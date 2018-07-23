@@ -18,13 +18,21 @@ export class PipeObsticle extends PIXI.Container {
         this.addChild(this.bottomPipe);
     }
 
-    get UpperPipe(): Pipe { return this.upperPipe; }
-    get BottomPipe(): Pipe { return this.bottomPipe; }
-    get IsNextObsticle(): boolean { return this.isNextObsticle; }
-    set IsNextObsticle(value: boolean) { this.isNextObsticle = value; }
+    get UpperPipe(): Pipe {
+        return this.upperPipe;
+    }
+    get BottomPipe(): Pipe {
+        return this.bottomPipe;
+    }
+    get IsNextObsticle(): boolean {
+        return this.isNextObsticle;
+    }
+    set IsNextObsticle(value: boolean) {
+        this.isNextObsticle = value;
+    }
 
     public updateObsticle(): void {
-        const upperOffset: number = Math.floor((Math.random() * 100) + 1);
+        const upperOffset: number = Math.floor(Math.random() * 100 + 1);
         this.upperPipe.y = -upperOffset;
         this.bottomPipe.y = this.UpperPipe.y + this.UpperPipe.height + GameSettings.getInstance().pipeObsticlesGap;
     }

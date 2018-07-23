@@ -8,7 +8,6 @@ import { BirdController } from "./bird-controller";
 import { ObsticlesController } from "./obsticles-controller";
 
 export class RootController extends PIXI.Container {
-
     private view: RootView;
 
     private obsticlesController: ObsticlesController;
@@ -19,7 +18,7 @@ export class RootController extends PIXI.Container {
     private ground: Ground;
 
     private gameSettings: GameSettings;
-    private gameOver: boolean = false;          // when set to true checkBirdCollision method will stop;
+    private gameOver: boolean = false; // when set to true checkBirdCollision method will stop;
 
     constructor(view: RootView) {
         super();
@@ -33,10 +32,15 @@ export class RootController extends PIXI.Container {
         this.ground.y = this.gameSettings.gameHeight - this.ground.height;
         this.gameSettings.groundYPos = this.ground.y;
 
-        this.birdView = new BirdView(this.gameSettings.birdStartingXPossition, this.gameSettings.birdStartingYPossition);
+        this.birdView = new BirdView(
+            this.gameSettings.birdStartingXPossition,
+            this.gameSettings.birdStartingYPossition
+        );
         this.birdController = new BirdController(this.birdView);
 
-        document.addEventListener("keydown", (e: KeyboardEvent) => { this.onKeyDown(e); });
+        document.addEventListener("keydown", (e: KeyboardEvent) => {
+            this.onKeyDown(e);
+        });
         (view as any).click = (view as any).touchstart = () => {
             this.mainAction();
         };
@@ -63,21 +67,20 @@ export class RootController extends PIXI.Container {
     }
 
     private mainAction(): void {
-        if (this.gameOver)
-            this.restart();
-        else
-            this.birdController.fly();
+        if (this.gameOver) this.restart();
+        else this.birdController.fly();
     }
 
     private checkBirdCollision(): void {
         requestAnimationFrame(() => {
-            if (!this.gameOver && !this.birdController.HasFallen)
-                this.checkBirdCollision();
+            if (!this.gameOver && !this.birdController.HasFallen) this.checkBirdCollision();
         });
 
         //pipe collision
         if (!this.birdController.IsHitted) {
-            if (CollisionChecker.pipeCollision(this.birdController.birdBody, this.obsticlesController.NextPipeObsticle)) {
+            if (
+                CollisionChecker.pipeCollision(this.birdController.birdBody, this.obsticlesController.NextPipeObsticle)
+            ) {
                 this.birdHitted();
             }
         }

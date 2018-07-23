@@ -11,10 +11,10 @@ export class BirdFlyFlappyBehavior implements IFlyBehavior {
     }
 
     public fly(): void {
-        if (!this.gravityBehavior.isHitted) {
-            this.gravityBehavior.velocityY = -BirdFlyFlappyBehavior.FLY_VELOCITY_Y;
-        }
+        this.gravityBehavior.velocityY = -BirdFlyFlappyBehavior.FLY_VELOCITY_Y;
     }
 
-    public dispose(): void { this.gravityBehavior = null; }
+    public dispose(): void {
+        this.gravityBehavior = null;
+    }
 }

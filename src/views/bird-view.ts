@@ -1,6 +1,6 @@
 import { GameObject } from "../game-objects/game-object";
 
-export class BirdView extends PIXI.Container  implements GameObject {
+export class BirdView extends PIXI.Container implements GameObject {
     public body: PIXI.Sprite;
 
     private birdTextures: PIXI.Texture[];
@@ -43,8 +43,7 @@ export class BirdView extends PIXI.Container  implements GameObject {
     public startBirdFlapping(): void {
         this.birdFlappying = true;
         requestAnimationFrame(() => {
-            if (this.birdFlappying)
-                this.startBirdFlapping();
+            if (this.birdFlappying) this.startBirdFlapping();
         });
 
         const now = Date.now();

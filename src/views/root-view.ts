@@ -8,5 +8,7 @@ export class RootView extends PIXI.Container {
         stage.addChild(this);
     }
 
-    get Stage(): PIXI.Container { return this.stage; }
+    get Stage(): PIXI.Container {
+        return this.stage;
+    }
 }

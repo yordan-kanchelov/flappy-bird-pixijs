@@ -23,8 +23,12 @@ export class ObsticlesController extends PIXI.Container {
         this.startMoving();
     }
 
-    get PipeObsticles(): PipeObsticle[] { return this.pipeObsticles; }
-    get NextPipeObsticle(): PipeObsticle { return this.pipeObsticles[this.nextPipeObsticleIndex]; }
+    get PipeObsticles(): PipeObsticle[] {
+        return this.pipeObsticles;
+    }
+    get NextPipeObsticle(): PipeObsticle {
+        return this.pipeObsticles[this.nextPipeObsticleIndex];
+    }
 
     public stopMoving(): void {
         this.isRunning = false;
@@ -48,10 +52,10 @@ export class ObsticlesController extends PIXI.Container {
     private addObsticles(): void {
         for (let i = 0; i < 3; i++) {
             const pipeObsticle: PipeObsticle = new PipeObsticle();
-            pipeObsticle.x = this.gameSettings.gameWidth + pipeObsticle.width * i + i * this.gameSettings.obsticlesDistance;
+            pipeObsticle.x =
+                this.gameSettings.gameWidth + pipeObsticle.width * i + i * this.gameSettings.obsticlesDistance;
 
-            if (i == 0)
-                pipeObsticle.IsNextObsticle = true;
+            if (i == 0) pipeObsticle.IsNextObsticle = true;
 
             this.view.addChild(pipeObsticle);
             this.pipeObsticles.push(pipeObsticle);
@@ -63,15 +67,18 @@ export class ObsticlesController extends PIXI.Container {
         this.pipeObsticles[0].IsNextObsticle = true;
         for (let i = 0; i < this.pipeObsticles.length; i++) {
             this.pipeObsticles[i].updateObsticle();
-            this.pipeObsticles[i].x = this.gameSettings.gameWidth + this.pipeObsticles[i].width * i + i * this.gameSettings.obsticlesDistance;
+            this.pipeObsticles[i].x =
+                this.gameSettings.gameWidth + this.pipeObsticles[i].width * i + i * this.gameSettings.obsticlesDistance;
         }
     }
 
     private movePipes(): void {
         for (let i = 0; i < this.pipeObsticles.length; i += 1) {
-            if (this.pipeObsticles[i].x < this.gameSettings.birdStartingXPossition - PIXI.Texture.fromImage("birdMiddle.png").width / 2) {
-                if (this.nextPipeObsticleIndex < this.PIPES_COUNT - 1)
-                    this.nextPipeObsticleIndex++;
+            if (
+                this.pipeObsticles[i].x <
+                this.gameSettings.birdStartingXPossition - PIXI.Texture.fromImage("birdMiddle.png").width / 2
+            ) {
+                if (this.nextPipeObsticleIndex < this.PIPES_COUNT - 1) this.nextPipeObsticleIndex++;
                 else {
                     this.nextPipeObsticleIndex = 0;
                 }

@@ -41591,11 +41591,11 @@ var BirdFlyFlappyBehavior = /** @class */ (function () {
         this.gravityBehavior = gravityBehavior;
     }
     BirdFlyFlappyBehavior.prototype.fly = function () {
-        if (!this.gravityBehavior.isHitted) {
-            this.gravityBehavior.velocityY = -BirdFlyFlappyBehavior.FLY_VELOCITY_Y;
-        }
+        this.gravityBehavior.velocityY = -BirdFlyFlappyBehavior.FLY_VELOCITY_Y;
     };
-    BirdFlyFlappyBehavior.prototype.dispose = function () { this.gravityBehavior = null; };
+    BirdFlyFlappyBehavior.prototype.dispose = function () {
+        this.gravityBehavior = null;
+    };
     BirdFlyFlappyBehavior.FLY_VELOCITY_Y = 2.5;
     return BirdFlyFlappyBehavior;
 }());
@@ -41611,22 +41611,23 @@ var BirdGravityBehavior = /** @class */ (function () {
         this.gravityPower = 0.1;
         this.gameObject = bird;
         this.velocityY = velocityY;
-        this.isHitted = isHitted;
         this.gravityTicker = new PIXI.ticker.Ticker();
         this.gravityTicker.add(this.gravity.bind(this));
         this.gravityTicker.start();
+        this._isHitted = isHitted;
     }
     BirdGravityBehavior.prototype.gravity = function () {
         if (this.velocityY < 10) {
             this.velocityY += this.gravityPower;
         }
         this.gameObject.body.y += this.velocityY;
+        console.log(this.gameObject.body.y);
         // bird rotation
-        if (!this.isHitted) {
-            if (this.velocityY > 0 && this.gameObject.body.rotation < 0.5) {
-                this.gameObject.body.rotation += this.velocityY / 40;
+        if (!this._isHitted) {
+            if (this._velocityY > 0 && this.gameObject.body.rotation < 0.5) {
+                this.gameObject.body.rotation += this._velocityY / 40;
             }
-            else if (this.velocityY < 0 && this.gameObject.body.rotation > -0.3) {
+            else if (this._velocityY < 0 && this.gameObject.body.rotation > -0.3) {
                 this.gameObject.body.rotation -= 0.05;
             }
         }
@@ -41634,6 +41635,22 @@ var BirdGravityBehavior = /** @class */ (function () {
             this.gameObject.body.rotation += 0.1;
         }
     };
+    Object.defineProperty(BirdGravityBehavior.prototype, "isHitted", {
+        set: function (value) {
+            this._isHitted = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(BirdGravityBehavior.prototype, "velocityY", {
+        get: function () { return this._velocityY; },
+        set: function (value) {
+            this._velocityY = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    ;
     BirdGravityBehavior.prototype.dispose = function () {
         this.gameObject = null;
         this.gravityTicker.stop();
@@ -41656,43 +41673,30 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-var game_setttings_1 = require("../models/game-setttings");
-var bird_gravity_behavior_1 = require("../behaviors/bird-gravity-behavior");
 var bird_fly_flappy_behavior_1 = require("../behaviors/bird-fly-flappy-behavior");
+var bird_gravity_behavior_1 = require("../behaviors/bird-gravity-behavior");
+var game_setttings_1 = require("../models/game-setttings");
 var BirdController = /** @class */ (function (_super) {
     __extends(BirdController, _super);
     function BirdController(view) {
         var _this = _super.call(this) || this;
         _this.gameSettings = game_setttings_1.GameSettings.getInstance();
         _this.view = view;
-        _this.isStatic = false;
         _this.hasFallen = false;
         _this.updateBirdBehaviors();
         return _this;
     }
     Object.defineProperty(BirdController.prototype, "birdBody", {
-        get: function () { return this.view.body; },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(BirdController.prototype, "IsStatic", {
-        get: function () { return this.isStatic; },
-        set: function (value) {
-            if (value) {
-                this.stopBirdGravity();
-                this.view.stopBirdFlapping();
-            }
-            // in case of pause
-            if (!this.gravityBehavior.isHitted && !this.hasFallen && !value) {
-                this.startBirdGravity();
-            }
-            this.isStatic = value;
+        get: function () {
+            return this.view.body;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(BirdController.prototype, "HasFallen", {
-        get: function () { return this.hasFallen; },
+        get: function () {
+            return this.hasFallen;
+        },
         set: function (value) {
             if (value) {
                 this.stopBirdGravity();
@@ -41703,18 +41707,26 @@ var BirdController = /** @class */ (function (_super) {
         configurable: true
     });
     Object.defineProperty(BirdController.prototype, "IsHitted", {
-        get: function () { return this.gravityBehavior.isHitted; },
+        get: function () {
+            return this.isHitted;
+        },
         set: function (value) {
             if (value) {
                 this.onBirdHit();
             }
-            this.gravityBehavior.isHitted = value;
+            this.isHitted = value;
         },
         enumerable: true,
         configurable: true
     });
     BirdController.prototype.fly = function () {
-        this.flyBehavior.fly();
+        if (!this.isHitted) {
+            this.flyBehavior.fly();
+        }
+    };
+    BirdController.prototype.updateBirdBehaviors = function () {
+        this.gravityBehavior = new bird_gravity_behavior_1.BirdGravityBehavior(this.view, this.gameSettings.birdStartingVelocity);
+        this.flyBehavior = new bird_fly_flappy_behavior_1.BirdFlyFlappyBehavior(this.gravityBehavior);
     };
     BirdController.prototype.resetBird = function () {
         this.view.body.x = this.gameSettings.birdStartingXPossition;
@@ -41723,17 +41735,17 @@ var BirdController = /** @class */ (function (_super) {
         this.gravityBehavior.velocityY = this.gameSettings.birdStartingVelocity;
         this.IsHitted = false;
         this.HasFallen = false;
-        this.IsStatic = false;
         this.view.startBirdFlapping();
         this.startBirdGravity();
     };
-    BirdController.prototype.startBirdGravity = function () { this.gravityBehavior.gravityTicker.start(); };
-    BirdController.prototype.stopBirdGravity = function () { this.gravityBehavior.gravityTicker.stop(); };
-    BirdController.prototype.updateBirdBehaviors = function () {
-        this.gravityBehavior = new bird_gravity_behavior_1.BirdGravityBehavior(this.view, this.gameSettings.birdStartingVelocity);
-        this.flyBehavior = new bird_fly_flappy_behavior_1.BirdFlyFlappyBehavior(this.gravityBehavior);
+    BirdController.prototype.startBirdGravity = function () {
+        this.gravityBehavior.gravityTicker.start();
+    };
+    BirdController.prototype.stopBirdGravity = function () {
+        this.gravityBehavior.gravityTicker.stop();
     };
     BirdController.prototype.onBirdHit = function () {
+        this.isHitted = true;
         this.gravityBehavior.velocityY = 0;
         this.view.stopBirdFlapping();
     };
@@ -41770,12 +41782,16 @@ var ObsticlesController = /** @class */ (function (_super) {
         return _this;
     }
     Object.defineProperty(ObsticlesController.prototype, "PipeObsticles", {
-        get: function () { return this.pipeObsticles; },
+        get: function () {
+            return this.pipeObsticles;
+        },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(ObsticlesController.prototype, "NextPipeObsticle", {
-        get: function () { return this.pipeObsticles[this.nextPipeObsticleIndex]; },
+        get: function () {
+            return this.pipeObsticles[this.nextPipeObsticleIndex];
+        },
         enumerable: true,
         configurable: true
     });
@@ -41786,8 +41802,9 @@ var ObsticlesController = /** @class */ (function (_super) {
         var _this = this;
         this.isRunning = true;
         requestAnimationFrame(function () {
-            if (_this.isRunning)
+            if (_this.isRunning) {
                 _this.startMoving();
+            }
         });
         this.movePipes();
     };
@@ -41797,7 +41814,8 @@ var ObsticlesController = /** @class */ (function (_super) {
     ObsticlesController.prototype.addObsticles = function () {
         for (var i = 0; i < 3; i++) {
             var pipeObsticle = new pipes_obsticle_1.PipeObsticle();
-            pipeObsticle.x = this.gameSettings.gameWidth + pipeObsticle.width * i + i * this.gameSettings.obsticlesDistance;
+            pipeObsticle.x =
+                this.gameSettings.gameWidth + pipeObsticle.width * i + i * this.gameSettings.obsticlesDistance;
             if (i == 0)
                 pipeObsticle.IsNextObsticle = true;
             this.view.addChild(pipeObsticle);
@@ -41809,12 +41827,14 @@ var ObsticlesController = /** @class */ (function (_super) {
         this.pipeObsticles[0].IsNextObsticle = true;
         for (var i = 0; i < this.pipeObsticles.length; i++) {
             this.pipeObsticles[i].updateObsticle();
-            this.pipeObsticles[i].x = this.gameSettings.gameWidth + this.pipeObsticles[i].width * i + i * this.gameSettings.obsticlesDistance;
+            this.pipeObsticles[i].x =
+                this.gameSettings.gameWidth + this.pipeObsticles[i].width * i + i * this.gameSettings.obsticlesDistance;
         }
     };
     ObsticlesController.prototype.movePipes = function () {
         for (var i = 0; i < this.pipeObsticles.length; i += 1) {
-            if (this.pipeObsticles[i].x < this.gameSettings.birdStartingXPossition - PIXI.Texture.fromImage("birdMiddle.png").width / 2) {
+            if (this.pipeObsticles[i].x <
+                this.gameSettings.birdStartingXPossition - PIXI.Texture.fromImage("birdMiddle.png").width / 2) {
                 if (this.nextPipeObsticleIndex < this.PIPES_COUNT - 1)
                     this.nextPipeObsticleIndex++;
                 else {
@@ -41845,13 +41865,13 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+var ground_1 = require("../game-objects/ground");
 var game_setttings_1 = require("../models/game-setttings");
-var obsticles_controller_1 = require("./obsticles-controller");
+var collision_checker_1 = require("../utils/collision-checker");
+var bird_view_1 = require("../views/bird-view");
 var obsticles_view_1 = require("../views/obsticles-view");
 var bird_controller_1 = require("./bird-controller");
-var bird_view_1 = require("../views/bird-view");
-var ground_1 = require("../game-objects/ground");
-var collision_checker_1 = require("../utils/collision-checker");
+var obsticles_controller_1 = require("./obsticles-controller");
 var RootController = /** @class */ (function (_super) {
     __extends(RootController, _super);
     function RootController(view) {
@@ -41865,7 +41885,9 @@ var RootController = /** @class */ (function (_super) {
         _this.gameSettings.groundYPos = _this.ground.y;
         _this.birdView = new bird_view_1.BirdView(_this.gameSettings.birdStartingXPossition, _this.gameSettings.birdStartingYPossition);
         _this.birdController = new bird_controller_1.BirdController(_this.birdView);
-        document.addEventListener('keydown', function (e) { _this.onKeyDown(e); });
+        document.addEventListener("keydown", function (e) {
+            _this.onKeyDown(e);
+        });
         view.click = view.touchstart = function () {
             _this.mainAction();
         };
@@ -41947,7 +41969,6 @@ var Ground = /** @class */ (function (_super) {
     function Ground() {
         var _this = _super.call(this) || this;
         _this.texture = PIXI.Texture.fromImage("ground.png");
-        ;
         _this.ticker = new PIXI.ticker.Ticker();
         _this.ticker.autoStart = false;
         _this.ticker.speed = 1;
@@ -42015,8 +42036,8 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-var pipe_1 = require("./pipe");
 var game_setttings_1 = require("../models/game-setttings");
+var pipe_1 = require("./pipe");
 var PipeObsticle = /** @class */ (function (_super) {
     __extends(PipeObsticle, _super);
     function PipeObsticle(isNextObsticle) {
@@ -42030,24 +42051,31 @@ var PipeObsticle = /** @class */ (function (_super) {
         return _this;
     }
     Object.defineProperty(PipeObsticle.prototype, "UpperPipe", {
-        get: function () { return this.upperPipe; },
+        get: function () {
+            return this.upperPipe;
+        },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(PipeObsticle.prototype, "BottomPipe", {
-        get: function () { return this.bottomPipe; },
+        get: function () {
+            return this.bottomPipe;
+        },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(PipeObsticle.prototype, "IsNextObsticle", {
-        get: function () { return this.isNextObsticle; },
-        set: function (value) { this.isNextObsticle = value; },
+        get: function () {
+            return this.isNextObsticle;
+        },
+        set: function (value) {
+            this.isNextObsticle = value;
+        },
         enumerable: true,
         configurable: true
     });
-    ;
     PipeObsticle.prototype.updateObsticle = function () {
-        var upperOffset = Math.floor((Math.random() * 100) + 1);
+        var upperOffset = Math.floor(Math.random() * 100 + 1);
         this.upperPipe.y = -upperOffset;
         this.bottomPipe.y = this.UpperPipe.y + this.UpperPipe.height + game_setttings_1.GameSettings.getInstance().pipeObsticlesGap;
     };
@@ -42066,9 +42094,9 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var PIXI = __importStar(require("pixi.js"));
+var root_controller_1 = require("./controllers/root-controller");
 var game_setttings_1 = require("./models/game-setttings");
 var root_view_1 = require("./views/root-view");
-var root_controller_1 = require("./controllers/root-controller");
 var Main = /** @class */ (function () {
     function Main() {
         var _this = this;
@@ -42080,19 +42108,24 @@ var Main = /** @class */ (function () {
     Main.prototype.startLoadingAssets = function () {
         var _this = this;
         var loader = PIXI.loader;
-        loader.add('gameSprite', "assets/spritesData.json");
-        loader.on('complete', function () {
+        loader.add("gameSprite", "assets/spritesData.json");
+        loader.on("complete", function () {
             _this.onAssetsLoaded();
         });
         loader.load();
     };
     Main.prototype.onAssetsLoaded = function () {
         this.createrenderer();
-        var rootView = new root_view_1.RootView(this.game.stage), rootController = new root_controller_1.RootController(rootView);
+        var rootView = new root_view_1.RootView(this.game.stage);
+        var rootController = new root_controller_1.RootController(rootView);
         this.animate();
     };
     Main.prototype.createrenderer = function () {
-        this.game = new PIXI.Application({ width: window.innerWidth, height: window.innerHeight, backgroundColor: 0xffff00 });
+        this.game = new PIXI.Application({
+            backgroundColor: 0xffff00,
+            height: window.innerHeight,
+            width: window.innerWidth,
+        });
         this.game.stage.scale.x = window.innerWidth / this.gameSettings.gameWidth;
         this.game.stage.scale.y = window.innerHeight / this.gameSettings.gameHeight;
         this.game.stage.interactive = true;
@@ -42111,7 +42144,7 @@ var Main = /** @class */ (function () {
 exports.Main = Main;
 (function () {
     var game = new Main();
-}());
+})();
 
 },{"./controllers/root-controller":194,"./models/game-setttings":199,"./views/root-view":203,"pixi.js":141}],199:[function(require,module,exports){
 "use strict";
@@ -42151,13 +42184,12 @@ var CollisionChecker = /** @class */ (function () {
     }
     CollisionChecker.pipeCollision = function (bird, pipeObsticle) {
         var birdBottomPoint = bird.y + bird.texture.height;
-        var xCollision = bird.x < pipeObsticle.x + pipeObsticle.UpperPipe.width &&
-            bird.x + bird.width / 2 > pipeObsticle.x;
+        var xCollision = bird.x < pipeObsticle.x + pipeObsticle.UpperPipe.width && bird.x + bird.width / 2 > pipeObsticle.x;
         var yCollision = (bird.y - bird.height / 2 < pipeObsticle.UpperPipe.y + pipeObsticle.UpperPipe.height &&
             bird.height / 2 + bird.y > pipeObsticle.UpperPipe.y) ||
             (bird.y - bird.height / 2 < pipeObsticle.BottomPipe.y + pipeObsticle.BottomPipe.height &&
                 bird.height / 2 + bird.y > pipeObsticle.BottomPipe.y) ||
-            (birdBottomPoint < 0); // when bird height is out of screen 
+            birdBottomPoint < 0; // when bird height is out of screen
         if (yCollision && xCollision) {
             return true;
         }
@@ -42200,7 +42232,7 @@ var BirdView = /** @class */ (function (_super) {
         _this.birdTextures = [
             PIXI.Texture.fromImage("birdDown.png"),
             PIXI.Texture.fromImage("birdMiddle.png"),
-            PIXI.Texture.fromImage("birdUp.png")
+            PIXI.Texture.fromImage("birdUp.png"),
         ];
         _this.body = new PIXI.Sprite(_this.birdTextures[0]);
         _this.body.anchor.x = _this.body.anchor.y = 0.5;
@@ -42280,7 +42312,9 @@ var RootView = /** @class */ (function (_super) {
         return _this;
     }
     Object.defineProperty(RootView.prototype, "Stage", {
-        get: function () { return this.stage; },
+        get: function () {
+            return this.stage;
+        },
         enumerable: true,
         configurable: true
     });
