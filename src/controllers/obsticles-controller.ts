@@ -9,8 +9,8 @@ export class ObstaclesController extends PIXI.Container {
     private view: ObstaclesView;
     private gameSettings: GameSettings = GameSettings.getInstance();
 
-    private isRunning: boolean;
     private nextPipeObstacleIndex: number;
+    private moveObstacleTicker: PIXI.ticker.Ticker;
 
     constructor(view: ObstaclesView) {
         super();
@@ -19,8 +19,10 @@ export class ObstaclesController extends PIXI.Container {
 
         this.nextPipeObstacleIndex = 0;
 
+        this.moveObstacleTicker = new PIXI.ticker.Ticker();
+        this.moveObstacleTicker.add(this.movePipes.bind(this));
+
         this.addObstacles();
-        this.startMoving();
     }
 
     get PipeObstacles(): PipeObstacle[] {
@@ -31,18 +33,11 @@ export class ObstaclesController extends PIXI.Container {
     }
 
     public stopMoving(): void {
-        this.isRunning = false;
+        this.moveObstacleTicker.stop();
     }
 
     public startMoving(): void {
-        this.isRunning = true;
-        requestAnimationFrame(() => {
-            if (this.isRunning) {
-                this.startMoving();
-            }
-        });
-
-        this.movePipes();
+        this.moveObstacleTicker.start();
     }
 
     public resetObstacles(): void {

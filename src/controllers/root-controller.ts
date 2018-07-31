@@ -49,6 +49,7 @@ export class RootController extends PIXI.Container {
         view.addChild(this.ground);
         view.addChild(this.birdView);
 
+        this.obstaclesController.startMoving();
         this.checkBirdCollision.bind(this)();
     }
 
