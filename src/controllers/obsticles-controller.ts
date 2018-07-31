@@ -1,33 +1,33 @@
-import { PipeObsticle } from "../game-objects/pipes-obsticle";
-import { GameSettings } from "../models/game-setttings";
-import { ObsticlesView } from "../views/obsticles-view";
+import { PipeObstacle } from "../game-objects/pipes-obstacle";
+import { GameSettings } from "../models/game-settings";
+import { ObstaclesView } from "../views/obsticles-view";
 
-export class ObsticlesController extends PIXI.Container {
+export class ObstaclesController extends PIXI.Container {
     private readonly PIPES_COUNT: number = 3;
 
-    private pipeObsticles: PipeObsticle[];
-    private view: ObsticlesView;
+    private pipeObstacles: PipeObstacle[];
+    private view: ObstaclesView;
     private gameSettings: GameSettings = GameSettings.getInstance();
 
     private isRunning: boolean;
-    private nextPipeObsticleIndex: number;
+    private nextPipeObstacleIndex: number;
 
-    constructor(view: ObsticlesView) {
+    constructor(view: ObstaclesView) {
         super();
         this.view = view;
-        this.pipeObsticles = [];
+        this.pipeObstacles = [];
 
-        this.nextPipeObsticleIndex = 0;
+        this.nextPipeObstacleIndex = 0;
 
-        this.addObsticles();
+        this.addObstacles();
         this.startMoving();
     }
 
-    get PipeObsticles(): PipeObsticle[] {
-        return this.pipeObsticles;
+    get PipeObstacles(): PipeObstacle[] {
+        return this.pipeObstacles;
     }
-    get NextPipeObsticle(): PipeObsticle {
-        return this.pipeObsticles[this.nextPipeObsticleIndex];
+    get NextPipeObstacle(): PipeObstacle {
+        return this.pipeObstacles[this.nextPipeObstacleIndex];
     }
 
     public stopMoving(): void {
@@ -45,51 +45,51 @@ export class ObsticlesController extends PIXI.Container {
         this.movePipes();
     }
 
-    public resetObsticles(): void {
-        this.resetPipesPossition();
+    public resetObstacles(): void {
+        this.resetPipesPosition();
     }
 
-    private addObsticles(): void {
+    private addObstacles(): void {
         for (let i = 0; i < 3; i++) {
-            const pipeObsticle: PipeObsticle = new PipeObsticle();
-            pipeObsticle.x =
-                this.gameSettings.gameWidth + pipeObsticle.width * i + i * this.gameSettings.obsticlesDistance;
+            const pipeObstacle: PipeObstacle = new PipeObstacle();
+            pipeObstacle.x =
+                this.gameSettings.gameWidth + pipeObstacle.width * i + i * this.gameSettings.obstaclesDistance;
 
-            if (i == 0) pipeObsticle.IsNextObsticle = true;
+            if (i == 0) pipeObstacle.IsNextObstacle = true;
 
-            this.view.addChild(pipeObsticle);
-            this.pipeObsticles.push(pipeObsticle);
+            this.view.addChild(pipeObstacle);
+            this.pipeObstacles.push(pipeObstacle);
         }
     }
 
-    private resetPipesPossition(): void {
-        this.nextPipeObsticleIndex = 0;
-        this.pipeObsticles[0].IsNextObsticle = true;
-        for (let i = 0; i < this.pipeObsticles.length; i++) {
-            this.pipeObsticles[i].updateObsticle();
-            this.pipeObsticles[i].x =
-                this.gameSettings.gameWidth + this.pipeObsticles[i].width * i + i * this.gameSettings.obsticlesDistance;
+    private resetPipesPosition(): void {
+        this.nextPipeObstacleIndex = 0;
+        this.pipeObstacles[0].IsNextObstacle = true;
+        for (let i = 0; i < this.pipeObstacles.length; i++) {
+            this.pipeObstacles[i].updateObstacle();
+            this.pipeObstacles[i].x =
+                this.gameSettings.gameWidth + this.pipeObstacles[i].width * i + i * this.gameSettings.obstaclesDistance;
         }
     }
 
     private movePipes(): void {
-        for (let i = 0; i < this.pipeObsticles.length; i += 1) {
+        for (let i = 0; i < this.pipeObstacles.length; i += 1) {
             if (
-                this.pipeObsticles[i].x <
-                this.gameSettings.birdStartingXPossition - PIXI.Texture.fromImage("birdMiddle.png").width / 2
+                this.pipeObstacles[i].x <
+                this.gameSettings.birdStartingXPosition - PIXI.Texture.fromImage("birdMiddle.png").width / 2
             ) {
-                if (this.nextPipeObsticleIndex < this.PIPES_COUNT - 1) this.nextPipeObsticleIndex++;
+                if (this.nextPipeObstacleIndex < this.PIPES_COUNT - 1) this.nextPipeObstacleIndex++;
                 else {
-                    this.nextPipeObsticleIndex = 0;
+                    this.nextPipeObstacleIndex = 0;
                 }
             }
 
-            if (this.pipeObsticles[i].x < -this.pipeObsticles[i].UpperPipe.width) {
-                this.pipeObsticles[i].updateObsticle();
-                this.pipeObsticles[i].x = this.gameSettings.gameWidth + this.gameSettings.obsticlesDistance;
+            if (this.pipeObstacles[i].x < -this.pipeObstacles[i].UpperPipe.width) {
+                this.pipeObstacles[i].updateObstacle();
+                this.pipeObstacles[i].x = this.gameSettings.gameWidth + this.gameSettings.obstaclesDistance;
             }
 
-            this.pipeObsticles[i].x -= this.gameSettings.obsticlesSpeed;
+            this.pipeObstacles[i].x -= this.gameSettings.obstaclesSpeed;
         }
     }
 }

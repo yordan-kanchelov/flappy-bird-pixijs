@@ -1,4 +1,4 @@
-import { GameSettings } from "../models/game-setttings";
+import { GameSettings } from "../models/game-settings";
 
 export class Pipe extends PIXI.Sprite {
     constructor(upperPipe: boolean = true) {

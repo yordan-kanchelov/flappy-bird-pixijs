@@ -1,18 +1,18 @@
-import { GameSettings } from "../models/game-setttings";
+import { GameSettings } from "../models/game-settings";
 import { Pipe } from "./pipe";
 
-export class PipeObsticle extends PIXI.Container {
+export class PipeObstacle extends PIXI.Container {
     private upperPipe: Pipe;
     private bottomPipe: Pipe;
-    private isNextObsticle: boolean;
+    private isNextObstacle: boolean;
 
-    constructor(isNextObsticle: boolean = false) {
+    constructor(isNextObstacle: boolean = false) {
         super();
 
         this.upperPipe = new Pipe(true);
         this.bottomPipe = new Pipe(false);
 
-        this.updateObsticle();
+        this.updateObstacle();
 
         this.addChild(this.upperPipe);
         this.addChild(this.bottomPipe);
@@ -24,16 +24,16 @@ export class PipeObsticle extends PIXI.Container {
     get BottomPipe(): Pipe {
         return this.bottomPipe;
     }
-    get IsNextObsticle(): boolean {
-        return this.isNextObsticle;
+    get IsNextObstacle(): boolean {
+        return this.isNextObstacle;
     }
-    set IsNextObsticle(value: boolean) {
-        this.isNextObsticle = value;
+    set IsNextObstacle(value: boolean) {
+        this.isNextObstacle = value;
     }
 
-    public updateObsticle(): void {
+    public updateObstacle(): void {
         const upperOffset: number = Math.floor(Math.random() * 100 + 1);
         this.upperPipe.y = -upperOffset;
-        this.bottomPipe.y = this.UpperPipe.y + this.UpperPipe.height + GameSettings.getInstance().pipeObsticlesGap;
+        this.bottomPipe.y = this.UpperPipe.y + this.UpperPipe.height + GameSettings.getInstance().pipeObstaclesGap;
     }
 }

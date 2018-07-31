@@ -4,14 +4,14 @@ export class GameSettings {
     public gameHeight: number = 256;
 
     //bird settings
-    public birdStartingXPossition: number = this.gameWidth / 3;
-    public birdStartingYPossition: number = this.gameHeight / 5;
+    public birdStartingXPosition: number = this.gameWidth / 3;
+    public birdStartingYPosition: number = this.gameHeight / 5;
     public birdStartingVelocity: number = -2;
 
-    //obsticles settings
-    public pipeObsticlesGap: number = 45;
-    public obsticlesDistance: number = 45;
-    public obsticlesSpeed: number = 1;
+    //obstacles settings
+    public pipeObstaclesGap: number = 45;
+    public obstaclesDistance: number = 45;
+    public obstaclesSpeed: number = 1;
 
     public groundYPos: number = 0;
 

@@ -1,4 +1,4 @@
-export class ObsticlesView extends PIXI.Container {
+export class ObstaclesView extends PIXI.Container {
     constructor() {
         super();
     }

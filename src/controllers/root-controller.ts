@@ -1,17 +1,17 @@
 import { Ground } from "../game-objects/ground";
-import { GameSettings } from "../models/game-setttings";
+import { GameSettings } from "../models/game-settings";
 import { CollisionChecker } from "../utils/collision-checker";
 import { BirdView } from "../views/bird-view";
-import { ObsticlesView } from "../views/obsticles-view";
+import { ObstaclesView } from "../views/obsticles-view";
 import { RootView } from "../views/root-view";
 import { BirdController } from "./bird-controller";
-import { ObsticlesController } from "./obsticles-controller";
+import { ObstaclesController } from "./obsticles-controller";
 
 export class RootController extends PIXI.Container {
     private view: RootView;
 
-    private obsticlesController: ObsticlesController;
-    private obsticlesView: ObsticlesView;
+    private obstaclesController: ObstaclesController;
+    private obstaclesView: ObstaclesView;
     private birdController: BirdController;
     private birdView: BirdView;
 
@@ -32,10 +32,7 @@ export class RootController extends PIXI.Container {
         this.ground.y = this.gameSettings.gameHeight - this.ground.height;
         this.gameSettings.groundYPos = this.ground.y;
 
-        this.birdView = new BirdView(
-            this.gameSettings.birdStartingXPossition,
-            this.gameSettings.birdStartingYPossition
-        );
+        this.birdView = new BirdView(this.gameSettings.birdStartingXPosition, this.gameSettings.birdStartingYPosition);
         this.birdController = new BirdController(this.birdView);
 
         document.addEventListener("keydown", (e: KeyboardEvent) => {
@@ -45,9 +42,9 @@ export class RootController extends PIXI.Container {
             this.mainAction();
         };
 
-        this.obsticlesView = new ObsticlesView();
-        this.obsticlesController = new ObsticlesController(this.obsticlesView);
-        view.addChild(this.obsticlesView);
+        this.obstaclesView = new ObstaclesView();
+        this.obstaclesController = new ObstaclesController(this.obstaclesView);
+        view.addChild(this.obstaclesView);
 
         view.addChild(this.ground);
         view.addChild(this.birdView);
@@ -77,11 +74,11 @@ export class RootController extends PIXI.Container {
         });
 
         //pipe collision
-        if (!this.birdController.IsHitted) {
+        if (!this.birdController.IsHit) {
             if (
-                CollisionChecker.pipeCollision(this.birdController.birdBody, this.obsticlesController.NextPipeObsticle)
+                CollisionChecker.pipeCollision(this.birdController.birdBody, this.obstaclesController.NextPipeObstacle)
             ) {
-                this.birdHitted();
+                this.birdHit();
             }
         }
 
@@ -89,7 +86,7 @@ export class RootController extends PIXI.Container {
         if (CollisionChecker.groundCollision(this.birdController.birdBody, this.ground)) {
             this.gameOver = true;
             this.birdController.HasFallen = true;
-            this.birdHitted();
+            this.birdHit();
         }
     }
 
@@ -98,14 +95,14 @@ export class RootController extends PIXI.Container {
 
         this.ground.startMoving();
         this.birdController.resetBird();
-        this.obsticlesController.resetObsticles();
-        this.obsticlesController.startMoving();
+        this.obstaclesController.resetObstacles();
+        this.obstaclesController.startMoving();
         this.checkBirdCollision();
     }
 
-    private birdHitted(): void {
-        this.birdController.IsHitted = true;
+    private birdHit(): void {
+        this.birdController.IsHit = true;
         this.ground.stopMoving();
-        this.obsticlesController.stopMoving();
+        this.obstaclesController.stopMoving();
     }
 }

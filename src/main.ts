@@ -1,6 +1,6 @@
 import * as PIXI from "pixi.js";
 import { RootController } from "./controllers/root-controller";
-import { GameSettings } from "./models/game-setttings";
+import { GameSettings } from "./models/game-settings";
 import { RootView } from "./views/root-view";
 
 export class Main {
@@ -35,7 +35,7 @@ export class Main {
         this.game = new PIXI.Application({
             backgroundColor: 0xffff00,
             height: window.innerHeight,
-            width: window.innerWidth,
+            width: window.innerWidth
         });
 
         this.game.stage.scale.x = window.innerWidth / this.gameSettings.gameWidth;
@@ -56,6 +56,6 @@ export class Main {
     }
 }
 
-(function () {
+(function() {
     const game: Main = new Main();
 })();
