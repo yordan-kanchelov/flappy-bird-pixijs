@@ -26,8 +26,6 @@ export class BirdGravityBehavior implements IGravityBehavior {
 
         this.gameObject.body.y += this.velocityY;
 
-        console.log(this.gameObject.body.y);
-
         // bird rotation
         if (!this._isHit) {
             if (this._velocityY > 0 && this.gameObject.body.rotation < 0.5) {
