@@ -1,39 +1,45 @@
 import { GameSettings } from "../models/game-settings";
 import { Pipe } from "./pipe";
+import { GameObject } from "./game-object";
 
-export class PipeObstacle extends PIXI.Container {
-    private upperPipe: Pipe;
-    private bottomPipe: Pipe;
-    private isNextObstacle: boolean;
+export class PipeObstacle extends PIXI.Container implements GameObject {
+    body: PIXI.Sprite;
+
+    private _upperPipe: Pipe;
+    private _bottomPipe: Pipe;
+    private _isNextObstacle: boolean;
 
     constructor(isNextObstacle: boolean = false) {
         super();
 
-        this.upperPipe = new Pipe(true);
-        this.bottomPipe = new Pipe(false);
+        this._upperPipe = new Pipe(true);
+        this._bottomPipe = new Pipe(false);
 
         this.updateObstacle();
 
-        this.addChild(this.upperPipe);
-        this.addChild(this.bottomPipe);
+        this.body = new PIXI.Sprite();
+        this.body.addChild(this._upperPipe);
+        this.body.addChild(this._bottomPipe);
+
+        this.addChild(this.body);
     }
 
-    get UpperPipe(): Pipe {
-        return this.upperPipe;
+    get upperPipe(): Pipe {
+        return this._upperPipe;
     }
-    get BottomPipe(): Pipe {
-        return this.bottomPipe;
+    get bottomPipe(): Pipe {
+        return this._bottomPipe;
     }
-    get IsNextObstacle(): boolean {
-        return this.isNextObstacle;
+    get isNextObstacle(): boolean {
+        return this._isNextObstacle;
     }
-    set IsNextObstacle(value: boolean) {
-        this.isNextObstacle = value;
+    set isNextObstacle(value: boolean) {
+        this._isNextObstacle = value;
     }
 
     public updateObstacle(): void {
         const upperOffset: number = Math.floor(Math.random() * 100 + 1);
-        this.upperPipe.y = -upperOffset;
-        this.bottomPipe.y = this.UpperPipe.y + this.UpperPipe.height + GameSettings.getInstance().pipeObstaclesGap;
+        this._upperPipe.y = -upperOffset;
+        this._bottomPipe.y = this.upperPipe.y + this.upperPipe.height + GameSettings.getInstance().pipeObstaclesGap;
     }
 }

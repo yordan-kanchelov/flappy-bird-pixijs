@@ -5,39 +5,39 @@ import { ObstaclesView } from "../views/obsticles-view";
 export class ObstaclesController extends PIXI.Container {
     private readonly PIPES_COUNT: number = 3;
 
-    private pipeObstacles: PipeObstacle[];
-    private view: ObstaclesView;
-    private gameSettings: GameSettings = GameSettings.getInstance();
+    private _pipeObstacles: PipeObstacle[];
+    private _view: ObstaclesView;
+    private _gameSettings: GameSettings = GameSettings.getInstance();
 
-    private nextPipeObstacleIndex: number;
-    private moveObstacleTicker: PIXI.ticker.Ticker;
+    private _nextPipeObstacleIndex: number;
+    private _moveObstacleTicker: PIXI.ticker.Ticker;
 
     constructor(view: ObstaclesView) {
         super();
-        this.view = view;
-        this.pipeObstacles = [];
+        this._view = view;
+        this._pipeObstacles = [];
 
-        this.nextPipeObstacleIndex = 0;
+        this._nextPipeObstacleIndex = 0;
 
-        this.moveObstacleTicker = new PIXI.ticker.Ticker();
-        this.moveObstacleTicker.add(this.movePipes.bind(this));
+        this._moveObstacleTicker = new PIXI.ticker.Ticker();
+        this._moveObstacleTicker.add(this.movePipes.bind(this));
 
         this.addObstacles();
     }
 
     get PipeObstacles(): PipeObstacle[] {
-        return this.pipeObstacles;
+        return this._pipeObstacles;
     }
     get NextPipeObstacle(): PipeObstacle {
-        return this.pipeObstacles[this.nextPipeObstacleIndex];
+        return this._pipeObstacles[this._nextPipeObstacleIndex];
     }
 
     public stopMoving(): void {
-        this.moveObstacleTicker.stop();
+        this._moveObstacleTicker.stop();
     }
 
     public startMoving(): void {
-        this.moveObstacleTicker.start();
+        this._moveObstacleTicker.start();
     }
 
     public resetObstacles(): void {
@@ -48,43 +48,45 @@ export class ObstaclesController extends PIXI.Container {
         for (let i = 0; i < 3; i++) {
             const pipeObstacle: PipeObstacle = new PipeObstacle();
             pipeObstacle.x =
-                this.gameSettings.gameWidth + pipeObstacle.width * i + i * this.gameSettings.obstaclesDistance;
+                this._gameSettings.gameWidth + pipeObstacle.width * i + i * this._gameSettings.obstaclesDistance;
 
-            if (i == 0) pipeObstacle.IsNextObstacle = true;
+            if (i == 0) pipeObstacle.isNextObstacle = true;
 
-            this.view.addChild(pipeObstacle);
-            this.pipeObstacles.push(pipeObstacle);
+            this._view.addChild(pipeObstacle);
+            this._pipeObstacles.push(pipeObstacle);
         }
     }
 
     private resetPipesPosition(): void {
-        this.nextPipeObstacleIndex = 0;
-        this.pipeObstacles[0].IsNextObstacle = true;
-        for (let i = 0; i < this.pipeObstacles.length; i++) {
-            this.pipeObstacles[i].updateObstacle();
-            this.pipeObstacles[i].x =
-                this.gameSettings.gameWidth + this.pipeObstacles[i].width * i + i * this.gameSettings.obstaclesDistance;
+        this._nextPipeObstacleIndex = 0;
+        this._pipeObstacles[0].isNextObstacle = true;
+        for (let i = 0; i < this._pipeObstacles.length; i++) {
+            this._pipeObstacles[i].updateObstacle();
+            this._pipeObstacles[i].x =
+                this._gameSettings.gameWidth +
+                this._pipeObstacles[i].width * i +
+                i * this._gameSettings.obstaclesDistance;
         }
     }
 
     private movePipes(): void {
-        for (let i = 0; i < this.pipeObstacles.length; i += 1) {
+        for (let i = 0; i < this._pipeObstacles.length; i += 1) {
             if (
-                this.pipeObstacles[i].x <
-                this.gameSettings.birdStartingXPosition - PIXI.Texture.fromImage("birdMiddle.png").width / 2
+                this._pipeObstacles[i].x <
+                this._gameSettings.birdStartingXPosition - PIXI.Texture.fromImage("birdMiddle.png").width / 2
             ) {
-                if (this.nextPipeObstacleIndex < this.PIPES_COUNT - 1) this.nextPipeObstacleIndex++;
+                if (this._nextPipeObstacleIndex < this.PIPES_COUNT - 1) this._nextPipeObstacleIndex++;
                 else {
-                    this.nextPipeObstacleIndex = 0;
+                    this._nextPipeObstacleIndex = 0;
                 }
             }
 
-            if (this.pipeObstacles[i].x < -this.pipeObstacles[i].UpperPipe.width) {
-                this.pipeObstacles[i].updateObstacle();
-                this.pipeObstacles[i].x = this.gameSettings.gameWidth + this.gameSettings.obstaclesDistance;
+            if (this._pipeObstacles[i].x < -this._pipeObstacles[i].upperPipe.width) {
+                this._pipeObstacles[i].updateObstacle();
+                this._pipeObstacles[i].x = this._gameSettings.gameWidth + this._gameSettings.obstaclesDistance;
             }
 
-            this.pipeObstacles[i].x -= this.gameSettings.obstaclesSpeed;
+            this._pipeObstacles[i].x -= this._gameSettings.obstaclesSpeed;
         }
     }
 }

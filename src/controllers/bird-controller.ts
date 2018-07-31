@@ -6,84 +6,84 @@ import { GameSettings } from "../models/game-settings";
 import { BirdView } from "../views/bird-view";
 
 export class BirdController extends PIXI.Container {
-    private view: BirdView;
-    private gameSettings: GameSettings;
+    private _view: BirdView;
+    private _gameSettings: GameSettings;
 
-    private gravityBehavior: IGravityBehavior;
-    private flyBehavior: IFlyBehavior;
+    private _gravityBehavior: IGravityBehavior;
+    private _flyBehavior: IFlyBehavior;
 
-    private isHit: boolean;
-    private hasFallen: boolean;
+    private _isHit: boolean;
+    private _hasFallen: boolean;
 
     constructor(view: BirdView) {
         super();
-        this.gameSettings = GameSettings.getInstance();
-        this.view = view;
+        this._gameSettings = GameSettings.getInstance();
+        this._view = view;
 
-        this.hasFallen = false;
+        this._hasFallen = false;
 
         this.updateBirdBehaviors();
     }
 
     get birdBody(): PIXI.Sprite {
-        return this.view.body;
+        return this._view.body;
     }
 
-    get HasFallen(): boolean {
-        return this.hasFallen;
+    get hasFallen(): boolean {
+        return this._hasFallen;
     }
-    set HasFallen(value: boolean) {
+    set hasFallen(value: boolean) {
         if (value) {
             this.stopBirdGravity();
         }
-        this.hasFallen = value;
+        this._hasFallen = value;
     }
 
-    get IsHit(): boolean {
-        return this.isHit;
+    get isHit(): boolean {
+        return this._isHit;
     }
-    set IsHit(value: boolean) {
+    set isHit(value: boolean) {
         if (value) {
             this.onBirdHit();
         }
-        this.isHit = value;
+        this._isHit = value;
     }
 
     public fly(): void {
-        if (!this.isHit) {
-            this.flyBehavior.fly();
+        if (!this._isHit) {
+            this._flyBehavior.fly();
         }
     }
 
     private updateBirdBehaviors(): void {
-        this.gravityBehavior = new BirdGravityBehavior(this.view, this.gameSettings.birdStartingVelocity);
-        this.flyBehavior = new BirdFlyFlappyBehavior(this.gravityBehavior);
+        this._gravityBehavior = new BirdGravityBehavior(this._view, this._gameSettings.birdStartingVelocity);
+        this._flyBehavior = new BirdFlyFlappyBehavior(this._gravityBehavior);
     }
 
     public resetBird(): void {
-        this.view.body.x = this.gameSettings.birdStartingXPosition;
-        this.view.body.y = this.gameSettings.birdStartingYPosition;
-        this.view.body.rotation = 0;
+        this._view.body.x = this._gameSettings.birdStartingXPosition;
+        this._view.body.y = this._gameSettings.birdStartingYPosition;
+        this._view.body.rotation = 0;
 
-        this.gravityBehavior.velocityY = this.gameSettings.birdStartingVelocity;
+        this._gravityBehavior.velocityY = this._gameSettings.birdStartingVelocity;
 
-        this.IsHit = false;
-        this.HasFallen = false;
+        this.isHit = false;
+        this.hasFallen = false;
 
-        this.view.startBirdFlapping();
+        this._view.startBirdFlapping();
         this.startBirdGravity();
     }
 
     private startBirdGravity(): void {
-        this.gravityBehavior.gravityTicker.start();
+        this._gravityBehavior.gravityTicker.start();
     }
     private stopBirdGravity(): void {
-        this.gravityBehavior.gravityTicker.stop();
+        this._gravityBehavior.gravityTicker.stop();
     }
 
     private onBirdHit(): void {
-        this.isHit = true;
-        this.gravityBehavior.velocityY = 0;
-        this.view.stopBirdFlapping();
+        this._isHit = true;
+        this._gravityBehavior.velocityY = 0;
+        this._view.stopBirdFlapping();
     }
 }

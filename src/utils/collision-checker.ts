@@ -6,13 +6,13 @@ export class CollisionChecker {
         const birdBottomPoint: number = bird.y + bird.texture.height;
 
         const xCollision: boolean =
-            bird.x < pipeObstacle.x + pipeObstacle.UpperPipe.width && bird.x + bird.width / 2 > pipeObstacle.x;
+            bird.x < pipeObstacle.x + pipeObstacle.upperPipe.width && bird.x + bird.width / 2 > pipeObstacle.x;
 
         const yCollision: boolean =
-            (bird.y - bird.height / 2 < pipeObstacle.UpperPipe.y + pipeObstacle.UpperPipe.height &&
-                bird.height / 2 + bird.y > pipeObstacle.UpperPipe.y) ||
-            (bird.y - bird.height / 2 < pipeObstacle.BottomPipe.y + pipeObstacle.BottomPipe.height &&
-                bird.height / 2 + bird.y > pipeObstacle.BottomPipe.y) ||
+            (bird.y - bird.height / 2 < pipeObstacle.upperPipe.y + pipeObstacle.upperPipe.height &&
+                bird.height / 2 + bird.y > pipeObstacle.upperPipe.y) ||
+            (bird.y - bird.height / 2 < pipeObstacle.bottomPipe.y + pipeObstacle.bottomPipe.height &&
+                bird.height / 2 + bird.y > pipeObstacle.bottomPipe.y) ||
             birdBottomPoint < 0; // when bird height is out of screen
 
         if (yCollision && xCollision) {

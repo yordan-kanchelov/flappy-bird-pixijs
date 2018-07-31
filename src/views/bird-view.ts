@@ -3,12 +3,12 @@ import { GameObject } from "../game-objects/game-object";
 export class BirdView extends PIXI.Container implements GameObject {
     public body: PIXI.Sprite;
 
-    private birdTextures: PIXI.Texture[];
-    private birdPhase: number;
+    private _birdTextures: PIXI.Texture[];
+    private _birdPhase: number;
 
-    private then: number;
-    private interval: number;
-    private delta: number;
+    private _then: number;
+    private _interval: number;
+    private _delta: number;
 
     private birdFlappying: boolean;
 
@@ -16,18 +16,18 @@ export class BirdView extends PIXI.Container implements GameObject {
         super();
 
         const fps = 60;
-        this.then = Date.now();
-        this.interval = 3000 / fps;
-        this.delta;
+        this._then = Date.now();
+        this._interval = 3000 / fps;
+        this._delta;
 
-        this.birdPhase = 0;
-        this.birdTextures = [
+        this._birdPhase = 0;
+        this._birdTextures = [
             PIXI.Texture.fromImage("birdDown.png"),
             PIXI.Texture.fromImage("birdMiddle.png"),
-            PIXI.Texture.fromImage("birdUp.png"),
+            PIXI.Texture.fromImage("birdUp.png")
         ];
 
-        this.body = new PIXI.Sprite(this.birdTextures[0]);
+        this.body = new PIXI.Sprite(this._birdTextures[0]);
         this.body.anchor.x = this.body.anchor.y = 0.5;
         this.body.x = birdX;
         this.body.y = birdY;
@@ -47,17 +47,17 @@ export class BirdView extends PIXI.Container implements GameObject {
         });
 
         const now = Date.now();
-        this.delta = now - this.then;
+        this._delta = now - this._then;
 
-        if (this.delta > this.interval) {
-            this.then = now - (this.delta % this.interval);
+        if (this._delta > this._interval) {
+            this._then = now - (this._delta % this._interval);
 
-            if (this.birdPhase > 2) {
-                this.birdPhase = 0;
+            if (this._birdPhase > 2) {
+                this._birdPhase = 0;
             }
 
-            this.body.texture = this.birdTextures[this.birdPhase];
-            this.birdPhase += 1;
+            this.body.texture = this._birdTextures[this._birdPhase];
+            this._birdPhase += 1;
         }
     }
 }

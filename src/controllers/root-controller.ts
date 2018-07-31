@@ -8,32 +8,35 @@ import { BirdController } from "./bird-controller";
 import { ObstaclesController } from "./obsticles-controller";
 
 export class RootController extends PIXI.Container {
-    private view: RootView;
+    private _view: RootView;
 
-    private obstaclesController: ObstaclesController;
-    private obstaclesView: ObstaclesView;
-    private birdController: BirdController;
-    private birdView: BirdView;
+    private _obstaclesController: ObstaclesController;
+    private _obstaclesView: ObstaclesView;
+    private _birdController: BirdController;
+    private _birdView: BirdView;
 
-    private ground: Ground;
+    private _ground: Ground;
 
-    private gameSettings: GameSettings;
-    private gameOver: boolean = false; // when set to true checkBirdCollision method will stop;
+    private _gameSettings: GameSettings;
+    private _gameOver: boolean = false; // when set to true checkBirdCollision method will stop;
 
     constructor(view: RootView) {
         super();
-        this.view = view;
+        this._view = view;
 
-        this.gameSettings = GameSettings.getInstance();
+        this._gameSettings = GameSettings.getInstance();
 
         this.addBackground();
 
-        this.ground = new Ground();
-        this.ground.y = this.gameSettings.gameHeight - this.ground.height;
-        this.gameSettings.groundYPos = this.ground.y;
+        this._ground = new Ground();
+        this._ground.y = this._gameSettings.gameHeight - this._ground.height;
+        this._gameSettings.groundYPos = this._ground.y;
 
-        this.birdView = new BirdView(this.gameSettings.birdStartingXPosition, this.gameSettings.birdStartingYPosition);
-        this.birdController = new BirdController(this.birdView);
+        this._birdView = new BirdView(
+            this._gameSettings.birdStartingXPosition,
+            this._gameSettings.birdStartingYPosition
+        );
+        this._birdController = new BirdController(this._birdView);
 
         document.addEventListener("keydown", (e: KeyboardEvent) => {
             this.onKeyDown(e);
@@ -42,20 +45,22 @@ export class RootController extends PIXI.Container {
             this.mainAction();
         };
 
-        this.obstaclesView = new ObstaclesView();
-        this.obstaclesController = new ObstaclesController(this.obstaclesView);
-        view.addChild(this.obstaclesView);
+        this._obstaclesView = new ObstaclesView();
+        this._obstaclesController = new ObstaclesController(this._obstaclesView);
+        view.addChild(this._obstaclesView);
 
-        view.addChild(this.ground);
-        view.addChild(this.birdView);
+        view.addChild(this._ground);
+        view.addChild(this._birdView);
 
-        this.obstaclesController.startMoving();
+        this._obstaclesController.startMoving();
+        this._ground.startMoving();
+
         this.checkBirdCollision.bind(this)();
     }
 
     public addBackground(): any {
         const backgroundSprite = new PIXI.Sprite(PIXI.Texture.fromImage("background.png"));
-        this.view.addChild(backgroundSprite);
+        this._view.addChild(backgroundSprite);
     }
 
     private onKeyDown(key: KeyboardEvent) {
@@ -65,45 +70,53 @@ export class RootController extends PIXI.Container {
     }
 
     private mainAction(): void {
-        if (this.gameOver) this.restart();
-        else this.birdController.fly();
+        if (this._gameOver) {
+            this.restart();
+        } else {
+            this._birdController.fly();
+        }
     }
 
     private checkBirdCollision(): void {
+        // TODO
+        // replace with ticker
         requestAnimationFrame(() => {
-            if (!this.gameOver && !this.birdController.HasFallen) this.checkBirdCollision();
+            if (!this._gameOver && !this._birdController.hasFallen) this.checkBirdCollision();
         });
 
         //pipe collision
-        if (!this.birdController.IsHit) {
+        if (!this._birdController.isHit) {
             if (
-                CollisionChecker.pipeCollision(this.birdController.birdBody, this.obstaclesController.NextPipeObstacle)
+                CollisionChecker.pipeCollision(
+                    this._birdController.birdBody,
+                    this._obstaclesController.NextPipeObstacle
+                )
             ) {
                 this.birdHit();
             }
         }
 
         //groundHit
-        if (CollisionChecker.groundCollision(this.birdController.birdBody, this.ground)) {
-            this.gameOver = true;
-            this.birdController.HasFallen = true;
+        if (CollisionChecker.groundCollision(this._birdController.birdBody, this._ground)) {
+            this._gameOver = true;
+            this._birdController.hasFallen = true;
             this.birdHit();
         }
     }
 
     private restart(): void {
-        this.gameOver = false;
+        this._gameOver = false;
 
-        this.ground.startMoving();
-        this.birdController.resetBird();
-        this.obstaclesController.resetObstacles();
-        this.obstaclesController.startMoving();
+        this._ground.startMoving();
+        this._birdController.resetBird();
+        this._obstaclesController.resetObstacles();
+        this._obstaclesController.startMoving();
         this.checkBirdCollision();
     }
 
     private birdHit(): void {
-        this.birdController.IsHit = true;
-        this.ground.stopMoving();
-        this.obstaclesController.stopMoving();
+        this._birdController.isHit = true;
+        this._ground.stopMoving();
+        this._obstaclesController.stopMoving();
     }
 }

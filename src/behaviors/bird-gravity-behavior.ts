@@ -12,6 +12,7 @@ export class BirdGravityBehavior implements IGravityBehavior {
     constructor(bird: GameObject, velocityY = 0, isHit = false) {
         this.gameObject = bird;
         this.velocityY = velocityY;
+
         this.gravityTicker = new PIXI.ticker.Ticker();
         this.gravityTicker.add(this.gravity.bind(this));
         this.gravityTicker.start();

@@ -41605,25 +41605,24 @@ exports.BirdFlyFlappyBehavior = BirdFlyFlappyBehavior;
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var BirdGravityBehavior = /** @class */ (function () {
-    function BirdGravityBehavior(bird, velocityY, isHitted) {
+    function BirdGravityBehavior(bird, velocityY, isHit) {
         if (velocityY === void 0) { velocityY = 0; }
-        if (isHitted === void 0) { isHitted = false; }
+        if (isHit === void 0) { isHit = false; }
         this.gravityPower = 0.1;
         this.gameObject = bird;
         this.velocityY = velocityY;
         this.gravityTicker = new PIXI.ticker.Ticker();
         this.gravityTicker.add(this.gravity.bind(this));
         this.gravityTicker.start();
-        this._isHitted = isHitted;
+        this._isHit = isHit;
     }
     BirdGravityBehavior.prototype.gravity = function () {
         if (this.velocityY < 10) {
             this.velocityY += this.gravityPower;
         }
         this.gameObject.body.y += this.velocityY;
-        console.log(this.gameObject.body.y);
         // bird rotation
-        if (!this._isHitted) {
+        if (!this._isHit) {
             if (this._velocityY > 0 && this.gameObject.body.rotation < 0.5) {
                 this.gameObject.body.rotation += this._velocityY / 40;
             }
@@ -41635,22 +41634,23 @@ var BirdGravityBehavior = /** @class */ (function () {
             this.gameObject.body.rotation += 0.1;
         }
     };
-    Object.defineProperty(BirdGravityBehavior.prototype, "isHitted", {
+    Object.defineProperty(BirdGravityBehavior.prototype, "isHit", {
         set: function (value) {
-            this._isHitted = value;
+            this._isHit = value;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(BirdGravityBehavior.prototype, "velocityY", {
-        get: function () { return this._velocityY; },
+        get: function () {
+            return this._velocityY;
+        },
         set: function (value) {
             this._velocityY = value;
         },
         enumerable: true,
         configurable: true
     });
-    ;
     BirdGravityBehavior.prototype.dispose = function () {
         this.gameObject = null;
         this.gravityTicker.stop();
@@ -41675,85 +41675,85 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var bird_fly_flappy_behavior_1 = require("../behaviors/bird-fly-flappy-behavior");
 var bird_gravity_behavior_1 = require("../behaviors/bird-gravity-behavior");
-var game_setttings_1 = require("../models/game-setttings");
+var game_settings_1 = require("../models/game-settings");
 var BirdController = /** @class */ (function (_super) {
     __extends(BirdController, _super);
     function BirdController(view) {
         var _this = _super.call(this) || this;
-        _this.gameSettings = game_setttings_1.GameSettings.getInstance();
-        _this.view = view;
-        _this.hasFallen = false;
+        _this._gameSettings = game_settings_1.GameSettings.getInstance();
+        _this._view = view;
+        _this._hasFallen = false;
         _this.updateBirdBehaviors();
         return _this;
     }
     Object.defineProperty(BirdController.prototype, "birdBody", {
         get: function () {
-            return this.view.body;
+            return this._view.body;
         },
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(BirdController.prototype, "HasFallen", {
+    Object.defineProperty(BirdController.prototype, "hasFallen", {
         get: function () {
-            return this.hasFallen;
+            return this._hasFallen;
         },
         set: function (value) {
             if (value) {
                 this.stopBirdGravity();
             }
-            this.hasFallen = value;
+            this._hasFallen = value;
         },
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(BirdController.prototype, "IsHitted", {
+    Object.defineProperty(BirdController.prototype, "isHit", {
         get: function () {
-            return this.isHitted;
+            return this._isHit;
         },
         set: function (value) {
             if (value) {
                 this.onBirdHit();
             }
-            this.isHitted = value;
+            this._isHit = value;
         },
         enumerable: true,
         configurable: true
     });
     BirdController.prototype.fly = function () {
-        if (!this.isHitted) {
-            this.flyBehavior.fly();
+        if (!this._isHit) {
+            this._flyBehavior.fly();
         }
     };
     BirdController.prototype.updateBirdBehaviors = function () {
-        this.gravityBehavior = new bird_gravity_behavior_1.BirdGravityBehavior(this.view, this.gameSettings.birdStartingVelocity);
-        this.flyBehavior = new bird_fly_flappy_behavior_1.BirdFlyFlappyBehavior(this.gravityBehavior);
+        this._gravityBehavior = new bird_gravity_behavior_1.BirdGravityBehavior(this._view, this._gameSettings.birdStartingVelocity);
+        this._flyBehavior = new bird_fly_flappy_behavior_1.BirdFlyFlappyBehavior(this._gravityBehavior);
     };
     BirdController.prototype.resetBird = function () {
-        this.view.body.x = this.gameSettings.birdStartingXPossition;
-        this.view.body.y = this.gameSettings.birdStartingYPossition;
-        this.view.body.rotation = 0;
-        this.gravityBehavior.velocityY = this.gameSettings.birdStartingVelocity;
-        this.IsHitted = false;
-        this.HasFallen = false;
-        this.view.startBirdFlapping();
+        this._view.body.x = this._gameSettings.birdStartingXPosition;
+        this._view.body.y = this._gameSettings.birdStartingYPosition;
+        this._view.body.rotation = 0;
+        this._gravityBehavior.velocityY = this._gameSettings.birdStartingVelocity;
+        this.isHit = false;
+        this.hasFallen = false;
+        this._view.startBirdFlapping();
         this.startBirdGravity();
     };
     BirdController.prototype.startBirdGravity = function () {
-        this.gravityBehavior.gravityTicker.start();
+        this._gravityBehavior.gravityTicker.start();
     };
     BirdController.prototype.stopBirdGravity = function () {
-        this.gravityBehavior.gravityTicker.stop();
+        this._gravityBehavior.gravityTicker.stop();
     };
     BirdController.prototype.onBirdHit = function () {
-        this.isHitted = true;
-        this.gravityBehavior.velocityY = 0;
-        this.view.stopBirdFlapping();
+        this._isHit = true;
+        this._gravityBehavior.velocityY = 0;
+        this._view.stopBirdFlapping();
     };
     return BirdController;
 }(PIXI.Container));
 exports.BirdController = BirdController;
 
-},{"../behaviors/bird-fly-flappy-behavior":190,"../behaviors/bird-gravity-behavior":191,"../models/game-setttings":199}],193:[function(require,module,exports){
+},{"../behaviors/bird-fly-flappy-behavior":190,"../behaviors/bird-gravity-behavior":191,"../models/game-settings":199}],193:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -41766,93 +41766,89 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-var pipes_obsticle_1 = require("../game-objects/pipes-obsticle");
-var game_setttings_1 = require("../models/game-setttings");
-var ObsticlesController = /** @class */ (function (_super) {
-    __extends(ObsticlesController, _super);
-    function ObsticlesController(view) {
+var pipes_obstacle_1 = require("../game-objects/pipes-obstacle");
+var game_settings_1 = require("../models/game-settings");
+var ObstaclesController = /** @class */ (function (_super) {
+    __extends(ObstaclesController, _super);
+    function ObstaclesController(view) {
         var _this = _super.call(this) || this;
         _this.PIPES_COUNT = 3;
-        _this.gameSettings = game_setttings_1.GameSettings.getInstance();
-        _this.view = view;
-        _this.pipeObsticles = [];
-        _this.nextPipeObsticleIndex = 0;
-        _this.addObsticles();
-        _this.startMoving();
+        _this._gameSettings = game_settings_1.GameSettings.getInstance();
+        _this._view = view;
+        _this._pipeObstacles = [];
+        _this._nextPipeObstacleIndex = 0;
+        _this._moveObstacleTicker = new PIXI.ticker.Ticker();
+        _this._moveObstacleTicker.add(_this.movePipes.bind(_this));
+        _this.addObstacles();
         return _this;
     }
-    Object.defineProperty(ObsticlesController.prototype, "PipeObsticles", {
+    Object.defineProperty(ObstaclesController.prototype, "PipeObstacles", {
         get: function () {
-            return this.pipeObsticles;
+            return this._pipeObstacles;
         },
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(ObsticlesController.prototype, "NextPipeObsticle", {
+    Object.defineProperty(ObstaclesController.prototype, "NextPipeObstacle", {
         get: function () {
-            return this.pipeObsticles[this.nextPipeObsticleIndex];
+            return this._pipeObstacles[this._nextPipeObstacleIndex];
         },
         enumerable: true,
         configurable: true
     });
-    ObsticlesController.prototype.stopMoving = function () {
-        this.isRunning = false;
+    ObstaclesController.prototype.stopMoving = function () {
+        this._moveObstacleTicker.stop();
     };
-    ObsticlesController.prototype.startMoving = function () {
-        var _this = this;
-        this.isRunning = true;
-        requestAnimationFrame(function () {
-            if (_this.isRunning) {
-                _this.startMoving();
-            }
-        });
-        this.movePipes();
+    ObstaclesController.prototype.startMoving = function () {
+        this._moveObstacleTicker.start();
     };
-    ObsticlesController.prototype.resetObsticles = function () {
-        this.resetPipesPossition();
+    ObstaclesController.prototype.resetObstacles = function () {
+        this.resetPipesPosition();
     };
-    ObsticlesController.prototype.addObsticles = function () {
+    ObstaclesController.prototype.addObstacles = function () {
         for (var i = 0; i < 3; i++) {
-            var pipeObsticle = new pipes_obsticle_1.PipeObsticle();
-            pipeObsticle.x =
-                this.gameSettings.gameWidth + pipeObsticle.width * i + i * this.gameSettings.obsticlesDistance;
+            var pipeObstacle = new pipes_obstacle_1.PipeObstacle();
+            pipeObstacle.x =
+                this._gameSettings.gameWidth + pipeObstacle.width * i + i * this._gameSettings.obstaclesDistance;
             if (i == 0)
-                pipeObsticle.IsNextObsticle = true;
-            this.view.addChild(pipeObsticle);
-            this.pipeObsticles.push(pipeObsticle);
+                pipeObstacle.isNextObstacle = true;
+            this._view.addChild(pipeObstacle);
+            this._pipeObstacles.push(pipeObstacle);
         }
     };
-    ObsticlesController.prototype.resetPipesPossition = function () {
-        this.nextPipeObsticleIndex = 0;
-        this.pipeObsticles[0].IsNextObsticle = true;
-        for (var i = 0; i < this.pipeObsticles.length; i++) {
-            this.pipeObsticles[i].updateObsticle();
-            this.pipeObsticles[i].x =
-                this.gameSettings.gameWidth + this.pipeObsticles[i].width * i + i * this.gameSettings.obsticlesDistance;
+    ObstaclesController.prototype.resetPipesPosition = function () {
+        this._nextPipeObstacleIndex = 0;
+        this._pipeObstacles[0].isNextObstacle = true;
+        for (var i = 0; i < this._pipeObstacles.length; i++) {
+            this._pipeObstacles[i].updateObstacle();
+            this._pipeObstacles[i].x =
+                this._gameSettings.gameWidth +
+                    this._pipeObstacles[i].width * i +
+                    i * this._gameSettings.obstaclesDistance;
         }
     };
-    ObsticlesController.prototype.movePipes = function () {
-        for (var i = 0; i < this.pipeObsticles.length; i += 1) {
-            if (this.pipeObsticles[i].x <
-                this.gameSettings.birdStartingXPossition - PIXI.Texture.fromImage("birdMiddle.png").width / 2) {
-                if (this.nextPipeObsticleIndex < this.PIPES_COUNT - 1)
-                    this.nextPipeObsticleIndex++;
+    ObstaclesController.prototype.movePipes = function () {
+        for (var i = 0; i < this._pipeObstacles.length; i += 1) {
+            if (this._pipeObstacles[i].x <
+                this._gameSettings.birdStartingXPosition - PIXI.Texture.fromImage("birdMiddle.png").width / 2) {
+                if (this._nextPipeObstacleIndex < this.PIPES_COUNT - 1)
+                    this._nextPipeObstacleIndex++;
                 else {
-                    this.nextPipeObsticleIndex = 0;
+                    this._nextPipeObstacleIndex = 0;
                 }
             }
-            if (this.pipeObsticles[i].x < -this.pipeObsticles[i].UpperPipe.width) {
-                this.pipeObsticles[i].updateObsticle();
-                this.pipeObsticles[i].x = this.gameSettings.gameWidth + this.gameSettings.obsticlesDistance;
+            if (this._pipeObstacles[i].x < -this._pipeObstacles[i].upperPipe.width) {
+                this._pipeObstacles[i].updateObstacle();
+                this._pipeObstacles[i].x = this._gameSettings.gameWidth + this._gameSettings.obstaclesDistance;
             }
-            this.pipeObsticles[i].x -= this.gameSettings.obsticlesSpeed;
+            this._pipeObstacles[i].x -= this._gameSettings.obstaclesSpeed;
         }
     };
-    return ObsticlesController;
+    return ObstaclesController;
 }(PIXI.Container));
-exports.ObsticlesController = ObsticlesController;
+exports.ObstaclesController = ObstaclesController;
 
-},{"../game-objects/pipes-obsticle":197,"../models/game-setttings":199}],194:[function(require,module,exports){
+},{"../game-objects/pipes-obstacle":197,"../models/game-settings":199}],194:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -41866,7 +41862,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var ground_1 = require("../game-objects/ground");
-var game_setttings_1 = require("../models/game-setttings");
+var game_settings_1 = require("../models/game-settings");
 var collision_checker_1 = require("../utils/collision-checker");
 var bird_view_1 = require("../views/bird-view");
 var obsticles_view_1 = require("../views/obsticles-view");
@@ -41876,32 +41872,34 @@ var RootController = /** @class */ (function (_super) {
     __extends(RootController, _super);
     function RootController(view) {
         var _this = _super.call(this) || this;
-        _this.gameOver = false; // when set to true checkBirdCollision method will stop;
-        _this.view = view;
-        _this.gameSettings = game_setttings_1.GameSettings.getInstance();
+        _this._gameOver = false; // when set to true checkBirdCollision method will stop;
+        _this._view = view;
+        _this._gameSettings = game_settings_1.GameSettings.getInstance();
         _this.addBackground();
-        _this.ground = new ground_1.Ground();
-        _this.ground.y = _this.gameSettings.gameHeight - _this.ground.height;
-        _this.gameSettings.groundYPos = _this.ground.y;
-        _this.birdView = new bird_view_1.BirdView(_this.gameSettings.birdStartingXPossition, _this.gameSettings.birdStartingYPossition);
-        _this.birdController = new bird_controller_1.BirdController(_this.birdView);
+        _this._ground = new ground_1.Ground();
+        _this._ground.y = _this._gameSettings.gameHeight - _this._ground.height;
+        _this._gameSettings.groundYPos = _this._ground.y;
+        _this._birdView = new bird_view_1.BirdView(_this._gameSettings.birdStartingXPosition, _this._gameSettings.birdStartingYPosition);
+        _this._birdController = new bird_controller_1.BirdController(_this._birdView);
         document.addEventListener("keydown", function (e) {
             _this.onKeyDown(e);
         });
         view.click = view.touchstart = function () {
             _this.mainAction();
         };
-        _this.obsticlesView = new obsticles_view_1.ObsticlesView();
-        _this.obsticlesController = new obsticles_controller_1.ObsticlesController(_this.obsticlesView);
-        view.addChild(_this.obsticlesView);
-        view.addChild(_this.ground);
-        view.addChild(_this.birdView);
+        _this._obstaclesView = new obsticles_view_1.ObstaclesView();
+        _this._obstaclesController = new obsticles_controller_1.ObstaclesController(_this._obstaclesView);
+        view.addChild(_this._obstaclesView);
+        view.addChild(_this._ground);
+        view.addChild(_this._birdView);
+        _this._obstaclesController.startMoving();
+        _this._ground.startMoving();
         _this.checkBirdCollision.bind(_this)();
         return _this;
     }
     RootController.prototype.addBackground = function () {
         var backgroundSprite = new PIXI.Sprite(PIXI.Texture.fromImage("background.png"));
-        this.view.addChild(backgroundSprite);
+        this._view.addChild(backgroundSprite);
     };
     RootController.prototype.onKeyDown = function (key) {
         if (key.keyCode == 32) {
@@ -41909,48 +41907,52 @@ var RootController = /** @class */ (function (_super) {
         }
     };
     RootController.prototype.mainAction = function () {
-        if (this.gameOver)
+        if (this._gameOver) {
             this.restart();
-        else
-            this.birdController.fly();
+        }
+        else {
+            this._birdController.fly();
+        }
     };
     RootController.prototype.checkBirdCollision = function () {
         var _this = this;
+        // TODO
+        // replace with ticker
         requestAnimationFrame(function () {
-            if (!_this.gameOver && !_this.birdController.HasFallen)
+            if (!_this._gameOver && !_this._birdController.hasFallen)
                 _this.checkBirdCollision();
         });
         //pipe collision
-        if (!this.birdController.IsHitted) {
-            if (collision_checker_1.CollisionChecker.pipeCollision(this.birdController.birdBody, this.obsticlesController.NextPipeObsticle)) {
-                this.birdHitted();
+        if (!this._birdController.isHit) {
+            if (collision_checker_1.CollisionChecker.pipeCollision(this._birdController.birdBody, this._obstaclesController.NextPipeObstacle)) {
+                this.birdHit();
             }
         }
         //groundHit
-        if (collision_checker_1.CollisionChecker.groundCollision(this.birdController.birdBody, this.ground)) {
-            this.gameOver = true;
-            this.birdController.HasFallen = true;
-            this.birdHitted();
+        if (collision_checker_1.CollisionChecker.groundCollision(this._birdController.birdBody, this._ground)) {
+            this._gameOver = true;
+            this._birdController.hasFallen = true;
+            this.birdHit();
         }
     };
     RootController.prototype.restart = function () {
-        this.gameOver = false;
-        this.ground.startMoving();
-        this.birdController.resetBird();
-        this.obsticlesController.resetObsticles();
-        this.obsticlesController.startMoving();
+        this._gameOver = false;
+        this._ground.startMoving();
+        this._birdController.resetBird();
+        this._obstaclesController.resetObstacles();
+        this._obstaclesController.startMoving();
         this.checkBirdCollision();
     };
-    RootController.prototype.birdHitted = function () {
-        this.birdController.IsHitted = true;
-        this.ground.stopMoving();
-        this.obsticlesController.stopMoving();
+    RootController.prototype.birdHit = function () {
+        this._birdController.isHit = true;
+        this._ground.stopMoving();
+        this._obstaclesController.stopMoving();
     };
     return RootController;
 }(PIXI.Container));
 exports.RootController = RootController;
 
-},{"../game-objects/ground":195,"../models/game-setttings":199,"../utils/collision-checker":200,"../views/bird-view":201,"../views/obsticles-view":202,"./bird-controller":192,"./obsticles-controller":193}],195:[function(require,module,exports){
+},{"../game-objects/ground":195,"../models/game-settings":199,"../utils/collision-checker":200,"../views/bird-view":201,"../views/obsticles-view":202,"./bird-controller":192,"./obsticles-controller":193}],195:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -41963,18 +41965,15 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-var game_setttings_1 = require("../models/game-setttings");
+var game_settings_1 = require("../models/game-settings");
 var Ground = /** @class */ (function (_super) {
     __extends(Ground, _super);
     function Ground() {
         var _this = _super.call(this) || this;
-        _this.texture = PIXI.Texture.fromImage("ground.png");
+        _this.body = new PIXI.Sprite(PIXI.Texture.fromImage("ground.png"));
         _this.ticker = new PIXI.ticker.Ticker();
-        _this.ticker.autoStart = false;
-        _this.ticker.speed = 1;
         _this.ticker.add(_this._startMoving, _this);
-        _this.ticker.start();
-        _this.gameSettings = game_setttings_1.GameSettings.getInstance();
+        _this.addChild(_this.body);
         return _this;
     }
     Ground.prototype.startMoving = function () {
@@ -41985,15 +41984,15 @@ var Ground = /** @class */ (function (_super) {
     };
     Ground.prototype._startMoving = function () {
         this.x -= 2;
-        if (-this.x === this.texture.width - this.gameSettings.gameWidth) {
+        if (-this.x === this.body.texture.width - game_settings_1.GameSettings.getInstance().gameWidth) {
             this.x = 0;
         }
     };
     return Ground;
-}(PIXI.Sprite));
+}(PIXI.Container));
 exports.Ground = Ground;
 
-},{"../models/game-setttings":199}],196:[function(require,module,exports){
+},{"../models/game-settings":199}],196:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -42006,24 +42005,25 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-var game_setttings_1 = require("../models/game-setttings");
+var game_settings_1 = require("../models/game-settings");
 var Pipe = /** @class */ (function (_super) {
     __extends(Pipe, _super);
     function Pipe(upperPipe) {
         if (upperPipe === void 0) { upperPipe = true; }
         var _this = _super.call(this) || this;
-        var gameSettings = game_setttings_1.GameSettings.getInstance();
-        _this.texture = PIXI.Texture.fromImage(upperPipe ? "pipeUp.png" : "pipeDown.png");
+        var gameSettings = game_settings_1.GameSettings.getInstance();
+        _this.body = new PIXI.Sprite(PIXI.Texture.fromImage(upperPipe ? "pipeUp.png" : "pipeDown.png"));
         if (!upperPipe) {
-            _this.y = gameSettings.groundYPos - _this.texture.height;
+            _this.y = gameSettings.groundYPos - _this.body.texture.height;
         }
+        _this.addChild(_this.body);
         return _this;
     }
     return Pipe;
-}(PIXI.Sprite));
+}(PIXI.Container));
 exports.Pipe = Pipe;
 
-},{"../models/game-setttings":199}],197:[function(require,module,exports){
+},{"../models/game-settings":199}],197:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -42036,54 +42036,56 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-var game_setttings_1 = require("../models/game-setttings");
+var game_settings_1 = require("../models/game-settings");
 var pipe_1 = require("./pipe");
-var PipeObsticle = /** @class */ (function (_super) {
-    __extends(PipeObsticle, _super);
-    function PipeObsticle(isNextObsticle) {
-        if (isNextObsticle === void 0) { isNextObsticle = false; }
+var PipeObstacle = /** @class */ (function (_super) {
+    __extends(PipeObstacle, _super);
+    function PipeObstacle(isNextObstacle) {
+        if (isNextObstacle === void 0) { isNextObstacle = false; }
         var _this = _super.call(this) || this;
-        _this.upperPipe = new pipe_1.Pipe(true);
-        _this.bottomPipe = new pipe_1.Pipe(false);
-        _this.updateObsticle();
-        _this.addChild(_this.upperPipe);
-        _this.addChild(_this.bottomPipe);
+        _this._upperPipe = new pipe_1.Pipe(true);
+        _this._bottomPipe = new pipe_1.Pipe(false);
+        _this.updateObstacle();
+        _this.body = new PIXI.Sprite();
+        _this.body.addChild(_this._upperPipe);
+        _this.body.addChild(_this._bottomPipe);
+        _this.addChild(_this.body);
         return _this;
     }
-    Object.defineProperty(PipeObsticle.prototype, "UpperPipe", {
+    Object.defineProperty(PipeObstacle.prototype, "upperPipe", {
         get: function () {
-            return this.upperPipe;
+            return this._upperPipe;
         },
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(PipeObsticle.prototype, "BottomPipe", {
+    Object.defineProperty(PipeObstacle.prototype, "bottomPipe", {
         get: function () {
-            return this.bottomPipe;
+            return this._bottomPipe;
         },
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(PipeObsticle.prototype, "IsNextObsticle", {
+    Object.defineProperty(PipeObstacle.prototype, "isNextObstacle", {
         get: function () {
-            return this.isNextObsticle;
+            return this._isNextObstacle;
         },
         set: function (value) {
-            this.isNextObsticle = value;
+            this._isNextObstacle = value;
         },
         enumerable: true,
         configurable: true
     });
-    PipeObsticle.prototype.updateObsticle = function () {
+    PipeObstacle.prototype.updateObstacle = function () {
         var upperOffset = Math.floor(Math.random() * 100 + 1);
-        this.upperPipe.y = -upperOffset;
-        this.bottomPipe.y = this.UpperPipe.y + this.UpperPipe.height + game_setttings_1.GameSettings.getInstance().pipeObsticlesGap;
+        this._upperPipe.y = -upperOffset;
+        this._bottomPipe.y = this.upperPipe.y + this.upperPipe.height + game_settings_1.GameSettings.getInstance().pipeObstaclesGap;
     };
-    return PipeObsticle;
+    return PipeObstacle;
 }(PIXI.Container));
-exports.PipeObsticle = PipeObsticle;
+exports.PipeObstacle = PipeObstacle;
 
-},{"../models/game-setttings":199,"./pipe":196}],198:[function(require,module,exports){
+},{"../models/game-settings":199,"./pipe":196}],198:[function(require,module,exports){
 "use strict";
 var __importStar = (this && this.__importStar) || function (mod) {
     if (mod && mod.__esModule) return mod;
@@ -42095,12 +42097,12 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var PIXI = __importStar(require("pixi.js"));
 var root_controller_1 = require("./controllers/root-controller");
-var game_setttings_1 = require("./models/game-setttings");
+var game_settings_1 = require("./models/game-settings");
 var root_view_1 = require("./views/root-view");
 var Main = /** @class */ (function () {
     function Main() {
         var _this = this;
-        this.gameSettings = game_setttings_1.GameSettings.getInstance();
+        this.gameSettings = game_settings_1.GameSettings.getInstance();
         window.onload = function () {
             _this.startLoadingAssets();
         };
@@ -42124,7 +42126,7 @@ var Main = /** @class */ (function () {
         this.game = new PIXI.Application({
             backgroundColor: 0xffff00,
             height: window.innerHeight,
-            width: window.innerWidth,
+            width: window.innerWidth
         });
         this.game.stage.scale.x = window.innerWidth / this.gameSettings.gameWidth;
         this.game.stage.scale.y = window.innerHeight / this.gameSettings.gameHeight;
@@ -42146,7 +42148,7 @@ exports.Main = Main;
     var game = new Main();
 })();
 
-},{"./controllers/root-controller":194,"./models/game-setttings":199,"./views/root-view":203,"pixi.js":141}],199:[function(require,module,exports){
+},{"./controllers/root-controller":194,"./models/game-settings":199,"./views/root-view":203,"pixi.js":141}],199:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var GameSettings = /** @class */ (function () {
@@ -42155,13 +42157,13 @@ var GameSettings = /** @class */ (function () {
         this.gameWidth = 144;
         this.gameHeight = 256;
         //bird settings
-        this.birdStartingXPossition = this.gameWidth / 3;
-        this.birdStartingYPossition = this.gameHeight / 5;
+        this.birdStartingXPosition = this.gameWidth / 3;
+        this.birdStartingYPosition = this.gameHeight / 5;
         this.birdStartingVelocity = -2;
-        //obsticles settings
-        this.pipeObsticlesGap = 45;
-        this.obsticlesDistance = 45;
-        this.obsticlesSpeed = 1;
+        //obstacles settings
+        this.pipeObstaclesGap = 45;
+        this.obstaclesDistance = 45;
+        this.obstaclesSpeed = 1;
         this.groundYPos = 0;
         if (GameSettings.instance) {
             throw new Error("Error: Instantiation failed: Use GameSettings.getInstance() instead of new.");
@@ -42182,13 +42184,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var CollisionChecker = /** @class */ (function () {
     function CollisionChecker() {
     }
-    CollisionChecker.pipeCollision = function (bird, pipeObsticle) {
+    CollisionChecker.pipeCollision = function (bird, pipeObstacle) {
         var birdBottomPoint = bird.y + bird.texture.height;
-        var xCollision = bird.x < pipeObsticle.x + pipeObsticle.UpperPipe.width && bird.x + bird.width / 2 > pipeObsticle.x;
-        var yCollision = (bird.y - bird.height / 2 < pipeObsticle.UpperPipe.y + pipeObsticle.UpperPipe.height &&
-            bird.height / 2 + bird.y > pipeObsticle.UpperPipe.y) ||
-            (bird.y - bird.height / 2 < pipeObsticle.BottomPipe.y + pipeObsticle.BottomPipe.height &&
-                bird.height / 2 + bird.y > pipeObsticle.BottomPipe.y) ||
+        var xCollision = bird.x < pipeObstacle.x + pipeObstacle.upperPipe.width && bird.x + bird.width / 2 > pipeObstacle.x;
+        var yCollision = (bird.y - bird.height / 2 < pipeObstacle.upperPipe.y + pipeObstacle.upperPipe.height &&
+            bird.height / 2 + bird.y > pipeObstacle.upperPipe.y) ||
+            (bird.y - bird.height / 2 < pipeObstacle.bottomPipe.y + pipeObstacle.bottomPipe.height &&
+                bird.height / 2 + bird.y > pipeObstacle.bottomPipe.y) ||
             birdBottomPoint < 0; // when bird height is out of screen
         if (yCollision && xCollision) {
             return true;
@@ -42225,16 +42227,16 @@ var BirdView = /** @class */ (function (_super) {
     function BirdView(birdX, birdY) {
         var _this = _super.call(this) || this;
         var fps = 60;
-        _this.then = Date.now();
-        _this.interval = 3000 / fps;
-        _this.delta;
-        _this.birdPhase = 0;
-        _this.birdTextures = [
+        _this._then = Date.now();
+        _this._interval = 3000 / fps;
+        _this._delta;
+        _this._birdPhase = 0;
+        _this._birdTextures = [
             PIXI.Texture.fromImage("birdDown.png"),
             PIXI.Texture.fromImage("birdMiddle.png"),
-            PIXI.Texture.fromImage("birdUp.png"),
+            PIXI.Texture.fromImage("birdUp.png")
         ];
-        _this.body = new PIXI.Sprite(_this.birdTextures[0]);
+        _this.body = new PIXI.Sprite(_this._birdTextures[0]);
         _this.body.anchor.x = _this.body.anchor.y = 0.5;
         _this.body.x = birdX;
         _this.body.y = birdY;
@@ -42253,14 +42255,14 @@ var BirdView = /** @class */ (function (_super) {
                 _this.startBirdFlapping();
         });
         var now = Date.now();
-        this.delta = now - this.then;
-        if (this.delta > this.interval) {
-            this.then = now - (this.delta % this.interval);
-            if (this.birdPhase > 2) {
-                this.birdPhase = 0;
+        this._delta = now - this._then;
+        if (this._delta > this._interval) {
+            this._then = now - (this._delta % this._interval);
+            if (this._birdPhase > 2) {
+                this._birdPhase = 0;
             }
-            this.body.texture = this.birdTextures[this.birdPhase];
-            this.birdPhase += 1;
+            this.body.texture = this._birdTextures[this._birdPhase];
+            this._birdPhase += 1;
         }
     };
     return BirdView;
@@ -42280,14 +42282,14 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-var ObsticlesView = /** @class */ (function (_super) {
-    __extends(ObsticlesView, _super);
-    function ObsticlesView() {
+var ObstaclesView = /** @class */ (function (_super) {
+    __extends(ObstaclesView, _super);
+    function ObstaclesView() {
         return _super.call(this) || this;
     }
-    return ObsticlesView;
+    return ObstaclesView;
 }(PIXI.Container));
-exports.ObsticlesView = ObsticlesView;
+exports.ObstaclesView = ObstaclesView;
 
 },{}],203:[function(require,module,exports){
 "use strict";
@@ -42307,13 +42309,13 @@ var RootView = /** @class */ (function (_super) {
     function RootView(stage) {
         var _this = _super.call(this) || this;
         _this.interactive = true;
-        _this.stage = stage;
+        _this._stage = stage;
         stage.addChild(_this);
         return _this;
     }
-    Object.defineProperty(RootView.prototype, "Stage", {
+    Object.defineProperty(RootView.prototype, "stage", {
         get: function () {
-            return this.stage;
+            return this._stage;
         },
         enumerable: true,
         configurable: true

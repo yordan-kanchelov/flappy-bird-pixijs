@@ -1,21 +1,20 @@
 import { GameSettings } from "../models/game-settings";
+import { GameObject } from "./game-object";
 
-export class Ground extends PIXI.Sprite {
-    private gameSettings: GameSettings;
+export class Ground extends PIXI.Container implements GameObject {
+    body: PIXI.Sprite;
 
     private ticker: PIXI.ticker.Ticker;
 
     constructor() {
         super();
-        this.texture = PIXI.Texture.fromImage("ground.png");
+
+        this.body = new PIXI.Sprite(PIXI.Texture.fromImage("ground.png"));
 
         this.ticker = new PIXI.ticker.Ticker();
-        this.ticker.autoStart = false;
-        this.ticker.speed = 1;
         this.ticker.add(this._startMoving, this);
-        this.ticker.start();
 
-        this.gameSettings = GameSettings.getInstance();
+        this.addChild(this.body);
     }
 
     public startMoving() {
@@ -29,7 +28,7 @@ export class Ground extends PIXI.Sprite {
     private _startMoving() {
         this.x -= 2;
 
-        if (-this.x === this.texture.width - this.gameSettings.gameWidth) {
+        if (-this.x === this.body.texture.width - GameSettings.getInstance().gameWidth) {
             this.x = 0;
         }
     }
