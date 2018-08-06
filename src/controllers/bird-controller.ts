@@ -70,7 +70,7 @@ export class BirdController extends PIXI.Container {
         this.isHit = false;
         this.hasFallen = false;
 
-        this._view.startBirdFlapping();
+        this._view.startMovingWings();
         this.startBirdGravity();
     }
 
@@ -84,6 +84,6 @@ export class BirdController extends PIXI.Container {
     private onBirdHit(): void {
         this._isHit = true;
         this._gravityBehavior.velocityY = 0;
-        this._view.stopBirdFlapping();
+        this._view.stopMovingWings();
     }
 }

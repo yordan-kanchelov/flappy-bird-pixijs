@@ -1,63 +1,29 @@
 import { GameObject } from "../game-objects/game-object";
+import { Bird } from "../game-objects/bird";
 
-export class BirdView extends PIXI.Container implements GameObject {
-    public body: PIXI.Sprite;
-
-    private _birdTextures: PIXI.Texture[];
-    private _birdPhase: number;
-
-    private _then: number;
-    private _interval: number;
-    private _delta: number;
-
-    private birdFlappying: boolean;
+export class BirdView extends PIXI.Container {
+    private bird: Bird;
 
     constructor(birdX: number, birdY: number) {
         super();
 
-        const fps = 60;
-        this._then = Date.now();
-        this._interval = 3000 / fps;
-        this._delta;
-
-        this._birdPhase = 0;
-        this._birdTextures = [
-            PIXI.Texture.fromImage("birdDown.png"),
-            PIXI.Texture.fromImage("birdMiddle.png"),
-            PIXI.Texture.fromImage("birdUp.png")
-        ];
-
-        this.body = new PIXI.Sprite(this._birdTextures[0]);
-        this.body.anchor.x = this.body.anchor.y = 0.5;
+        this.bird = new Bird();
         this.body.x = birdX;
         this.body.y = birdY;
         this.addChild(this.body);
 
-        this.startBirdFlapping();
+        this.startMovingWings();
     }
 
-    public stopBirdFlapping(): void {
-        this.birdFlappying = false;
+    get body(): PIXI.Sprite {
+        return this.bird.body;
     }
 
-    public startBirdFlapping(): void {
-        this.birdFlappying = true;
-        requestAnimationFrame(() => {
-            if (this.birdFlappying) this.startBirdFlapping();
-        });
+    public startMovingWings(): void {
+        this.bird.startMovingWings();
+    }
 
-        const now = Date.now();
-        this._delta = now - this._then;
-
-        if (this._delta > this._interval) {
-            this._then = now - (this._delta % this._interval);
-
-            if (this._birdPhase > 2) {
-                this._birdPhase = 0;
-            }
-
-            this.body.texture = this._birdTextures[this._birdPhase];
-            this._birdPhase += 1;
-        }
+    public stopMovingWings(): void {
+        this.bird.stopMovingWings();
     }
 }

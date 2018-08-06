@@ -2,10 +2,10 @@ import { Ground } from "../game-objects/ground";
 import { GameSettings } from "../models/game-settings";
 import { CollisionChecker } from "../utils/collision-checker";
 import { BirdView } from "../views/bird-view";
-import { ObstaclesView } from "../views/obsticles-view";
+import { ObstaclesView } from "../views/obstacles-view";
 import { RootView } from "../views/root-view";
 import { BirdController } from "./bird-controller";
-import { ObstaclesController } from "./obsticles-controller";
+import { ObstaclesController } from "./obstacles-controller";
 
 export class RootController extends PIXI.Container {
     private _view: RootView;

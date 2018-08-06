@@ -1,6 +1,6 @@
 import { PipeObstacle } from "../game-objects/pipes-obstacle";
 import { GameSettings } from "../models/game-settings";
-import { ObstaclesView } from "../views/obsticles-view";
+import { ObstaclesView } from "../views/obstacles-view";
 
 export class ObstaclesController extends PIXI.Container {
     private readonly PIPES_COUNT: number = 3;
