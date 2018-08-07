@@ -2,7 +2,7 @@
 
 # Flappy bird clone pixi.js
 
-A simple flappy bird project
+A simple flappy bird clone written in typescript
 
 ## TODO:
 
