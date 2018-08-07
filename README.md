@@ -1,10 +1,10 @@
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 
-# Flappy-bird-pixijs
+# Flappy bird clone pixi.js
 
 A simple flappy bird project
 
-# TODO:
+## TODO:
 
 -   Add Score
 -   Handle collision better ( collision for rotated rectangles )
