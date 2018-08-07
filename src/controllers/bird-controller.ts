@@ -4,6 +4,7 @@ import { IFlyBehavior } from "../behaviors/fly-behavior";
 import { IGravityBehavior } from "../behaviors/gravity-behavior";
 import { GameSettings } from "../models/game-settings";
 import { BirdView } from "../views/bird-view";
+import { Bird } from "../game-objects/bird";
 
 export class BirdController extends PIXI.Container {
     private _view: BirdView;
@@ -25,8 +26,8 @@ export class BirdController extends PIXI.Container {
         this.updateBirdBehaviors();
     }
 
-    get birdBody(): PIXI.Sprite {
-        return this._view.body;
+    get bird(): Bird {
+        return this._view.bird;
     }
 
     get hasFallen(): boolean {
@@ -55,15 +56,10 @@ export class BirdController extends PIXI.Container {
         }
     }
 
-    private updateBirdBehaviors(): void {
-        this._gravityBehavior = new BirdGravityBehavior(this._view, this._gameSettings.birdStartingVelocity);
-        this._flyBehavior = new BirdFlyFlappyBehavior(this._gravityBehavior);
-    }
-
     public resetBird(): void {
-        this._view.body.x = this._gameSettings.birdStartingXPosition;
-        this._view.body.y = this._gameSettings.birdStartingYPosition;
-        this._view.body.rotation = 0;
+        this._view.bird.x = this._gameSettings.birdStartingXPosition;
+        this._view.bird.y = this._gameSettings.birdStartingYPosition;
+        this._view.bird.rotation = 0;
 
         this._gravityBehavior.velocityY = this._gameSettings.birdStartingVelocity;
 
@@ -85,5 +81,10 @@ export class BirdController extends PIXI.Container {
         this._isHit = true;
         this._gravityBehavior.velocityY = 0;
         this._view.stopMovingWings();
+    }
+
+    private updateBirdBehaviors(): void {
+        this._gravityBehavior = new BirdGravityBehavior(this._view.bird, this._gameSettings.birdStartingVelocity);
+        this._flyBehavior = new BirdFlyFlappyBehavior(this._gravityBehavior);
     }
 }

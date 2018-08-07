@@ -1,8 +1,9 @@
 import { Ground } from "../game-objects/ground";
 import { PipeObstacle } from "../game-objects/pipes-obstacle";
+import { Bird } from "../game-objects/bird";
 
 export class CollisionChecker {
-    public static pipeCollision(bird: PIXI.Sprite, pipeObstacle: PipeObstacle): boolean {
+    public static pipeCollision(bird: Bird, pipeObstacle: PipeObstacle): boolean {
         const birdBottomPoint: number = bird.y + bird.texture.height;
 
         const xCollision: boolean =
@@ -22,7 +23,7 @@ export class CollisionChecker {
         return false;
     }
 
-    public static groundCollision(bird: PIXI.Sprite, ground: Ground): boolean {
+    public static groundCollision(bird: Bird, ground: Ground): boolean {
         if (Math.round(bird.y) >= ground.y) {
             return true;
         } else {

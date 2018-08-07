@@ -86,18 +86,13 @@ export class RootController extends PIXI.Container {
 
         //pipe collision
         if (!this._birdController.isHit) {
-            if (
-                CollisionChecker.pipeCollision(
-                    this._birdController.birdBody,
-                    this._obstaclesController.NextPipeObstacle
-                )
-            ) {
+            if (CollisionChecker.pipeCollision(this._birdController.bird, this._obstaclesController.NextPipeObstacle)) {
                 this.birdHit();
             }
         }
 
         //groundHit
-        if (CollisionChecker.groundCollision(this._birdController.birdBody, this._ground)) {
+        if (CollisionChecker.groundCollision(this._birdController.bird, this._ground)) {
             this._gameOver = true;
             this._birdController.hasFallen = true;
             this.birdHit();

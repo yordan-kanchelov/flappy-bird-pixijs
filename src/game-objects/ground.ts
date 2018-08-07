@@ -1,20 +1,20 @@
 import { GameSettings } from "../models/game-settings";
 import { GameObject } from "./game-object";
 
-export class Ground extends PIXI.Container implements GameObject {
-    body: PIXI.Sprite;
-
+export class Ground extends PIXI.Sprite implements GameObject {
     private ticker: PIXI.ticker.Ticker;
 
     constructor() {
         super();
 
-        this.body = new PIXI.Sprite(PIXI.Texture.fromImage("ground.png"));
+        this.texture = PIXI.Texture.fromImage("ground.png");
 
         this.ticker = new PIXI.ticker.Ticker();
         this.ticker.add(this._startMoving, this);
+    }
 
-        this.addChild(this.body);
+    get body(): PIXI.Sprite {
+        return this;
     }
 
     public startMoving() {

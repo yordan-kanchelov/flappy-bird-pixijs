@@ -1,8 +1,6 @@
 import { GameObject } from "./game-object";
 
-export class Bird extends PIXI.Container implements GameObject {
-    body: PIXI.Sprite;
-
+export class Bird extends PIXI.Sprite implements GameObject {
     private _birdTextures: PIXI.Texture[];
     private _birdPhase: number;
 
@@ -27,8 +25,12 @@ export class Bird extends PIXI.Container implements GameObject {
             PIXI.Texture.fromImage("birdUp.png")
         ];
 
-        this.body = new PIXI.Sprite(this._birdTextures[0]);
-        this.body.anchor.x = this.body.anchor.y = 0.5;
+        this.texture = this._birdTextures[0];
+        this.anchor.x = this.anchor.y = 0.5;
+    }
+
+    get body(): PIXI.Sprite {
+        return this;
     }
 
     stopMovingWings() {
