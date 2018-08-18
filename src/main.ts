@@ -1,4 +1,5 @@
 import * as PIXI from "pixi.js";
+import { PixiConsole, PixiConsoleConfig } from "pixi-console";
 import { RootController } from "./controllers/root-controller";
 import { GameSettings } from "./models/game-settings";
 import { RootView } from "./views/root-view";
@@ -9,8 +10,20 @@ export class Main {
 
     constructor() {
         window.onload = () => {
+            this.createrenderer();
+            this.initConsole();
             this.startLoadingAssets();
         };
+    }
+
+    private initConsole() {
+        let consoleConfig = new PixiConsoleConfig();
+        consoleConfig.consoleWidth = this.gameSettings.gameWidth;
+        consoleConfig.consoleHeight = this.gameSettings.gameHeight;
+        consoleConfig.consoleAlpha = 0.5;
+        consoleConfig.fontSize = 10;
+
+        new PixiConsole(consoleConfig);
     }
 
     private startLoadingAssets(): void {
@@ -23,8 +36,6 @@ export class Main {
     }
 
     private onAssetsLoaded(): void {
-        this.createrenderer();
-
         const rootView = new RootView(this.game.stage);
         const rootController = new RootController(rootView);
 
