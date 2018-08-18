@@ -10,7 +10,7 @@ export class Main {
 
     constructor() {
         window.onload = () => {
-            this.createrenderer();
+            this.createRenderer();
             this.initConsole();
             this.startLoadingAssets();
         };
@@ -42,7 +42,7 @@ export class Main {
         this.animate();
     }
 
-    private createrenderer(): void {
+    private createRenderer(): void {
         this.game = new PIXI.Application({
             backgroundColor: 0xffff00,
             height: window.innerHeight,
