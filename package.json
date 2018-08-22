@@ -16,7 +16,7 @@
     "license": "ISC",
     "dependencies": {
         "browserify": "^16.2.2",
-        "pixi-console": "^0.4.0",
+        "pixi-console": "^0.5.1",
         "pixi.js": "^4.8.1",
         "tsify": "^4.0.0",
         "typescript": "^2.9.2",
