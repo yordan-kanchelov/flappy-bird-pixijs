@@ -1,5 +1,5 @@
 import { GameSettings } from "../models/game-settings";
-import { GameObject } from "./game-object";
+import { GameObject } from "../interfaces/game-object";
 
 export class Pipe extends PIXI.Sprite implements GameObject {
     constructor(upperPipe: boolean = true) {

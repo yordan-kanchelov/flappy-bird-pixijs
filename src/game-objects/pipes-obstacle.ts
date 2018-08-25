@@ -1,10 +1,8 @@
 import { GameSettings } from "../models/game-settings";
 import { Pipe } from "./pipe";
-import { GameObject } from "./game-object";
+import { GameObject } from "../interfaces/game-object";
 
-export class PipeObstacle extends PIXI.Container implements GameObject {
-    body: PIXI.Sprite;
-
+export class PipeObstacle extends PIXI.Container {
     private _upperPipe: Pipe;
     private _bottomPipe: Pipe;
     private _isNextObstacle: boolean;
@@ -12,16 +10,17 @@ export class PipeObstacle extends PIXI.Container implements GameObject {
     constructor(isNextObstacle: boolean = false) {
         super();
 
+        this._isNextObstacle = isNextObstacle;
+
         this._upperPipe = new Pipe(true);
         this._bottomPipe = new Pipe(false);
 
         this.updateObstacle();
 
-        this.body = new PIXI.Sprite();
-        this.body.addChild(this._upperPipe);
-        this.body.addChild(this._bottomPipe);
+        this.addChild(this._upperPipe);
+        this.addChild(this._bottomPipe);
 
-        this.addChild(this.body);
+        this.addChild(this);
     }
 
     get upperPipe(): Pipe {

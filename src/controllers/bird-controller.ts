@@ -1,7 +1,7 @@
 import { BirdFlyFlappyBehavior } from "../behaviors/bird-fly-flappy-behavior";
 import { BirdGravityBehavior } from "../behaviors/bird-gravity-behavior";
-import { IFlyBehavior } from "../behaviors/fly-behavior";
-import { IGravityBehavior } from "../behaviors/gravity-behavior";
+import { IFlyBehavior } from "../interfaces/behaviors/fly-behavior";
+import { IGravityBehavior } from "../interfaces/behaviors/gravity-behavior";
 import { GameSettings } from "../models/game-settings";
 import { BirdView } from "../views/bird-view";
 import { Bird } from "../game-objects/bird";

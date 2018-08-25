@@ -1,5 +1,5 @@
-import { GameObject } from "../game-objects/game-object";
-import { IGravityBehavior } from "./gravity-behavior";
+import { GameObject } from "../interfaces/game-object";
+import { IGravityBehavior } from "../interfaces/behaviors/gravity-behavior";
 
 export class BirdGravityBehavior implements IGravityBehavior {
     public gameObject: GameObject;

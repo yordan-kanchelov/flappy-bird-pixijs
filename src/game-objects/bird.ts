@@ -1,4 +1,4 @@
-import { GameObject } from "./game-object";
+import { GameObject } from "../interfaces/game-object";
 
 export class Bird extends PIXI.Sprite implements GameObject {
     private _birdTextures: PIXI.Texture[];

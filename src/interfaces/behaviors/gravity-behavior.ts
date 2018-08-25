@@ -1,4 +1,4 @@
-import { GameObject } from "../game-objects/game-object";
+import { GameObject } from "../game-object";
 
 export interface IGravityBehavior {
     gameObject: GameObject;

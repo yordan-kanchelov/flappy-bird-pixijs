@@ -1,5 +1,5 @@
-import { IFlyBehavior } from "./fly-behavior";
-import { IGravityBehavior } from "./gravity-behavior";
+import { IFlyBehavior } from "../interfaces/behaviors/fly-behavior";
+import { IGravityBehavior } from "../interfaces/behaviors/gravity-behavior";
 
 export class BirdFlyFlappyBehavior implements IFlyBehavior {
     private static readonly FLY_VELOCITY_Y: number = 2.5;
