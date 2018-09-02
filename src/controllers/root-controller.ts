@@ -34,7 +34,7 @@ export class RootController extends PIXI.Container {
 
         this._birdView = new BirdView(
             this._gameSettings.birdStartingXPosition,
-            this._gameSettings.birdStartingYPosition
+            this._gameSettings.birdStartingYPosition,
         );
         this._birdController = new BirdController(this._birdView);
 

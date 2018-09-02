@@ -8,7 +8,7 @@ export class Bird extends PIXI.Sprite implements GameObject {
     private _interval: number;
     private _delta: number;
 
-    private birdFlappying: boolean;
+    private birdFlapping: boolean;
 
     constructor() {
         super();
@@ -22,7 +22,7 @@ export class Bird extends PIXI.Sprite implements GameObject {
         this._birdTextures = [
             PIXI.Texture.fromImage("birdDown.png"),
             PIXI.Texture.fromImage("birdMiddle.png"),
-            PIXI.Texture.fromImage("birdUp.png")
+            PIXI.Texture.fromImage("birdUp.png"),
         ];
 
         this.texture = this._birdTextures[0];
@@ -34,14 +34,14 @@ export class Bird extends PIXI.Sprite implements GameObject {
     }
 
     stopMovingWings() {
-        this.birdFlappying = false;
+        this.birdFlapping = false;
     }
 
     startMovingWings() {
-        this.birdFlappying = true;
+        this.birdFlapping = true;
 
         requestAnimationFrame(() => {
-            if (this.birdFlappying) {
+            if (this.birdFlapping) {
                 this.startMovingWings();
             }
         });

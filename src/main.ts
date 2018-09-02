@@ -46,7 +46,7 @@ export class Main {
         this.game = new PIXI.Application({
             backgroundColor: 0xffff00,
             height: window.innerHeight,
-            width: window.innerWidth
+            width: window.innerWidth,
         });
 
         this.game.stage.scale.x = window.innerWidth / this.gameSettings.gameWidth;
