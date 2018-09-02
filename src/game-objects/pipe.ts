@@ -5,18 +5,11 @@ export class Pipe extends PIXI.Sprite implements GameObject {
     constructor(upperPipe: boolean = true) {
         super();
 
-        const gameSettings: GameSettings = GameSettings.getInstance();
-
-        this.texture = PIXI.Texture.fromImage(upperPipe ? "pipeUp.png" : "pipeDown.png");
-
-        if (!upperPipe) {
-            this.y = gameSettings.groundYPos - this.body.texture.height;
-        }
-
-        this.addChild(this.body);
+        const pipeTexture = PIXI.Texture.fromImage(upperPipe ? "pipeUp.png" : "pipeDown.png");
+        this.texture = pipeTexture;
     }
 
     get body(): PIXI.Sprite {
-        return this;
+        return null;
     }
 }
