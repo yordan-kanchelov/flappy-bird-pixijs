@@ -15,6 +15,8 @@ export class RootController extends PIXI.Container {
     private _birdController: BirdController;
     private _birdView: BirdView;
 
+    // TODO: 
+    // move in obstacle's controller
     private _ground: Ground;
 
     private _gameSettings: GameSettings;

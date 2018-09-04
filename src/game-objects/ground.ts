@@ -1,6 +1,5 @@
 import { GameSettings } from "../models/game-settings";
 import { GameObject } from "../interfaces/game-object";
-
 export class Ground extends PIXI.Sprite implements GameObject {
     private ticker: PIXI.ticker.Ticker;
 
@@ -17,6 +16,8 @@ export class Ground extends PIXI.Sprite implements GameObject {
         return this;
     }
 
+    // TODO: 
+    // move this logic in obstacle's controller
     public startMoving() {
         this.ticker.start();
     }

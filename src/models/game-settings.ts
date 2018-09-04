@@ -15,6 +15,9 @@ export class GameSettings {
 
     public groundYPos: number = 0;
 
+    // customization
+    public groundMoveSpeed: number = 2;
+
     private static instance: GameSettings = new GameSettings();
 
     constructor() {

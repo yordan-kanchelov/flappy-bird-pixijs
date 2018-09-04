@@ -2,18 +2,17 @@ import { PipeObstacle } from "../game-objects/pipes-obstacle";
 import { GameSettings } from "../models/game-settings";
 import { ObstaclesView } from "../views/obstacles-view";
 
-export class ObstaclesController extends PIXI.Container {
+export class ObstaclesController {
     private readonly PIPES_COUNT: number = 3;
 
-    private _pipeObstacles: PipeObstacle[];
     private _view: ObstaclesView;
+    private _pipeObstacles: PipeObstacle[];
     private _gameSettings: GameSettings = GameSettings.getInstance();
 
     private _nextPipeObstacleIndex: number;
     private _moveObstacleTicker: PIXI.ticker.Ticker;
 
     constructor(view: ObstaclesView) {
-        super();
         this._view = view;
         this._pipeObstacles = [];
 
@@ -60,6 +59,9 @@ export class ObstaclesController extends PIXI.Container {
     private resetPipesPosition(): void {
         this._nextPipeObstacleIndex = 0;
         this._pipeObstacles[0].isNextObstacle = true;
+
+        // TODO:
+        // move this in the view;
         for (let i = 0; i < this._pipeObstacles.length; i++) {
             this._pipeObstacles[i].updateObstacle();
             this._pipeObstacles[i].x =
@@ -69,6 +71,10 @@ export class ObstaclesController extends PIXI.Container {
         }
     }
 
+    // TODO:
+    // move this in the view
+    // refactor 
+    // get event when the pipe is out of screen and update the obstacle afterward
     private movePipes(): void {
         for (let i = 0; i < this._pipeObstacles.length; i += 1) {
             if (
