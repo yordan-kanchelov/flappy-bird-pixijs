@@ -9,6 +9,10 @@ export class RootView extends PIXI.Container {
         this._stage = stage;
 
         stage.addChild(this);
+
+        // TODO:
+        // create debug controller & view
+        // place the console and fps counter there
         stage.addChild(PixiConsole.getInstance());
         stage.addChild(
             new PixiFps({
