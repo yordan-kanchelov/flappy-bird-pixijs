@@ -33,13 +33,11 @@ export class Bird extends PIXI.Sprite implements GameObject {
         return this;
     }
 
-    stopMovingWings() {
-        this.birdFlapping = false;
-    }
-
     startMovingWings() {
         this.birdFlapping = true;
 
+        // TODO:
+        // use ticker
         requestAnimationFrame(() => {
             if (this.birdFlapping) {
                 this.startMovingWings();
@@ -59,5 +57,9 @@ export class Bird extends PIXI.Sprite implements GameObject {
             this.body.texture = this._birdTextures[this._birdPhase];
             this._birdPhase += 1;
         }
+    }
+
+    stopMovingWings() {
+        this.birdFlapping = false;
     }
 }
