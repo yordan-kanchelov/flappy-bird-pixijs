@@ -14,7 +14,6 @@ export class ObstaclesView extends PIXI.Container {
     }
 
     addGroundObstacle(ground: Ground, yPos: number): any {
-        console.log(yPos);
         this.groundObstacle = ground;
         this.groundObstacle.y = yPos;
         this.addChild(this.groundObstacle);
@@ -27,6 +26,7 @@ export class ObstaclesView extends PIXI.Container {
         ) {
             this.emit(ObstaclesView.PIPE_PASSED);
         }
+        
         for (let i = 0; i < this.pipeObstacles.length; i += 1) {
             if (this.pipeObstacles[i].x < -this.pipeObstacles[i].upperPipe.width) {
                 this.pipeObstacles[i].updateObstacle();
