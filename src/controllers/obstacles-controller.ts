@@ -48,10 +48,7 @@ export class ObstaclesController {
         this.movePipes();
         this.moveGround();
     }
-    // TODO:
-    // move this in the view
-    // refactor
-    // get event when the pipe is out of screen and update the obstacle afterward
+
     private movePipes(): void {
         this._view.movePipes();
     }
