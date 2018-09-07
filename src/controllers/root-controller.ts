@@ -15,10 +15,6 @@ export class RootController extends PIXI.Container {
     private _birdController: BirdController;
     private _birdView: BirdView;
 
-    // TODO: 
-    // move in obstacle's controller
-    private _ground: Ground;
-
     private _gameSettings: GameSettings;
     private _gameOver: boolean = false; // when set to true checkBirdCollision method will stop;
 
@@ -30,9 +26,6 @@ export class RootController extends PIXI.Container {
 
         this.addBackground();
 
-        this._ground = new Ground();
-        this._ground.y = this._gameSettings.gameHeight - this._ground.height;
-        this._gameSettings.groundYPos = this._ground.y;
 
         this._birdView = new BirdView(
             this._gameSettings.birdStartingXPosition,
@@ -51,11 +44,9 @@ export class RootController extends PIXI.Container {
         this._obstaclesController = new ObstaclesController(this._obstaclesView);
         view.addChild(this._obstaclesView);
 
-        view.addChild(this._ground);
         view.addChild(this._birdView);
 
         this._obstaclesController.startMoving();
-        this._ground.startMoving();
 
         this.checkBirdCollision.bind(this)();
     }
@@ -94,7 +85,7 @@ export class RootController extends PIXI.Container {
         }
 
         //groundHit
-        if (CollisionChecker.groundCollision(this._birdController.bird, this._ground)) {
+        if (CollisionChecker.groundCollision(this._birdController.bird, this._obstaclesController.GroundObstacle)) {
             this._gameOver = true;
             this._birdController.hasFallen = true;
             this.birdHit();
@@ -104,7 +95,6 @@ export class RootController extends PIXI.Container {
     private restart(): void {
         this._gameOver = false;
 
-        this._ground.startMoving();
         this._birdController.resetBird();
         this._obstaclesController.resetObstacles();
         this._obstaclesController.startMoving();
@@ -113,7 +103,6 @@ export class RootController extends PIXI.Container {
 
     private birdHit(): void {
         this._birdController.isHit = true;
-        this._ground.stopMoving();
         this._obstaclesController.stopMoving();
     }
 }
