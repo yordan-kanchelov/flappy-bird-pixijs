@@ -42100,9 +42100,13 @@ var ObstaclesController = /** @class */ (function () {
         }
     };
     ObstaclesController.prototype.resetPipesPosition = function () {
+        // TODO: 
+        // nextPipeObsticle show be only in the controller or model 
+        // remove it from the view 
         this._nextPipeObstacleIndex = 0;
-        this._view.resetPipesPossition();
+        this._view.nextPipeObstacleIndex = 0;
         this._view.pipeObstacles[0].isNextObstacle = true;
+        this._view.resetPipesPossition();
     };
     return ObstaclesController;
 }());
@@ -42596,7 +42600,6 @@ var ObstaclesView = /** @class */ (function (_super) {
         return _this;
     }
     ObstaclesView.prototype.addGroundObstacle = function (ground, yPos) {
-        console.log(yPos);
         this.groundObstacle = ground;
         this.groundObstacle.y = yPos;
         this.addChild(this.groundObstacle);
