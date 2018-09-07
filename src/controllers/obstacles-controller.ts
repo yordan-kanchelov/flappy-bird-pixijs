@@ -89,9 +89,14 @@ export class ObstaclesController {
     }
     
     private resetPipesPosition(): void {
+        // TODO: 
+        // nextPipeObsticle show be only in the controller or model 
+        // remove it from the view 
+        
         this._nextPipeObstacleIndex = 0;
+        this._view.nextPipeObstacleIndex = 0;
+        this._view.pipeObstacles[0].isNextObstacle = true;
         
         this._view.resetPipesPossition();
-        this._view.pipeObstacles[0].isNextObstacle = true;
     }
 }
