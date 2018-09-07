@@ -1,3 +1,5 @@
+import { Ground } from "../game-objects/ground";
+
 export class GameSettings {
     //game resolution
     public gameWidth: number = 144;
@@ -12,8 +14,6 @@ export class GameSettings {
     public pipeObstaclesGap: number = 45;
     public obstaclesDistance: number = 45;
     public obstaclesSpeed: number = 1;
-
-    public groundYPos: number = 0;
 
     // customization
     public groundMoveSpeed: number = 2;
