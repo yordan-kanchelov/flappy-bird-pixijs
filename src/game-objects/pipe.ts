@@ -10,6 +10,6 @@ export class Pipe extends PIXI.Sprite implements GameObject {
     }
 
     get body(): PIXI.Sprite {
-        return null;
+        return this;
     }
 }
