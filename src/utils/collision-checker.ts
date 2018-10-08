@@ -22,12 +22,4 @@ export class CollisionChecker {
 
         return false;
     }
-
-    public static groundCollision(bird: Bird, ground: Ground): boolean {
-        if (Math.round(bird.y) >= ground.y) {
-            return true;
-        } else {
-            return false;
-        }
-    }
 }
