@@ -5,6 +5,8 @@ import { IGravityBehavior } from "../interfaces/behaviors/gravity-behavior";
 import { GameSettings } from "../models/game-settings";
 import { BirdView } from "../views/bird-view";
 import { Bird } from "../game-objects/bird";
+import { IRotationBehavior } from "../interfaces/behaviors/rotation-behavior";
+import { BirdRotationBehavior } from "../behaviors/bird-rotation-behavior";
 
 export class BirdController extends PIXI.Container {
     private _view: BirdView;
@@ -12,15 +14,12 @@ export class BirdController extends PIXI.Container {
 
     private _gravityBehavior: IGravityBehavior;
     private _flyBehavior: IFlyBehavior;
-
-    private _hasFallen: boolean;
+    private _rotationBehavior: IRotationBehavior;
 
     constructor(view: BirdView) {
         super();
         this._gameSettings = GameSettings.getInstance();
         this._view = view;
-
-        this._hasFallen = false;
 
         this.updateBirdBehaviors();
     }
@@ -37,16 +36,6 @@ export class BirdController extends PIXI.Container {
         this.bird.health = value;
     }
 
-    get hasFallen(): boolean {
-        return this._hasFallen;
-    }
-    set hasFallen(value: boolean) {
-        if (value) {
-            this.stopBirdGravity();
-        }
-        this._hasFallen = value;
-    }
-
     public fly(): void {
         if (this.bird.health !== 0) {
             this._flyBehavior.fly();
@@ -61,27 +50,21 @@ export class BirdController extends PIXI.Container {
         this.bird.velocityY = this._gameSettings.birdStartingVelocity;
 
         this.birdHealth = 100;
-        this.hasFallen = false;
 
         this._view.startMovingWings();
-        this.startBirdGravity();
-    }
-
-    private startBirdGravity(): void {
-        this._gravityBehavior.gravityTicker.start();
-    }
-    private stopBirdGravity(): void {
-        this._gravityBehavior.gravityTicker.stop();
     }
 
     private onBirdHit(): void {
-        this.birdHealth = 0;
-        this.bird.velocityY = 0;
+        if (this.bird.velocityY < 0) {
+            this.bird.velocityY = 0;
+        }
+
         this._view.stopMovingWings();
     }
 
     private updateBirdBehaviors(): void {
         this._gravityBehavior = new BirdGravityBehavior(this.bird, this._gameSettings.birdStartingVelocity);
         this._flyBehavior = new BirdFlyFlappyBehavior(this.bird);
+        this._rotationBehavior = new BirdRotationBehavior(this.bird);
     }
 }

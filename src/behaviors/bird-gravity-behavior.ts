@@ -1,5 +1,6 @@
 import { GameObject } from "../interfaces/game-object";
 import { IGravityBehavior } from "../interfaces/behaviors/gravity-behavior";
+import { World } from "../models/world";
 
 export class BirdGravityBehavior implements IGravityBehavior {
     public gameObject: GameObject;
@@ -18,6 +19,10 @@ export class BirdGravityBehavior implements IGravityBehavior {
     public gravity(): void {
         if (this.velocityY < 10) {
             this.velocityY += this.gravityPower;
+        }
+
+        if (this.velocityY > 0 && World.isObjectOnGround(this.gameObject)) {
+            return;
         }
 
         this.gameObject.body.y += this.velocityY;

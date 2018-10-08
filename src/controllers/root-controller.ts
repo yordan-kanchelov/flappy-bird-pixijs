@@ -1,4 +1,4 @@
-import { Ground } from "../game-objects/ground";
+import PixiEventResolver from "pixi-event-resolver";
 import { GameSettings } from "../models/game-settings";
 import { CollisionChecker } from "../utils/collision-checker";
 import { BirdView } from "../views/bird-view";
@@ -6,6 +6,7 @@ import { ObstaclesView } from "../views/obstacles-view";
 import { RootView } from "../views/root-view";
 import { BirdController } from "./bird-controller";
 import { ObstaclesController } from "./obstacles-controller";
+import { World } from "../models/world";
 
 export class RootController extends PIXI.Container {
     private _view: RootView;
@@ -32,22 +33,19 @@ export class RootController extends PIXI.Container {
         );
         this._birdController = new BirdController(this._birdView);
 
-        document.addEventListener("keydown", (e: KeyboardEvent) => {
-            this.onKeyDown(e);
-        });
-        (view as any).click = (view as any).touchstart = () => {
-            this.mainAction();
-        };
-
         this._obstaclesView = new ObstaclesView();
         this._obstaclesController = new ObstaclesController(this._obstaclesView);
-        view.addChild(this._obstaclesView);
 
+        view.addChild(this._obstaclesView);
         view.addChild(this._birdView);
 
-        this._obstaclesController.startMoving();
+        World.getInstance().ground = this._obstaclesController.GroundObstacle;
+        World.getInstance().stage = this._view.stage;
 
-        this.checkBirdCollision.bind(this)();
+        this.setupEvents();
+
+        this.checkBirdCollision();
+        this._obstaclesController.startMoving();
     }
 
     public addBackground(): any {
@@ -73,7 +71,9 @@ export class RootController extends PIXI.Container {
         // TODO
         // replace with ticker
         requestAnimationFrame(() => {
-            if (!this._gameOver && !this._birdController.hasFallen) this.checkBirdCollision();
+            if (!this._gameOver) {
+                this.checkBirdCollision();
+            }
         });
 
         //pipe collision
@@ -84,9 +84,8 @@ export class RootController extends PIXI.Container {
         }
 
         //groundHit
-        if (CollisionChecker.groundCollision(this._birdController.bird, this._obstaclesController.GroundObstacle)) {
+        if (World.isObjectOnGround(this._birdController.bird)) {
             this._gameOver = true;
-            this._birdController.hasFallen = true;
             this.onBirdHit();
         }
     }
@@ -103,5 +102,14 @@ export class RootController extends PIXI.Container {
     private onBirdHit(): void {
         this._birdController.birdHealth = 0;
         this._obstaclesController.stopMoving();
+    }
+
+    private setupEvents(): any {
+        document.addEventListener("keydown", (e: KeyboardEvent) => {
+            this.onKeyDown(e);
+        });
+        this._view.addListener(PixiEventResolver.resolve("click") as PIXI.interaction.InteractionEventTypes, () =>
+            this.mainAction(),
+        );
     }
 }
