@@ -108,7 +108,7 @@ export class RootController extends PIXI.Container {
         document.addEventListener("keydown", (e: KeyboardEvent) => {
             this.onKeyDown(e);
         });
-        this._view.addListener(PixiEventResolver.resolve("click") as PIXI.interaction.InteractionEventTypes, () =>
+        this._view.addListener(PixiEventResolver.resolve("mousedown") as PIXI.interaction.InteractionEventTypes, () =>
             this.mainAction(),
         );
     }
