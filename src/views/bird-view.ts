@@ -7,8 +7,8 @@ export class BirdView extends PIXI.Container {
         super();
 
         this._bird = new Bird();
-        this._bird.x = birdX;
-        this._bird.y = birdY;
+        this.bird.x = birdX;
+        this.bird.y = birdY;
         this.addChild(this._bird);
 
         this.startMovingWings();

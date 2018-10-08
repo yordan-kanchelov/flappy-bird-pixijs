@@ -1,20 +1,20 @@
 import { IFlyBehavior } from "../interfaces/behaviors/fly-behavior";
-import { IGravityBehavior } from "../interfaces/behaviors/gravity-behavior";
+import { GameObject } from "../interfaces/game-object";
 
 export class BirdFlyFlappyBehavior implements IFlyBehavior {
     private static readonly FLY_VELOCITY_Y: number = 2.5;
 
-    public gravityBehavior: IGravityBehavior;
+    public gameObject: GameObject;
 
-    constructor(gravityBehavior: IGravityBehavior) {
-        this.gravityBehavior = gravityBehavior;
+    constructor(gameObject: GameObject) {
+        this.gameObject = gameObject;
     }
 
     public fly(): void {
-        this.gravityBehavior.velocityY = -BirdFlyFlappyBehavior.FLY_VELOCITY_Y;
+        this.gameObject.velocityY = -BirdFlyFlappyBehavior.FLY_VELOCITY_Y;
     }
 
-    public dispose(): void {
-        this.gravityBehavior = null;
+    dispose(): void {
+        this.gameObject = null;
     }
 }

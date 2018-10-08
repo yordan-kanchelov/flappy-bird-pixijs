@@ -1,6 +1,9 @@
 import { GameObject } from "../interfaces/game-object";
 
 export class Bird extends PIXI.Sprite implements GameObject {
+    velocityX: number;
+    velocityY: number;
+
     private _birdTextures: PIXI.Texture[];
     private _birdPhase: number;
 

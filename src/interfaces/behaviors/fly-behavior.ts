@@ -1,7 +1,7 @@
-import { IGravityBehavior } from "./gravity-behavior";
+import { GameObject } from "../game-object";
 
 export interface IFlyBehavior {
-    gravityBehavior: IGravityBehavior;
+    gameObject: GameObject;
 
     fly(): void;
     dispose(): void;

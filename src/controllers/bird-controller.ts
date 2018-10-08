@@ -57,11 +57,11 @@ export class BirdController extends PIXI.Container {
     }
 
     public resetBird(): void {
-        this._view.bird.x = this._gameSettings.birdStartingXPosition;
-        this._view.bird.y = this._gameSettings.birdStartingYPosition;
-        this._view.bird.rotation = 0;
+        this.bird.x = this._gameSettings.birdStartingXPosition;
+        this.bird.y = this._gameSettings.birdStartingYPosition;
+        this.bird.rotation = 0;
 
-        this._gravityBehavior.velocityY = this._gameSettings.birdStartingVelocity;
+        this.bird.velocityY = this._gameSettings.birdStartingVelocity;
 
         this.isHit = false;
         this.hasFallen = false;
@@ -79,12 +79,12 @@ export class BirdController extends PIXI.Container {
 
     private onBirdHit(): void {
         this._isHit = true;
-        this._gravityBehavior.velocityY = 0;
+        this.bird.velocityY = 0;
         this._view.stopMovingWings();
     }
 
     private updateBirdBehaviors(): void {
-        this._gravityBehavior = new BirdGravityBehavior(this._view.bird, this._gameSettings.birdStartingVelocity);
-        this._flyBehavior = new BirdFlyFlappyBehavior(this._gravityBehavior);
+        this._gravityBehavior = new BirdGravityBehavior(this.bird, this._gameSettings.birdStartingVelocity);
+        this._flyBehavior = new BirdFlyFlappyBehavior(this.bird);
     }
 }
