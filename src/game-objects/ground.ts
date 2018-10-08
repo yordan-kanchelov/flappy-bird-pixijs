@@ -1,5 +1,6 @@
 import { GameObject } from "../interfaces/game-object";
 export class Ground extends PIXI.Sprite implements GameObject {
+    health: number;
     velocityX: number;
     velocityY: number;
 

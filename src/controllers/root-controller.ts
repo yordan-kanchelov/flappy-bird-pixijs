@@ -26,7 +26,6 @@ export class RootController extends PIXI.Container {
 
         this.addBackground();
 
-
         this._birdView = new BirdView(
             this._gameSettings.birdStartingXPosition,
             this._gameSettings.birdStartingYPosition,
@@ -78,9 +77,9 @@ export class RootController extends PIXI.Container {
         });
 
         //pipe collision
-        if (!this._birdController.isHit) {
+        if (this._birdController.bird.health !== 0) {
             if (CollisionChecker.pipeCollision(this._birdController.bird, this._obstaclesController.NextPipeObstacle)) {
-                this.birdHit();
+                this.onBirdHit();
             }
         }
 
@@ -88,7 +87,7 @@ export class RootController extends PIXI.Container {
         if (CollisionChecker.groundCollision(this._birdController.bird, this._obstaclesController.GroundObstacle)) {
             this._gameOver = true;
             this._birdController.hasFallen = true;
-            this.birdHit();
+            this.onBirdHit();
         }
     }
 
@@ -101,8 +100,8 @@ export class RootController extends PIXI.Container {
         this.checkBirdCollision();
     }
 
-    private birdHit(): void {
-        this._birdController.isHit = true;
+    private onBirdHit(): void {
+        this._birdController.birdHealth = 0;
         this._obstaclesController.stopMoving();
     }
 }

@@ -1,8 +1,10 @@
 import { GameObject } from "../interfaces/game-object";
 
 export class Pipe extends PIXI.Sprite implements GameObject {
+    health: number;
     velocityX: number;
     velocityY: number;
+
     constructor(upperPipe: boolean = true) {
         super();
 

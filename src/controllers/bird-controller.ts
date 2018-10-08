@@ -13,7 +13,6 @@ export class BirdController extends PIXI.Container {
     private _gravityBehavior: IGravityBehavior;
     private _flyBehavior: IFlyBehavior;
 
-    private _isHit: boolean;
     private _hasFallen: boolean;
 
     constructor(view: BirdView) {
@@ -30,6 +29,14 @@ export class BirdController extends PIXI.Container {
         return this._view.bird;
     }
 
+    set birdHealth(value: number) {
+        if (value === 0) {
+            this.onBirdHit();
+        }
+
+        this.bird.health = value;
+    }
+
     get hasFallen(): boolean {
         return this._hasFallen;
     }
@@ -40,18 +47,8 @@ export class BirdController extends PIXI.Container {
         this._hasFallen = value;
     }
 
-    get isHit(): boolean {
-        return this._isHit;
-    }
-    set isHit(value: boolean) {
-        if (value) {
-            this.onBirdHit();
-        }
-        this._isHit = value;
-    }
-
     public fly(): void {
-        if (!this._isHit) {
+        if (this.bird.health !== 0) {
             this._flyBehavior.fly();
         }
     }
@@ -63,7 +60,7 @@ export class BirdController extends PIXI.Container {
 
         this.bird.velocityY = this._gameSettings.birdStartingVelocity;
 
-        this.isHit = false;
+        this.birdHealth = 100;
         this.hasFallen = false;
 
         this._view.startMovingWings();
@@ -78,7 +75,7 @@ export class BirdController extends PIXI.Container {
     }
 
     private onBirdHit(): void {
-        this._isHit = true;
+        this.birdHealth = 0;
         this.bird.velocityY = 0;
         this._view.stopMovingWings();
     }
