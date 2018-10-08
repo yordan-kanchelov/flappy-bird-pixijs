@@ -1,5 +1,3 @@
-import { Ground } from "../game-objects/ground";
-
 export class GameSettings {
     //game resolution
     public gameWidth: number = 144;
