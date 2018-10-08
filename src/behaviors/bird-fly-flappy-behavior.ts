@@ -11,7 +11,9 @@ export class BirdFlyFlappyBehavior implements IFlyBehavior {
     }
 
     public fly(): void {
-        this.gameObject.velocityY = -BirdFlyFlappyBehavior.FLY_VELOCITY_Y;
+        if (this.gameObject.health !== 0) {
+            this.gameObject.velocityY = -BirdFlyFlappyBehavior.FLY_VELOCITY_Y;
+        }
     }
 
     dispose(): void {

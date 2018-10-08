@@ -37,9 +37,7 @@ export class BirdController extends PIXI.Container {
     }
 
     public fly(): void {
-        if (this.bird.health !== 0) {
-            this._flyBehavior.fly();
-        }
+        this._flyBehavior.fly();
     }
 
     public resetBird(): void {
