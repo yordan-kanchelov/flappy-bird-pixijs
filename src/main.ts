@@ -4,7 +4,6 @@ import { PixiConsole, PixiConsoleConfig } from "pixi-console";
 import { RootController } from "./controllers/root-controller";
 import { GameSettings } from "./models/game-settings";
 import { RootView } from "./views/root-view";
-import PixiEventResolver from "pixi-event-resolver";
 
 export class Main {
     private gameSettings: GameSettings = GameSettings.getInstance();
