@@ -1,8 +1,10 @@
 import * as PIXI from "pixi.js";
+import screenfull from "screenfull";
 import { PixiConsole, PixiConsoleConfig } from "pixi-console";
 import { RootController } from "./controllers/root-controller";
 import { GameSettings } from "./models/game-settings";
 import { RootView } from "./views/root-view";
+import PixiEventResolver from "pixi-event-resolver";
 
 export class Main {
     private gameSettings: GameSettings = GameSettings.getInstance();
@@ -49,11 +51,23 @@ export class Main {
             width: window.innerWidth,
         });
 
-        this.game.stage.scale.x = window.innerWidth / this.gameSettings.gameWidth;
-        this.game.stage.scale.y = window.innerHeight / this.gameSettings.gameHeight;
         this.game.stage.interactive = true;
+        this.game.stage.scale.x = window.innerWidth / this.gameSettings.gameWidth;
+        this.game.stage.scale.y = window.innerHeight / this.gameSettings.gameHeight;  
 
         document.body.appendChild(this.game.view);
+
+        this.game.view.addEventListener(PixiEventResolver.resolve("mousedown"), () => {
+            if (screenfull.enabled) {
+                screenfull.request(this.game.view);
+            }
+        });
+
+        window.addEventListener("resize", () => {
+            this.game.renderer.resize(window.innerWidth, window.innerHeight);
+            this.game.stage.scale.x = window.innerWidth / this.gameSettings.gameWidth;
+            this.game.stage.scale.y = window.innerHeight / this.gameSettings.gameHeight;
+        });
 
         this.animate();
     }
