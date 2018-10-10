@@ -53,12 +53,12 @@ export class Main {
 
         this.game.stage.interactive = true;
         this.game.stage.scale.x = window.innerWidth / this.gameSettings.gameWidth;
-        this.game.stage.scale.y = window.innerHeight / this.gameSettings.gameHeight;  
+        this.game.stage.scale.y = window.innerHeight / this.gameSettings.gameHeight;
 
         document.body.appendChild(this.game.view);
 
         this.game.view.addEventListener(PixiEventResolver.resolve("mousedown"), () => {
-            if (screenfull.enabled) {
+            if (screenfull && screenfull.enabled) {
                 screenfull.request(this.game.view);
             }
         });
