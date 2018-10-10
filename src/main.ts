@@ -57,7 +57,8 @@ export class Main {
 
         document.body.appendChild(this.game.view);
 
-        this.game.view.addEventListener(PixiEventResolver.resolve("mousedown"), () => {
+        this.game.stage.interactive = true;
+        this.game.stage.addListener("tap", () => {
             if (screenfull && screenfull.enabled) {
                 screenfull.request(this.game.view);
             }
