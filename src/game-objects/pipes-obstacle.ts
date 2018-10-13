@@ -1,6 +1,7 @@
 import { GameSettings } from "../models/game-settings";
 import { Pipe } from "./pipe";
 import { Ground } from "./ground";
+import { World } from "../models/world";
 
 export class PipeObstacle extends PIXI.Container {
     private _upperPipe: Pipe;
@@ -14,7 +15,7 @@ export class PipeObstacle extends PIXI.Container {
 
         this._upperPipe = new Pipe(true);
         this._bottomPipe = new Pipe(false);
-        this._bottomPipe.y = GameSettings.getInstance().gameHeight - new Ground().texture.height;
+        this._bottomPipe.y = World.getInstance().ground.y;
 
         this.updateObstacle();
 

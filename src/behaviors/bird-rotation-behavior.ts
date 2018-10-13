@@ -10,7 +10,9 @@ export class BirdRotationBehavior implements IRotationBehavior {
         this.gameObject = gameObject;
 
         this.rotationTicker = new PIXI.ticker.Ticker();
-        this.rotationTicker.add(this.rotate.bind(this));
+        this.rotationTicker.add(() => {
+            this.rotate();
+        });
         this.rotationTicker.start();
     }
 
