@@ -26,7 +26,7 @@ export class ObstaclesView extends PIXI.Container {
         ) {
             this.emit(ObstaclesView.PIPE_PASSED);
         }
-        
+
         for (let i = 0; i < this.pipeObstacles.length; i += 1) {
             if (this.pipeObstacles[i].x < -this.pipeObstacles[i].upperPipe.width) {
                 this.pipeObstacles[i].updateObstacle();
@@ -37,8 +37,8 @@ export class ObstaclesView extends PIXI.Container {
         }
     }
 
-    moveGround() {
-        this.groundObstacle.x -= this._gameSettings.groundMoveSpeed;
+    moveGround(moveStep: number) {
+        this.groundObstacle.x += moveStep;
 
         if (-this.groundObstacle.x === this.groundObstacle.body.texture.width - this._gameSettings.gameWidth) {
             this.groundObstacle.x = 0;
