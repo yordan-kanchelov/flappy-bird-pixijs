@@ -2,6 +2,7 @@ import { PipeObstacle } from "../game-objects/pipes-obstacle";
 import { GameSettings } from "../models/game-settings";
 import { ObstaclesView } from "../views/obstacles-view";
 import { Ground } from "../game-objects/ground";
+import { World } from "../models/world";
 
 export class ObstaclesController {
     private readonly PIPES_COUNT: number = 3;
@@ -64,12 +65,12 @@ export class ObstaclesController {
     }
 
     private addObstacles(): void {
-        this.addPipeObstacles();
         this.addGroundObstacle();
+        this.addPipeObstacles();
     }
 
     private addGroundObstacle() {
-        let ground = new Ground();
+        const ground = World.getInstance().ground = new Ground();
         this._view.addGroundObstacle(new Ground(), this._gameSettings.gameHeight - ground.height);
     }
 
@@ -81,7 +82,7 @@ export class ObstaclesController {
             pipeObstacle.x =
                 this._gameSettings.gameWidth + pipeObstacle.width * i + i * this._gameSettings.obstaclesDistance;
             if (i == 0) pipeObstacle.isNextObstacle = true;
-            this._view.addChild(pipeObstacle);
+            this._view.addChildAt(pipeObstacle,0); // add them below ground 
             this._view.pipeObstacles.push(pipeObstacle);
         }
     }
