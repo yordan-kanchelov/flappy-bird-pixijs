@@ -18,6 +18,7 @@ export class RootController extends PIXI.Container {
 
     private _gameSettings: GameSettings;
     private _gameOver: boolean = false; // when set to true checkBirdCollision method will stop;
+    private _collisionCheckTicker: PIXI.ticker.Ticker;
 
     constructor(view: RootView) {
         super();
@@ -44,7 +45,10 @@ export class RootController extends PIXI.Container {
 
         this.setupEvents();
 
-        this.checkBirdCollision();
+        this._collisionCheckTicker = new PIXI.ticker.Ticker();
+        this._collisionCheckTicker.add(this.onCollisionCheckTick.bind(this));
+        this._collisionCheckTicker.start();
+
         this._obstaclesController.startMoving();
     }
 
@@ -67,14 +71,10 @@ export class RootController extends PIXI.Container {
         }
     }
 
-    private checkBirdCollision(): void {
-        // TODO
-        // replace with ticker
-        requestAnimationFrame(() => {
-            if (!this._gameOver) {
-                this.checkBirdCollision();
-            }
-        });
+    private onCollisionCheckTick(): void {
+        if (this._gameOver) {
+            this._collisionCheckTicker.stop();
+        }
 
         //pipe collision
         if (this._birdController.bird.health !== 0) {
@@ -96,7 +96,7 @@ export class RootController extends PIXI.Container {
         this._birdController.resetBird();
         this._obstaclesController.resetObstacles();
         this._obstaclesController.startMoving();
-        this.checkBirdCollision();
+        this._collisionCheckTicker.start();
     }
 
     private onBirdHit(): void {
