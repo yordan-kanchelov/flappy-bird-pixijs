@@ -1,12 +1,12 @@
-import { GameObject } from "../interfaces/game-object";
+import { IGameObject } from "../interfaces/game-object";
 import { IRotationBehavior } from "../interfaces/behaviors/rotation-behavior";
 import { World } from "../models/world";
 
 export class BirdRotationBehavior implements IRotationBehavior {
-    public gameObject: GameObject;
+    public gameObject: IGameObject;
     public rotationTicker: PIXI.ticker.Ticker;
 
-    constructor(gameObject: GameObject) {
+    constructor(gameObject: IGameObject) {
         this.gameObject = gameObject;
 
         this.rotationTicker = new PIXI.ticker.Ticker();

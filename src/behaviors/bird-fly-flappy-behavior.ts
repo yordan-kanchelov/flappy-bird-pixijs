@@ -1,12 +1,12 @@
 import { IFlyBehavior } from "../interfaces/behaviors/fly-behavior";
-import { GameObject } from "../interfaces/game-object";
+import { IGameObject } from "../interfaces/game-object";
 
 export class BirdFlyFlappyBehavior implements IFlyBehavior {
     private static readonly FLY_VELOCITY_Y: number = 2.5;
 
-    public gameObject: GameObject;
+    public gameObject: IGameObject;
 
-    constructor(gameObject: GameObject) {
+    constructor(gameObject: IGameObject) {
         this.gameObject = gameObject;
     }
 

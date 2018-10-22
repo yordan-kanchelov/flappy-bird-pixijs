@@ -1,4 +1,4 @@
-export interface GameObject extends PIXI.Container {
+export interface IGameObject extends PIXI.Container {
     body: PIXI.Sprite;
     health: number;
     velocityX: number;

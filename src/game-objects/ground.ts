@@ -1,5 +1,5 @@
-import { GameObject } from "../interfaces/game-object";
-export class Ground extends PIXI.Sprite implements GameObject {
+import { IGameObject } from "../interfaces/game-object";
+export class Ground extends PIXI.Sprite implements IGameObject {
     health: number;
     velocityX: number;
     velocityY: number;

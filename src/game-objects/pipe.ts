@@ -1,6 +1,6 @@
-import { GameObject } from "../interfaces/game-object";
+import { IGameObject } from "../interfaces/game-object";
 
-export class Pipe extends PIXI.Sprite implements GameObject {
+export class Pipe extends PIXI.Sprite implements IGameObject {
     health: number;
     velocityX: number;
     velocityY: number;

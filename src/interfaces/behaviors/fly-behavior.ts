@@ -1,7 +1,7 @@
-import { GameObject } from "../game-object";
+import { IGameObject } from "../game-object";
 
 export interface IFlyBehavior {
-    gameObject: GameObject;
+    gameObject: IGameObject;
 
     fly(): void;
     dispose(): void;

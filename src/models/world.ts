@@ -1,5 +1,5 @@
 import { Ground } from "../game-objects/ground";
-import { GameObject } from "../interfaces/game-object";
+import { IGameObject } from "../interfaces/game-object";
 
 export class World {
     private static instance: World = new World();
@@ -19,7 +19,7 @@ export class World {
         return World.instance;
     }
 
-    public static isObjectOnGround(gameObject: GameObject) {
+    public static isObjectOnGround(gameObject: IGameObject) {
         if (gameObject.y >= World.getInstance().ground.y) {
             return true;
         }

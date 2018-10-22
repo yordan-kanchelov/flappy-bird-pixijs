@@ -1,7 +1,7 @@
-import { GameObject } from "../game-object";
+import { IGameObject } from "../game-object";
 
 export interface IGravityBehavior {
-    gameObject: GameObject;
+    gameObject: IGameObject;
     gravityPower: number;
     gravityTicker: PIXI.ticker.Ticker;
     gravity(): void;

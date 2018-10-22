@@ -1,7 +1,7 @@
-import { GameObject } from "../game-object";
+import { IGameObject } from "../game-object";
 
 export interface IRotationBehavior {
-    gameObject: GameObject;
+    gameObject: IGameObject;
     rotationTicker: PIXI.ticker.Ticker;
     rotate(): void;
     dispose(): void;
