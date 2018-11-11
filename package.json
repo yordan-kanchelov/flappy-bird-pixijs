@@ -4,18 +4,18 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "preinstall": "npm install -g typescript browserify uglify-js",
         "watch": "run-script-os",
         "watch:win32": "watchify --debug -p [ tsify ] .\\src\\main.ts -o index.js",
         "watch:darwin:linux:": "watchify --debug -p [ tsify ] ./src/main.ts -o index.js",
         "build": "run-script-os",
-        "build:win32": "browserify .\\src\\main.ts -p [ tsify ] > index.js && uglifyjs --output .\\index.js  --compress --mangle -- .\\index.js",
-        "build:darwin:linux:": "browserify ./src/main.ts -p [ tsify ] > index.js && uglifyjs --output ./index.js  --compress --mangle -- ./index.js"
+        "build:win32": "npx browserify .\\src\\main.ts -p [ tsify ] > index.js && uglifyjs --output .\\index.js  --compress --mangle -- .\\index.js",
+        "build:darwin:linux:": "npx browserify ./src/main.ts -p [ tsify ] > index.js && uglifyjs --output ./index.js  --compress --mangle -- ./index.js"
     },
     "author": "",
     "license": "ISC",
     "dependencies": {
         "browserify": "^16.2.2",
+        "is-ios": "^1.0.0",
         "pixi-console": "^0.7.0",
         "pixi-event-resolver": "^1.2.0",
         "pixi-fps": "^1.0.0",
