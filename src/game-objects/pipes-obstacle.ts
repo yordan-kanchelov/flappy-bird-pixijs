@@ -5,12 +5,9 @@ import { World } from "../models/world";
 export class PipeObstacle extends PIXI.Container {
     private _upperPipe: Pipe;
     private _bottomPipe: Pipe;
-    private _isNextObstacle: boolean;
 
-    constructor(isNextObstacle: boolean = false) {
+    constructor() {
         super();
-
-        this._isNextObstacle = isNextObstacle;
 
         this._upperPipe = new Pipe(true);
         this._bottomPipe = new Pipe(false);
@@ -27,12 +24,6 @@ export class PipeObstacle extends PIXI.Container {
     }
     get bottomPipe(): Pipe {
         return this._bottomPipe;
-    }
-    get isNextObstacle(): boolean {
-        return this._isNextObstacle;
-    }
-    set isNextObstacle(value: boolean) {
-        this._isNextObstacle = value;
     }
 
     public updateObstacle(): void {

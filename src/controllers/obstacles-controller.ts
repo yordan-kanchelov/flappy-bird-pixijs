@@ -81,7 +81,6 @@ export class ObstaclesController {
             const pipeObstacle: PipeObstacle = new PipeObstacle();
             pipeObstacle.x =
                 this._gameSettings.gameWidth + pipeObstacle.width * i + i * this._gameSettings.obstaclesDistance;
-            if (i == 0) pipeObstacle.isNextObstacle = true;
             this._view.addChildAt(pipeObstacle,0); // add them below ground 
             this._view.pipeObstacles.push(pipeObstacle);
         }
@@ -94,7 +93,6 @@ export class ObstaclesController {
 
         this._nextPipeObstacleIndex = 0;
         this._view.nextPipeObstacleIndex = 0;
-        this._view.pipeObstacles[0].isNextObstacle = true;
 
         this._view.resetPipesPossition();
     }
