@@ -1,6 +1,5 @@
 import { GameSettings } from "../models/game-settings";
 import { Pipe } from "./pipe";
-import { Ground } from "./ground";
 import { World } from "../models/world";
 
 export class PipeObstacle extends PIXI.Container {
