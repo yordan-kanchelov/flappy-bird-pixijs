@@ -8,7 +8,7 @@ import { BirdController } from "./bird-controller";
 import { ObstaclesController } from "./obstacles-controller";
 import { World } from "../models/world";
 
-export class RootController extends PIXI.Container {
+export class RootController {
     private _view: RootView;
 
     private _obstaclesController: ObstaclesController;
@@ -21,7 +21,6 @@ export class RootController extends PIXI.Container {
     private _collisionCheckTicker: PIXI.ticker.Ticker;
 
     constructor(view: RootView) {
-        super();
         this._view = view;
 
         this._gameSettings = GameSettings.getInstance();
