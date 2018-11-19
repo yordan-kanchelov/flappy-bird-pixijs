@@ -2,21 +2,30 @@ import { GameSettings } from "../models/game-settings";
 import { Pipe } from "./pipe";
 import { World } from "../models/world";
 
-export class PipeObstacle extends PIXI.Container {
+export class PipeObstacle {
     private _upperPipe: Pipe;
     private _bottomPipe: Pipe;
 
     constructor() {
-        super();
-
         this._upperPipe = new Pipe(true);
         this._bottomPipe = new Pipe(false);
         this._bottomPipe.y = World.getInstance().ground.y;
 
         this.updateObstacle();
+    }
 
-        this.addChild(this._upperPipe);
-        this.addChild(this._bottomPipe);
+    public set x(xValue: number) {
+        this._bottomPipe.x = xValue;
+        this._upperPipe.x = xValue;
+    }
+
+    public get x(): number {
+        return this._bottomPipe.x;
+    }
+
+    public get width(): number {
+        // both pipes are with the same width so return one of them
+        return this._upperPipe.width;
     }
 
     get upperPipe(): Pipe {
@@ -26,6 +35,10 @@ export class PipeObstacle extends PIXI.Container {
         return this._bottomPipe;
     }
 
+    get pipes() {
+        return [this.upperPipe, this.bottomPipe];
+    }
+    
     public updateObstacle(): void {
         const upperOffset: number = Math.floor(Math.random() * 100 + 1);
         this._upperPipe.y = -upperOffset;

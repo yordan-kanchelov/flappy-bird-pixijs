@@ -70,7 +70,7 @@ export class ObstaclesController {
     }
 
     private addGroundObstacle() {
-        const ground = World.getInstance().ground = new Ground();
+        const ground = (World.getInstance().ground = new Ground());
         this._view.addGroundObstacle(new Ground(), this._gameSettings.gameHeight - ground.height);
     }
 
@@ -81,7 +81,8 @@ export class ObstaclesController {
             const pipeObstacle: PipeObstacle = new PipeObstacle();
             pipeObstacle.x =
                 this._gameSettings.gameWidth + pipeObstacle.width * i + i * this._gameSettings.obstaclesDistance;
-            this._view.addChildAt(pipeObstacle,0); // add them below ground 
+            this._view.addChildAt(pipeObstacle.upperPipe, 0); // add them below ground
+            this._view.addChildAt(pipeObstacle.bottomPipe, 0); // add them below ground
             this._view.pipeObstacles.push(pipeObstacle);
         }
     }
