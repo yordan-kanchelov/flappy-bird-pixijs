@@ -8,7 +8,7 @@ import { Bird } from "../game-objects/bird";
 import { IRotationBehavior } from "../interfaces/behaviors/rotation-behavior";
 import { BirdRotationBehavior } from "../behaviors/bird-rotation-behavior";
 
-export class BirdController extends PIXI.Container {
+export class BirdController {
     private _view: BirdView;
     private _gameSettings: GameSettings;
 
@@ -17,7 +17,6 @@ export class BirdController extends PIXI.Container {
     private _rotationBehavior: IRotationBehavior;
 
     constructor(view: BirdView) {
-        super();
         this._gameSettings = GameSettings.getInstance();
         this._view = view;
 
