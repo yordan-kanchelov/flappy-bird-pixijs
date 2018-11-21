@@ -40,6 +40,12 @@ export class Main {
         const rootView = new RootView(this.game.stage);
         const rootController = new RootController(rootView);
 
+        (window as any).flappyBird = {
+            Main: this,
+            RootController: rootController,
+            RootView: rootView,
+        };
+
         this.animate();
     }
 
