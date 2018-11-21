@@ -1,6 +1,6 @@
-import { IGameObject } from "../interfaces/game-object";
-import { IRotationBehavior } from "../interfaces/behaviors/rotation-behavior";
-import { World } from "../models/world";
+import { IGameObject } from "../../interfaces/game-object";
+import { IRotationBehavior } from "../../interfaces/behaviors/rotation-behavior";
+import { World } from "../../models/world";
 
 export class BirdRotationBehavior implements IRotationBehavior {
     public gameObject: IGameObject;

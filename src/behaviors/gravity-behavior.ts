@@ -2,13 +2,13 @@ import { IGameObject } from "../interfaces/game-object";
 import { IGravityBehavior } from "../interfaces/behaviors/gravity-behavior";
 import { World } from "../models/world";
 
-export class BirdGravityBehavior implements IGravityBehavior {
+export class GravityBehavior implements IGravityBehavior {
     public gameObject: IGameObject;
     public gravityPower: number = 0.1;
     public gravityTicker: PIXI.ticker.Ticker;
 
-    constructor(bird: IGameObject, velocityY = 0) {
-        this.gameObject = bird;
+    constructor(gameObject: IGameObject, velocityY = 0) {
+        this.gameObject = gameObject;
         this.velocityY = velocityY;
 
         this.gravityTicker = new PIXI.ticker.Ticker();
