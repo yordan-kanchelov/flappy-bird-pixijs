@@ -1,5 +1,4 @@
 import { IGameObject } from "../../interfaces/game-object";
-import { World } from "../../models/world";
 import { GravityBehavior } from "../gravity-behavior";
 
 export class BirdGravityBehavior extends GravityBehavior {
