@@ -45,6 +45,8 @@ export class ObstaclesController {
         this.resetPipesPosition();
     }
 
+    //TODO 
+    // add move behavior  
     private moveObstacles() {
         this.movePipes();
         this.moveGround();
@@ -65,24 +67,27 @@ export class ObstaclesController {
     }
 
     private addObstacles(): void {
-        this.addGroundObstacle();
         this.addPipeObstacles();
+        this.addGroundObstacle();
     }
 
     private addGroundObstacle() {
         const ground = (World.getInstance().ground = new Ground());
-        this._view.addGroundObstacle(new Ground(), this._gameSettings.gameHeight - ground.height);
+        ground.y = this._gameSettings.gameHeight - ground.height;
+
+        World.addObjectToWorld(ground);
+        this._view.groundObstacle = ground;
     }
 
     private addPipeObstacles() {
         this._view.pipeObstacles = [];
 
-        for (let i = 0; i < 3; i++) {
+        for (let i = 0; i < this.PIPES_COUNT; i++) {
             const pipeObstacle: PipeObstacle = new PipeObstacle();
             pipeObstacle.x =
                 this._gameSettings.gameWidth + pipeObstacle.width * i + i * this._gameSettings.obstaclesDistance;
-            this._view.addChildAt(pipeObstacle.upperPipe, 0); // add them below ground
-            this._view.addChildAt(pipeObstacle.bottomPipe, 0); // add them below ground
+            World.addObjectToWorld(pipeObstacle.upperPipe); // add them below ground
+            World.addObjectToWorld(pipeObstacle.bottomPipe); // add them below ground
             this._view.pipeObstacles.push(pipeObstacle);
         }
     }
@@ -95,6 +100,6 @@ export class ObstaclesController {
         this._nextPipeObstacleIndex = 0;
         this._view.nextPipeObstacleIndex = 0;
 
-        this._view.resetPipesPossition();
+        this._view.resetPipesPosition();
     }
 }

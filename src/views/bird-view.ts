@@ -1,15 +1,12 @@
 import { Bird } from "../game-objects/bird";
 
-export class BirdView extends PIXI.Container {
+export class BirdView {
     private _bird: Bird;
 
     constructor(birdX: number, birdY: number) {
-        super();
-
         this._bird = new Bird();
         this.bird.x = birdX;
         this.bird.y = birdY;
-        this.addChild(this._bird);
 
         this.startMovingWings();
     }

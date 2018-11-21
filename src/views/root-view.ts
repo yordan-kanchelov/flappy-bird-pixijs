@@ -5,20 +5,19 @@ export class RootView extends PIXI.Container {
 
     constructor(stage: PIXI.Container) {
         super();
-        this.interactive = true;
         this._stage = stage;
-
-        stage.addChild(this);
 
         // TODO:
         // create debug controller & view
         // place the console and fps counter there
-        stage.addChild(PixiConsole.getInstance());
-        stage.addChild(
+        this.addChild(PixiConsole.getInstance());
+        this.addChild(
             new PixiFps({
                 fontSize: 12,
             } as PIXI.TextStyle),
         );
+        
+        stage.addChild(this);
     }
 
     get stage(): PIXI.Container {

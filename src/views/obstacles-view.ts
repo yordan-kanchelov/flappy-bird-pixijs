@@ -2,7 +2,7 @@ import { Ground } from "../game-objects/ground";
 import { PipeObstacle } from "../game-objects/pipes-obstacle";
 import { GameSettings } from "../models/game-settings";
 
-export class ObstaclesView extends PIXI.Container {
+export class ObstaclesView extends PIXI.utils.EventEmitter {
     public static readonly PIPE_PASSED = "pipePassed";
 
     groundObstacle: Ground;
@@ -10,13 +10,7 @@ export class ObstaclesView extends PIXI.Container {
     nextPipeObstacleIndex: number = 0;
 
     constructor() {
-        super();
-    }
-
-    addGroundObstacle(ground: Ground, yPos: number): any {
-        this.groundObstacle = ground;
-        this.groundObstacle.y = yPos;
-        this.addChild(this.groundObstacle);
+        super()
     }
 
     movePipes() {
@@ -45,7 +39,7 @@ export class ObstaclesView extends PIXI.Container {
         }
     }
 
-    resetPipesPossition() {
+    resetPipesPosition() {
         for (let i = 0; i < this.pipeObstacles.length; i++) {
             this.pipeObstacles[i].updateObstacle();
             this.pipeObstacles[i].x =

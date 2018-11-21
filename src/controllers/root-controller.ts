@@ -21,26 +21,21 @@ export class RootController {
     private _collisionCheckTicker: PIXI.ticker.Ticker;
 
     constructor(view: RootView) {
-        this._view = view;
+        World.getInstance().stage = view.stage;
+        World.setBackground(PIXI.Texture.fromImage("background.png"));
 
+        this._view = view;
         this._gameSettings = GameSettings.getInstance();
 
-        this.addBackground();
-
+        this._obstaclesView = new ObstaclesView();
+        this._obstaclesController = new ObstaclesController(this._obstaclesView);
+        
         this._birdView = new BirdView(
             this._gameSettings.birdStartingXPosition,
             this._gameSettings.birdStartingYPosition,
         );
         this._birdController = new BirdController(this._birdView);
 
-        this._obstaclesView = new ObstaclesView();
-        this._obstaclesController = new ObstaclesController(this._obstaclesView);
-
-        view.addChild(this._obstaclesView);
-        view.addChild(this._birdView);
-
-        World.getInstance().ground = this._obstaclesController.GroundObstacle;
-        World.getInstance().stage = this._view.stage;
 
         this.setupEvents();
 
@@ -49,11 +44,6 @@ export class RootController {
         this._collisionCheckTicker.start();
 
         this._obstaclesController.startMoving();
-    }
-
-    public addBackground(): any {
-        const backgroundSprite = new PIXI.Sprite(PIXI.Texture.fromImage("background.png"));
-        this._view.addChild(backgroundSprite);
     }
 
     private onKeyDown(key: KeyboardEvent) {
@@ -107,8 +97,9 @@ export class RootController {
         document.addEventListener("keydown", (e: KeyboardEvent) => {
             this.onKeyDown(e);
         });
-        this._view.addListener(PixiEventResolver.resolve("mousedown") as PIXI.interaction.InteractionEventTypes, () =>
-            this.mainAction(),
+        this._view.stage.addListener(
+            PixiEventResolver.resolve("mousedown") as PIXI.interaction.InteractionEventTypes,
+            () => this.mainAction(),
         );
     }
 }
