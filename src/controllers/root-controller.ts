@@ -7,9 +7,11 @@ import { RootView } from "../views/root-view";
 import { BirdController } from "./bird-controller";
 import { ObstaclesController } from "./obstacles-controller";
 import { World } from "../models/world";
+import { RootModel } from "../models/root-model";
 
 export class RootController {
     private _view: RootView;
+    private _model: RootModel;
 
     private _obstaclesController: ObstaclesController;
     private _obstaclesView: ObstaclesView;
@@ -20,7 +22,7 @@ export class RootController {
     private _gameOver: boolean = false; // when set to true checkBirdCollision method will stop;
     private _collisionCheckTicker: PIXI.ticker.Ticker;
 
-    constructor(view: RootView) {
+    constructor(model: RootModel,view: RootView) {
         World.getInstance().stage = view.stage;
         World.setBackground(PIXI.Texture.fromImage("background.png"));
 
@@ -71,7 +73,7 @@ export class RootController {
                 this.onBirdHit();
             }
         }
-
+        
         //groundHit
         if (World.isObjectOnGround(this._birdController.bird)) {
             this._gameOver = true;

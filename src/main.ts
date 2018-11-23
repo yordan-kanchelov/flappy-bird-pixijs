@@ -4,6 +4,7 @@ import { PixiConsole, PixiConsoleConfig } from "pixi-console";
 import { RootController } from "./controllers/root-controller";
 import { GameSettings } from "./models/game-settings";
 import { RootView } from "./views/root-view";
+import { RootModel } from "./models/root-model";
 
 export class Main {
     private gameSettings: GameSettings = GameSettings.getInstance();
@@ -37,8 +38,9 @@ export class Main {
     }
 
     private onAssetsLoaded(): void {
+        const rootModel = new RootModel();
         const rootView = new RootView(this.game.stage);
-        const rootController = new RootController(rootView);
+        const rootController = new RootController(rootModel, rootView);
 
         (window as any).flappyBird = {
             Main: this,
