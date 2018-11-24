@@ -19,7 +19,6 @@ export class GameController {
     private _birdView: BirdView;
 
     private _gameSettings: GameSettings;
-    private _gameOver: boolean = false; // when set to true checkBirdCollision method will stop;
     private _collisionCheckTicker: PIXI.ticker.Ticker;
 
     constructor(model: GameModel, view: GameView) {
@@ -55,7 +54,7 @@ export class GameController {
     }
 
     private mainAction(): void {
-        if (this._gameOver) {
+        if (this._model.gameOver) {
             this.restart();
         } else {
             this._birdController.fly();
@@ -63,7 +62,7 @@ export class GameController {
     }
 
     private onCollisionCheckTick(): void {
-        if (this._gameOver) {
+        if (this._model.gameOver) {
             this._collisionCheckTicker.stop();
         }
 
@@ -76,13 +75,13 @@ export class GameController {
 
         //groundHit
         if (World.isObjectOnGround(this._birdController.bird)) {
-            this._gameOver = true;
+            this._model.gameOver = true;
             this.onBirdHit();
         }
     }
 
     private restart(): void {
-        this._gameOver = false;
+        this._model.resetModel();
 
         this._birdController.resetBird();
         this._obstaclesController.resetObstacles();
