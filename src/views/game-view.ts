@@ -1,6 +1,6 @@
 import { PixiConsole } from "pixi-console";
 import PixiFps from "pixi-fps";
-export class RootView extends PIXI.Container {
+export class GameView extends PIXI.Container {
     private _stage: PIXI.Container;
 
     constructor(stage: PIXI.Container) {
@@ -16,7 +16,7 @@ export class RootView extends PIXI.Container {
                 fontSize: 12,
             } as PIXI.TextStyle),
         );
-        
+
         stage.addChild(this);
     }
 

@@ -1,10 +1,10 @@
 import * as PIXI from "pixi.js";
 import screenfull from "screenfull";
 import { PixiConsole, PixiConsoleConfig } from "pixi-console";
-import { RootController } from "./controllers/root-controller";
+import { GameController } from "./controllers/game-controller";
 import { GameSettings } from "./models/game-settings";
-import { RootView } from "./views/root-view";
-import { RootModel } from "./models/root-model";
+import { GameView } from "./views/game-view";
+import { GameModel } from "./models/game-model";
 
 export class Main {
     private gameSettings: GameSettings = GameSettings.getInstance();
@@ -38,15 +38,11 @@ export class Main {
     }
 
     private onAssetsLoaded(): void {
-        const rootModel = new RootModel();
-        const rootView = new RootView(this.game.stage);
-        const rootController = new RootController(rootModel, rootView);
+        const gameModel = new GameModel();
+        const gameView = new GameView(this.game.stage);
+        const gameController = new GameController(gameModel, gameView);
 
-        (window as any).flappyBird = {
-            Main: this,
-            RootController: rootController,
-            RootView: rootView,
-        };
+        (window as any).flappyBird = { Main: this, GameController: gameController, GameView: gameView };
 
         this.animate();
     }

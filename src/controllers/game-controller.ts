@@ -3,14 +3,14 @@ import { GameSettings } from "../models/game-settings";
 import { CollisionChecker } from "../utils/collision-checker";
 import { BirdView } from "../views/bird-view";
 import { ObstaclesView } from "../views/obstacles-view";
-import { RootView } from "../views/root-view";
+import { GameView } from "../views/game-view";
 import { BirdController } from "./bird-controller";
 import { ObstaclesController } from "./obstacles-controller";
 import { World } from "../models/world";
 import { RootModel } from "../models/root-model";
 
-export class RootController {
-    private _view: RootView;
+export class GameController {
+    private _view: GameView;
     private _model: RootModel;
 
     private _obstaclesController: ObstaclesController;
@@ -22,22 +22,22 @@ export class RootController {
     private _gameOver: boolean = false; // when set to true checkBirdCollision method will stop;
     private _collisionCheckTicker: PIXI.ticker.Ticker;
 
-    constructor(model: RootModel,view: RootView) {
+    constructor(model: RootModel, view: GameView) {
         World.getInstance().stage = view.stage;
         World.setBackground(PIXI.Texture.fromImage("background.png"));
 
         this._view = view;
+        this._model = model;
         this._gameSettings = GameSettings.getInstance();
 
         this._obstaclesView = new ObstaclesView();
         this._obstaclesController = new ObstaclesController(this._obstaclesView);
-        
+
         this._birdView = new BirdView(
             this._gameSettings.birdStartingXPosition,
             this._gameSettings.birdStartingYPosition,
         );
         this._birdController = new BirdController(this._birdView);
-
 
         this.setupEvents();
 
@@ -73,7 +73,7 @@ export class RootController {
                 this.onBirdHit();
             }
         }
-        
+
         //groundHit
         if (World.isObjectOnGround(this._birdController.bird)) {
             this._gameOver = true;
