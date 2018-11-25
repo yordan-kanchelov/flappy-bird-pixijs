@@ -4,14 +4,13 @@
 
 A simple flappy bird clone written in typescript
 
-
 #### Game link - https://flappy-birdd.herokuapp.com/
 
 #
 
 ## TODO:
 
--   Add menu screen  
+-   Add menu screen
 
 -   Add Score
 
@@ -19,4 +18,6 @@ A simple flappy bird clone written in typescript
 
 -   Handle collision better ( collision for rotated rectangles )
 
--  ~~Properly scale the game~~	
+-   Try to separate better model data from view
+
+-   ~~Properly scale the game~~
