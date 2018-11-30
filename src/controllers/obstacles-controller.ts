@@ -4,7 +4,9 @@ import { ObstaclesView } from "../views/obstacles-view";
 import { Ground } from "../game-objects/ground";
 import { World } from "../models/world";
 
-export class ObstaclesController {
+export class ObstaclesController extends PIXI.utils.EventEmitter {
+    public static readonly PIPE_PASSED = "pipePassed"; // move to notification class
+
     private readonly PIPES_COUNT: number = 3;
 
     private _view: ObstaclesView;
@@ -14,6 +16,8 @@ export class ObstaclesController {
     private _moveObstaclesTicker: PIXI.ticker.Ticker;
 
     constructor(view: ObstaclesView) {
+        super();
+
         this._view = view;
         this._view.on(ObstaclesView.PIPE_PASSED, this.onPipePassed, this);
 
@@ -45,8 +49,8 @@ export class ObstaclesController {
         this.resetPipesPosition();
     }
 
-    //TODO 
-    // add move behavior  
+    //TODO
+    // add move behavior
     private moveObstacles() {
         this.movePipes();
         this.moveGround();
@@ -64,6 +68,8 @@ export class ObstaclesController {
         this._nextPipeObstacleIndex =
             this._nextPipeObstacleIndex < this.PIPES_COUNT - 1 ? this._nextPipeObstacleIndex + 1 : 0;
         this._view.nextPipeObstacleIndex = this._nextPipeObstacleIndex;
+
+        this.emit(ObstaclesController.PIPE_PASSED);
     }
 
     private addObstacles(): void {

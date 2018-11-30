@@ -19,6 +19,7 @@ export class GameController {
     private _birdView: BirdView;
 
     private _gameSettings: GameSettings;
+    private _gameScoreText: PIXI.Text;
     private _collisionCheckTicker: PIXI.ticker.Ticker;
 
     constructor(model: GameModel, view: GameView) {
@@ -29,15 +30,9 @@ export class GameController {
         this._model = model;
         this._gameSettings = GameSettings.getInstance();
 
-        this._obstaclesView = new ObstaclesView();
-        this._obstaclesController = new ObstaclesController(this._obstaclesView);
-
-        this._birdView = new BirdView(
-            this._gameSettings.birdStartingXPosition,
-            this._gameSettings.birdStartingYPosition,
-        );
-        this._birdController = new BirdController(this._birdView);
-
+        this.initObstacles();
+        this.initPlayerBird();
+        this.initGameScoreText();
         this.setupEvents();
 
         this._collisionCheckTicker = new PIXI.ticker.Ticker();
@@ -45,6 +40,29 @@ export class GameController {
         this._collisionCheckTicker.start();
 
         this._obstaclesController.startMoving();
+    }
+
+    private initPlayerBird(): any {
+        this._birdView = new BirdView(
+            this._gameSettings.birdStartingXPosition,
+            this._gameSettings.birdStartingYPosition,
+        );
+        this._birdController = new BirdController(this._birdView);
+    }
+
+    private initObstacles(): any {
+        this._obstaclesView = new ObstaclesView();
+        this._obstaclesController = new ObstaclesController(this._obstaclesView);
+    }
+
+    // TODO:
+    // move to view
+    private initGameScoreText(): any {
+        this._gameScoreText = new PIXI.Text(this._model.gameScore.toString(), { fontSize: 17, fill: 0xffffff });
+
+        this._gameScoreText.position.set(2, 2);
+
+        this._view.stage.addChild(this._gameScoreText);
     }
 
     private onKeyDown(key: KeyboardEvent) {
@@ -83,6 +101,7 @@ export class GameController {
     private restart(): void {
         this._model.resetModel();
 
+        this.updateGameScore();
         this._birdController.resetBird();
         this._obstaclesController.resetObstacles();
         this._obstaclesController.startMoving();
@@ -94,7 +113,22 @@ export class GameController {
         this._obstaclesController.stopMoving();
     }
 
+    private onPipePassed(): any {
+        this._model.incrementScore(1);
+        this.updateGameScore();
+    }
+
+    private updateGameScore() {
+        this._gameScoreText.text = this._model.gameScore.toString();
+    }
+
     private setupEvents(): any {
+        // collision
+        this._obstaclesController.on(ObstaclesController.PIPE_PASSED, () => {
+            this.onPipePassed();
+        });
+
+        // fly events
         document.addEventListener("keydown", (e: KeyboardEvent) => {
             this.onKeyDown(e);
         });

@@ -11,11 +11,12 @@ export class GameView extends PIXI.Container {
         // create debug controller & view
         // place the console and fps counter there
         this.addChild(PixiConsole.getInstance());
-        this.addChild(
-            new PixiFps({
-                fontSize: 12,
-            } as PIXI.TextStyle),
-        );
+
+        // this.addChild(
+        //     new PixiFps({
+        //         fontSize: 12,
+        //     } as PIXI.TextStyle),
+        // );
 
         stage.addChild(this);
     }
