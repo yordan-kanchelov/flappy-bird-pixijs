@@ -12,12 +12,14 @@ A simple flappy bird clone written in typescript
 
 -   Add menu screen
 
--   Add Score
-
 -   Add game over screen
+
+-   Add sound effects
 
 -   Handle collision better ( collision for rotated rectangles )
 
 -   Try to separate better model data from view
+
+-   ~~Add Score~~
 
 -   ~~Properly scale the game~~
