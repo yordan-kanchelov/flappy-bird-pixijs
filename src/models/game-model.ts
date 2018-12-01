@@ -19,7 +19,7 @@ export class GameModel {
     }
 
     decrementScore(decValue: number) {
-        this._gameScore -= decValue;
+        this._gameScore = this.gameScore <= decValue ? 0 : this.gameScore - decValue;
     }
 
     resetModel() {
