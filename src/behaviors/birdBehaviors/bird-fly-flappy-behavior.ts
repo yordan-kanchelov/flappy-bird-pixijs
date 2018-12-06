@@ -3,7 +3,7 @@ import { IGameObject } from "../../interfaces/game-object";
 import { Howl } from "howler";
 
 export class BirdFlyFlappyBehavior implements IFlyBehavior {
-    private static readonly FLY_VELOCITY_Y: number = 2.5;
+    private static readonly FLY_VELOCITY_Y: number = 2.43 ;
 
     public gameObject: IGameObject;
 
