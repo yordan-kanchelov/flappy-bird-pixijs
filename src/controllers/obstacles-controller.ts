@@ -77,14 +77,9 @@ export class ObstaclesController extends PIXI.utils.EventEmitter {
         const ground = (World.getInstance().ground = new Ground());
         ground.y = this._gameSettings.gameHeight - ground.height;
 
-        const outerGround = new Ground();
-        outerGround.x = ground.x + ground.width;
-        outerGround.y = this._gameSettings.gameHeight - outerGround.height;
-
         World.addObjectToWorld(ground);
-        World.addObjectToWorld(outerGround);
 
-        this._view.groundObstacles = [ground, outerGround];
+        this._view.groundObstacle = ground;
     }
 
     private addPipeObstacles() {
