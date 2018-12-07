@@ -33,10 +33,6 @@ export class ObstaclesController extends PIXI.utils.EventEmitter {
         return this._view.pipeObstacles[this._nextPipeObstacleIndex];
     }
 
-    get GroundObstacle(): Ground {
-        return this._view.groundObstacle;
-    }
-
     public startMoving(): void {
         this._moveObstaclesTicker.start();
     }
@@ -81,8 +77,14 @@ export class ObstaclesController extends PIXI.utils.EventEmitter {
         const ground = (World.getInstance().ground = new Ground());
         ground.y = this._gameSettings.gameHeight - ground.height;
 
+        const outerGround = new Ground();
+        outerGround.x = ground.x + ground.width;
+        outerGround.y = this._gameSettings.gameHeight - outerGround.height;
+
         World.addObjectToWorld(ground);
-        this._view.groundObstacle = ground;
+        World.addObjectToWorld(outerGround);
+
+        this._view.groundObstacles = [ground, outerGround];
     }
 
     private addPipeObstacles() {
