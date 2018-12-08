@@ -73,6 +73,8 @@ export class ObstaclesController extends PIXI.utils.EventEmitter {
         this.addGroundObstacle();
     }
 
+    // TODO
+    // move ground as parallax background in the root view  
     private addGroundObstacle() {
         const ground = (World.getInstance().ground = new Ground());
         ground.y = this._gameSettings.gameHeight - ground.height;
