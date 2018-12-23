@@ -3,11 +3,12 @@ import { IGameObject } from "../../interfaces/game-object";
 import { Howl } from "howler";
 
 export class BirdFlyFlappyBehavior implements IFlyBehavior {
-    private static readonly FLY_VELOCITY_Y: number = 2.43 ;
+    private static readonly FLY_VELOCITY_Y: number = 2.43;
 
     public gameObject: IGameObject;
 
     private flySound: Howl;
+    private whoopingFlySound: Howl;
 
     constructor(gameObject: IGameObject) {
         this.gameObject = gameObject;
@@ -15,15 +16,24 @@ export class BirdFlyFlappyBehavior implements IFlyBehavior {
         this.flySound = new Howl({
             src: ["../../../assets/sounds/sfx_wing.wav"],
         });
+
+        this.whoopingFlySound = new Howl({
+            src: ["../../../assets/sounds/sfx_swooshing.wav"],
+        });
     }
 
     public fly(): void {
         if (this.gameObject.health === 0) {
-            return ;
+            return;
         }
-        
+
+        if (this.gameObject.velocityY >= 4) {
+            this.whoopingFlySound.play();
+        } else {
+            this.flySound.play();
+        }
+
         this.gameObject.velocityY = -BirdFlyFlappyBehavior.FLY_VELOCITY_Y;
-        this.flySound.play();
     }
 
     dispose(): void {
