@@ -23,7 +23,8 @@ export class GameController {
     private _gameScoreText: PIXI.Text;
     private _collisionCheckTicker: PIXI.ticker.Ticker;
 
-    private _pointSound: Howl;
+    private _scorePointSound: Howl;
+    private _hitSound: Howl;
 
     constructor(model: GameModel, view: GameView) {
         World.getInstance().stage = view.stage;
@@ -33,8 +34,12 @@ export class GameController {
         this._model = model;
         this._gameSettings = GameSettings.getInstance();
 
-        this._pointSound = new Howl({
+        this._scorePointSound = new Howl({
             src: ["../../assets/sounds/sfx_point.wav"],
+        });
+
+        this._hitSound = new Howl({
+            src: ["../../assets/sounds/sfx_hit.wav"],
         });
 
         this.initObstacles();
@@ -52,7 +57,7 @@ export class GameController {
     private initPlayerBird(): any {
         this._birdView = new BirdView(
             this._gameSettings.birdStartingXPosition,
-            this._gameSettings.birdStartingYPosition
+            this._gameSettings.birdStartingYPosition,
         );
         this._birdController = new BirdController(this._birdView);
     }
@@ -119,13 +124,17 @@ export class GameController {
     }
 
     private onBirdHit(): void {
-        this._birdController.birdHealth = 0;
-        this._obstaclesController.stopMoving();
+        if (this._birdController.bird.health != 0) {
+            this._hitSound.play();
+
+            this._birdController.birdHealth = 0;
+            this._obstaclesController.stopMoving();
+        }
     }
 
     private onPipePassed(): any {
         this._model.incrementScore(1);
-        this._pointSound.play();
+        this._scorePointSound.play();
 
         this.updateGameScore();
     }
@@ -135,7 +144,7 @@ export class GameController {
 
         // center text
         const gameWidth = GameSettings.getInstance().gameWidth;
-        this._gameScoreText.position.set(gameWidth / 2 - this._gameScoreText.width / 2 , 20);
+        this._gameScoreText.position.set(gameWidth / 2 - this._gameScoreText.width / 2, 20);
     }
 
     private setupEvents(): any {
@@ -150,7 +159,7 @@ export class GameController {
         });
         this._view.stage.addListener(
             PixiEventResolver.resolve("mousedown") as PIXI.interaction.InteractionEventTypes,
-            () => this.mainAction()
+            () => this.mainAction(),
         );
     }
 }
