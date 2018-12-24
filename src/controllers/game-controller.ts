@@ -1,5 +1,6 @@
 import PixiEventResolver from "pixi-event-resolver";
-import { Howl } from "howler";
+import Utils from "../utils/utils";
+
 import { GameSettings } from "../models/game-settings";
 import { CollisionChecker } from "../utils/collision-checker";
 import { BirdView } from "../views/bird-view";
@@ -34,13 +35,8 @@ export class GameController {
         this._model = model;
         this._gameSettings = GameSettings.getInstance();
 
-        this._scorePointSound = new Howl({
-            src: ["../../assets/sounds/sfx_point.wav"],
-        });
-
-        this._hitSound = new Howl({
-            src: ["../../assets/sounds/sfx_hit.wav"],
-        });
+        this._scorePointSound = Utils.getHowlSound("sfx_point.wav");
+        this._hitSound = Utils.getHowlSound("sfx_hit.wav");
 
         this.initObstacles();
         this.initPlayerBird();
