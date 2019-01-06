@@ -3,6 +3,8 @@ import { PipeObstacle } from "../game-objects/pipes-obstacle";
 import { Bird } from "../game-objects/bird";
 
 export class CollisionChecker {
+    // TODO: 
+    // check for circle collision maybe it would be better with it
     public static pipeCollision(bird: Bird, pipeObstacle: PipeObstacle): boolean {
         const birdBottomPoint: number = bird.y + bird.texture.height;
 
