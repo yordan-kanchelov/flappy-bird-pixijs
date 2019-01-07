@@ -1,10 +1,10 @@
-import { IGameObject } from "../interfaces/game-object";
-import { IGravityBehavior } from "../interfaces/behaviors/gravity-behavior";
-import { World } from "../models/world";
+import { IGameObject } from "../../interfaces/game-object";
+import { IGravityBehavior } from "../../interfaces/behaviors/gravity-behavior";
+import { World } from "../../models/world";
 
 export class GravityBehavior implements IGravityBehavior {
     public gameObject: IGameObject;
-    public gravityPower: number = 0.1;
+    public gravityPower: number = 1;
     public gravityTicker: PIXI.ticker.Ticker;
 
     constructor(gameObject: IGameObject, velocityY = 0) {
@@ -34,11 +34,11 @@ export class GravityBehavior implements IGravityBehavior {
         this.gravityTicker = null;
     }
 
-    get velocityY(): number {
+    private get velocityY(): number {
         return this.gameObject.velocityY;
     }
 
-    set velocityY(value: number) {
+    private set velocityY(value: number) {
         this.gameObject.velocityY = value;
     }
 }
