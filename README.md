@@ -12,6 +12,8 @@ A simple flappy bird clone written in typescript
 
 -   Add menu screen
 
+-   Add loading screen
+
 -   Add game over screen
 
 -   Handle collision better ( collision for rotated rectangles, if not circle collision ) 
