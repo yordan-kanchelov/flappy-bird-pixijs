@@ -1,5 +1,5 @@
 import { IGameObject } from "../../interfaces/game-object";
-import { GravityBehavior } from "../gravity-behavior";
+import { GravityBehavior } from "../gravityBehaviors/gravity-behavior";
 
 export class BirdGravityBehavior extends GravityBehavior {
     public gravityPower: number = 0.1;
