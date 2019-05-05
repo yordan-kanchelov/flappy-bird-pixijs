@@ -7,7 +7,7 @@ export class World {
     stage: PIXI.Container;
     ground: Ground;
     gameObjects: IGameObject[];
-    
+
     private background: PIXI.Sprite;
 
     constructor() {
@@ -19,14 +19,13 @@ export class World {
 
         this.gameObjects = [];
     }
-    
 
     public static getInstance(): World {
         return World.instance;
     }
 
     public static setBackground(backgroundTexture: PIXI.Texture): any {
-        if(!this.WorldInstance.background){
+        if (!this.WorldInstance.background) {
             this.WorldInstance.background = new PIXI.Sprite(backgroundTexture);
             this.WorldInstance.stage.addChildAt(this.WorldInstance.background, 0);
         } else {
@@ -47,7 +46,7 @@ export class World {
         this.WorldInstance.stage.addChild(gameObject);
     }
 
-    private static get WorldInstance() { 
+    private static get WorldInstance() {
         return World.getInstance();
     }
 }

@@ -10,7 +10,7 @@ export class ObstaclesView extends PIXI.utils.EventEmitter {
     nextPipeObstacleIndex: number = 0;
 
     constructor() {
-        super()
+        super();
     }
 
     movePipes() {

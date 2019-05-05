@@ -53,7 +53,7 @@ export class GameController {
     private initPlayerBird(): any {
         this._birdView = new BirdView(
             this._gameSettings.birdStartingXPosition,
-            this._gameSettings.birdStartingYPosition,
+            this._gameSettings.birdStartingYPosition
         );
         this._birdController = new BirdController(this._birdView);
     }
@@ -155,7 +155,7 @@ export class GameController {
         });
         this._view.stage.addListener(
             PixiEventResolver.resolve("mousedown") as PIXI.interaction.InteractionEventTypes,
-            () => this.mainAction(),
+            () => this.mainAction()
         );
     }
 }

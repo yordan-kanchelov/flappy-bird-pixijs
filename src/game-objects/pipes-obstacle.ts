@@ -9,7 +9,7 @@ export class PipeObstacle {
     constructor() {
         this._upperPipe = new Pipe(true);
         this._bottomPipe = new Pipe(false);
-        this._bottomPipe.y = GameSettings.getInstance().gameHeight - new Ground().height; // think for a better way 
+        this._bottomPipe.y = GameSettings.getInstance().gameHeight - new Ground().height; // think for a better way
 
         this.updateObstacle();
     }
@@ -38,7 +38,7 @@ export class PipeObstacle {
     get pipes() {
         return [this.upperPipe, this.bottomPipe];
     }
-    
+
     public updateObstacle(): void {
         const upperOffset: number = Math.floor(Math.random() * 100 + 1);
         this._upperPipe.y = -upperOffset;
