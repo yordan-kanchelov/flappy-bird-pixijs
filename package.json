@@ -4,18 +4,16 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "liveServer": "npx live-server",
-        "tscWatcher": "run-script-os",
-        "tscWatcher:win32": "watchify --debug -p [ tsify ] .\\src\\main.ts -o index.js",
-        "tscWatcher:darwin:linux:": "watchify --debug -p [ tsify ] ./src/main.ts -o index.js",
-        "watch": "npx npm-run-all -p tscWatcher liveServer",
-        "build": "run-script-os",
-        "build:win32": "npx browserify .\\src\\main.ts -p [ tsify ] > index.js && uglifyjs --output .\\index.js  --compress --mangle -- .\\index.js",
-        "build:darwin:linux:": "npx browserify ./src/main.ts -p [ tsify ] > index.js && uglifyjs --output ./index.js  --compress --mangle -- ./index.js"
+        "liveServer": "live-server ./dist",
+        "tscWatcher": "npx watchify --debug -p [ tsify ] ./src/main.ts -o ./dist/index.js",
+        "copyAssets": "npx del-cli ./dist/assets && npx copy ./assets/** ./dist/assets/",
+        "watch": "npm run copyAssets && npx npm-run-all -p tscWatcher liveServer",
+        "build": "npm run copyAssets && npx browserify ./src/main.ts -p [ tsify ] > ./dist/index.js && uglifyjs --output ./dist/index.js  --compress --mangle -- ./dist/index.js"
     },
     "author": "",
     "license": "ISC",
     "dependencies": {
+        "copy": "^0.3.2",
         "howler": "^2.0.15",
         "is-ios": "^1.0.0",
         "pixi-console": "^0.7.0",
@@ -28,12 +26,12 @@
         "@types/howler": "^2.0.5",
         "@types/pixi.js": "^4.7.5",
         "@types/screenfull": "^3.3.2",
+        "del-cli": "^1.1.0",
         "browserify": "^16.2.3",
         "live-server": "^1.2.1",
         "npm-run-all": "^4.1.3",
-        "run-script-os": "^1.0.3",
         "tsify": "^4.0.0",
-        "typescript": "^3.1.6",
+        "typescript": "^3.4.5",
         "uglify-js": "^3.4.0",
         "watchify": "^3.11.0"
     }
