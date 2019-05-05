@@ -4,7 +4,7 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "liveServer": "live-server ./dist",
+        "liveServer": "live-server --open=./dist",
         "tscWatcher": "npx watchify --debug -p [ tsify ] ./src/main.ts -o ./dist/index.js",
         "copyAssets": "npx del-cli ./dist/assets && npx cpy ./assets/** ./dist/ --parents",
         "watch": "npm run copyAssets && npx npm-run-all -p tscWatcher liveServer",
