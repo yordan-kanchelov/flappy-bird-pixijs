@@ -48,17 +48,19 @@ export class Main {
     }
 
     private createRenderer(): void {
+        const gameContainer = document.getElementById("gameContainer");
+
         this.game = new PIXI.Application({
             backgroundColor: 0xffff00,
             height: window.innerHeight,
             width: window.innerWidth,
         });
 
+        gameContainer.appendChild(this.game.view);
+
         this.game.stage.interactive = true;
         this.game.stage.scale.x = window.innerWidth / this.gameSettings.gameWidth;
         this.game.stage.scale.y = window.innerHeight / this.gameSettings.gameHeight;
-
-        document.body.appendChild(this.game.view);
 
         this.game.stage.interactive = true;
         this.game.stage.addListener("tap", () => {
