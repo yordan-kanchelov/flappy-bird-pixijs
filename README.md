@@ -4,7 +4,7 @@
 
 A simple flappy bird clone written in typescript
 
-#### Game link - https://flappy-birdd.herokuapp.com/
+#### Game link - https://flappy-bird-pixijs.netlify.com/
 
 #
 
