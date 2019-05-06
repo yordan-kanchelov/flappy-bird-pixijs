@@ -1,10 +1,6 @@
 {
     "gitflow4code.features": [
         {
-            "name": "feature/Updated_collision",
-            "base": "develop"
-        },
-        {
             "name": "feature/updated-collision",
             "base": "develop"
         },
