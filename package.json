@@ -1,7 +1,7 @@
 {
-    "name": "flappy-bird-pixi",
+    "name": "flappy-bird-pixi-v5",
     "version": "1.0.0",
-    "description": "",
+    "description": "flappy bird clone pixi.js v5.0.0",
     "main": "index.js",
     "scripts": {
         "live-server": "live-server --open=./dist",
