@@ -1,3 +1,5 @@
+import * as PIXI from "pixi.js";
+
 import { IGameObject } from "../interfaces/game-object";
 
 export class Pipe extends PIXI.Sprite implements IGameObject {
@@ -6,10 +8,7 @@ export class Pipe extends PIXI.Sprite implements IGameObject {
     velocityY: number;
 
     constructor(upperPipe: boolean = true) {
-        super();
-
-        const pipeTexture = PIXI.Texture.fromImage(upperPipe ? "pipeUp.png" : "pipeDown.png");
-        this.texture = pipeTexture;
+        super(PIXI.Texture.from(upperPipe ? "pipeUp.png" : "pipeDown.png"));
     }
 
     get body(): PIXI.Sprite {
