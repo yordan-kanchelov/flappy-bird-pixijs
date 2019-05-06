@@ -1,3 +1,5 @@
+import * as PIXI from "pixi.js";
+
 import { PipeObstacle } from "../game-objects/pipes-obstacle";
 import { GameSettings } from "../models/game-settings";
 import { ObstaclesView } from "../views/obstacles-view";
@@ -13,7 +15,7 @@ export class ObstaclesController extends PIXI.utils.EventEmitter {
     private _gameSettings: GameSettings = GameSettings.getInstance();
 
     private _nextPipeObstacleIndex: number;
-    private _moveObstaclesTicker: PIXI.ticker.Ticker;
+    private _moveObstaclesTicker: PIXI.Ticker;
 
     constructor(view: ObstaclesView) {
         super();
@@ -23,7 +25,7 @@ export class ObstaclesController extends PIXI.utils.EventEmitter {
 
         this._nextPipeObstacleIndex = 0;
 
-        this._moveObstaclesTicker = new PIXI.ticker.Ticker();
+        this._moveObstaclesTicker = new PIXI.Ticker();
         this._moveObstaclesTicker.add(() => this.moveObstacles());
 
         this.addObstacles();

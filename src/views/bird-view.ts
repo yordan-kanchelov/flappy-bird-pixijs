@@ -1,3 +1,5 @@
+import * as PIXI from "pixi.js";
+
 import { Bird } from "../game-objects/bird";
 
 export class BirdView {

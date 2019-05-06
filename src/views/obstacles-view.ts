@@ -1,3 +1,5 @@
+import * as PIXI from "pixi.js";
+
 import { Ground } from "../game-objects/ground";
 import { PipeObstacle } from "../game-objects/pipes-obstacle";
 import { GameSettings } from "../models/game-settings";
@@ -16,7 +18,7 @@ export class ObstaclesView extends PIXI.utils.EventEmitter {
     movePipes() {
         if (
             this.pipeObstacles[this.nextPipeObstacleIndex].x + this.pipeObstacles[this.nextPipeObstacleIndex].width <
-            this._gameSettings.birdStartingXPosition - PIXI.Texture.fromImage("birdMiddle.png").width / 2
+            this._gameSettings.birdStartingXPosition - PIXI.Texture.from("birdMiddle.png").width / 2
         ) {
             this.emit(ObstaclesView.PIPE_PASSED);
         }

@@ -1,3 +1,5 @@
+import * as PIXI from "pixi.js";
+
 import { GameSettings } from "../models/game-settings";
 import { Pipe } from "./pipe";
 import { Ground } from "./ground";

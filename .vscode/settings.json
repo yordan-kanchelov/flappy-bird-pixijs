@@ -1,0 +1,16 @@
+{
+    "gitflow4code.features": [
+        {
+            "name": "feature/Updated_collision",
+            "base": "develop"
+        },
+        {
+            "name": "feature/updated-collision",
+            "base": "develop"
+        },
+        {
+            "name": "feature/pixi-v5-migration",
+            "base": "develop"
+        }
+    ]
+}
