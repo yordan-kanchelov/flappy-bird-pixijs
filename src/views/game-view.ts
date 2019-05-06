@@ -1,4 +1,6 @@
-import { PixiConsole } from "pixi-console";
+import * as PIXI from "pixi.js";
+
+// import { PixiConsole } from "pixi-console";
 import PixiFps from "pixi-fps";
 export class GameView extends PIXI.Container {
     private _stage: PIXI.Container;
@@ -10,7 +12,7 @@ export class GameView extends PIXI.Container {
         // TODO:
         // create debug controller & view
         // place the console and fps counter there
-        this.addChild(PixiConsole.getInstance());
+        // this.addChild(PixiConsole.getInstance());
 
         // this.addChild(
         //     new PixiFps({

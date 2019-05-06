@@ -20,12 +20,11 @@
         "pixi-console": "^0.7.0",
         "pixi-event-resolver": "^1.2.0",
         "pixi-fps": "^1.0.0",
-        "pixi.js": "^4.8.1",
+        "pixi.js": "^5.0.0",
         "screenfull": "^3.3.3"
     },
     "devDependencies": {
         "@types/howler": "^2.0.5",
-        "@types/pixi.js": "^4.7.5",
         "@types/screenfull": "^3.3.2",
         "browserify": "^16.2.3",
         "cpy-cli": "^2.0.0",

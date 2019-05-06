@@ -1,6 +1,6 @@
 import * as PIXI from "pixi.js";
 import screenfull from "screenfull";
-import { PixiConsole, PixiConsoleConfig } from "pixi-console";
+// import { PixiConsole, PixiConsoleConfig } from "pixi-console";
 import { GameController } from "./controllers/game-controller";
 import { GameSettings } from "./models/game-settings";
 import { GameView } from "./views/game-view";
@@ -13,23 +13,23 @@ export class Main {
     constructor() {
         window.onload = () => {
             this.createRenderer();
-            this.initConsole();
+            // this.initConsole();
             this.startLoadingAssets();
         };
     }
 
-    private initConsole() {
-        let consoleConfig = new PixiConsoleConfig();
-        consoleConfig.consoleWidth = this.gameSettings.gameWidth;
-        consoleConfig.consoleHeight = this.gameSettings.gameHeight;
-        consoleConfig.consoleAlpha = 0.5;
-        consoleConfig.fontSize = 10;
+    // private initConsole() {
+    //     let consoleConfig = new PixiConsoleConfig();
+    //     consoleConfig.consoleWidth = this.gameSettings.gameWidth;
+    //     consoleConfig.consoleHeight = this.gameSettings.gameHeight;
+    //     consoleConfig.consoleAlpha = 0.5;
+    //     consoleConfig.fontSize = 10;
 
-        new PixiConsole(consoleConfig);
-    }
+    //     new PixiConsole(consoleConfig);
+    // }
 
     private startLoadingAssets(): void {
-        const loader = PIXI.loader;
+        const loader = PIXI.Loader.shared;
         loader.add("gameSprite", "assets/spritesData.json");
         loader.on("complete", () => {
             this.onAssetsLoaded();

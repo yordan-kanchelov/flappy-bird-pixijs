@@ -1,3 +1,5 @@
+import * as PIXI from "pixi.js";
+
 import { IGameObject } from "../interfaces/game-object";
 
 export class Bird extends PIXI.Sprite implements IGameObject {
@@ -15,7 +17,7 @@ export class Bird extends PIXI.Sprite implements IGameObject {
     private birdFlapping: boolean;
 
     constructor() {
-        super();
+        super(PIXI.Texture.EMPTY);
 
         const fps = 60;
         this._then = Date.now();
@@ -24,9 +26,9 @@ export class Bird extends PIXI.Sprite implements IGameObject {
 
         this._birdPhase = 0;
         this._birdTextures = [
-            PIXI.Texture.fromImage("birdDown.png"),
-            PIXI.Texture.fromImage("birdMiddle.png"),
-            PIXI.Texture.fromImage("birdUp.png"),
+            PIXI.Texture.from("birdDown.png"),
+            PIXI.Texture.from("birdMiddle.png"),
+            PIXI.Texture.from("birdUp.png"),
         ];
 
         this.texture = this._birdTextures[0];

@@ -1,3 +1,5 @@
+import * as PIXI from "pixi.js";
+
 import { Ground } from "../game-objects/ground";
 import { IGameObject } from "../interfaces/game-object";
 

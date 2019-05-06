@@ -1,3 +1,5 @@
+import * as PIXI from "pixi.js";
+
 import PixiEventResolver from "pixi-event-resolver";
 import Utils from "../utils/utils";
 
@@ -22,14 +24,14 @@ export class GameController {
 
     private _gameSettings: GameSettings;
     private _gameScoreText: PIXI.Text;
-    private _collisionCheckTicker: PIXI.ticker.Ticker;
+    private _collisionCheckTicker: PIXI.Ticker;
 
     private _scorePointSound: Howl;
     private _hitSound: Howl;
 
     constructor(model: GameModel, view: GameView) {
         World.getInstance().stage = view.stage;
-        World.setBackground(PIXI.Texture.fromImage("background.png"));
+        World.setBackground(PIXI.Texture.from("background.png"));
 
         this._view = view;
         this._model = model;
@@ -43,7 +45,7 @@ export class GameController {
         this.initGameScoreText();
         this.setupEvents();
 
-        this._collisionCheckTicker = new PIXI.ticker.Ticker();
+        this._collisionCheckTicker = new PIXI.Ticker();
         this._collisionCheckTicker.add(this.onCollisionCheckTick.bind(this));
         this._collisionCheckTicker.start();
 
