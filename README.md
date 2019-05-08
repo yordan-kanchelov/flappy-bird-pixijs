@@ -16,7 +16,7 @@ A simple flappy bird clone written in typescript
 
 -   Add game over screen
 
--   Handle collision better ( collision for rotated rectangles, if not circle collision ) 
+-   Handle collision better ( add hitbody of a circle to the bird and perform check with it ) 
 
 -   Try to separate better model data from view
 
