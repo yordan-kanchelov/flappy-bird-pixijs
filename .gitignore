@@ -5,4 +5,4 @@ dist/*
 !dist/manifest.json
 !dist/favicon.ico
 !dist/icons
-!dist/serviceWorker.js
+!dist/service-worker.js
