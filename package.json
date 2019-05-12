@@ -17,7 +17,7 @@
     "dependencies": {
         "howler": "^2.0.15",
         "is-ios": "^1.0.0",
-        "pixi-console": "^0.7.0",
+        "pixi-console": "^3.0.1",
         "pixi-event-resolver": "^1.2.0",
         "pixi-fps": "^1.0.0",
         "pixi.js": "^5.0.0",
@@ -35,7 +35,7 @@
         "prettier": "^1.17.0",
         "tsify": "^4.0.0",
         "typescript": "^3.4.5",
-        "uglify-js": "^3.4.0",
+        "uglify-es": "^3.3.9",
         "watchify": "^3.11.0"
     }
 }
