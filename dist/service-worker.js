@@ -1,8 +1,4 @@
-const filesToCache = [
-    "/",
-    "index.html",
-    "index.js",
-];
+const filesToCache = ["/", "index.html", "index.js"];
 
 const staticCacheName = "v1";
 
@@ -41,20 +37,20 @@ self.addEventListener("fetch", event => {
     );
 });
 
-self.addEventListener('activate', event => {
-  console.log('Activating new service worker...');
+self.addEventListener("activate", event => {
+    console.log("Activating new service worker...");
 
-  const cacheWhitelist = [staticCacheName];
+    const cacheWhitelist = [staticCacheName];
 
-  event.waitUntil(
-    caches.keys().then(cacheNames => {
-      return Promise.all(
-        cacheNames.map(cacheName => {
-          if (cacheWhitelist.indexOf(cacheName) === -1) {
-            return caches.delete(cacheName);
-          }
+    event.waitUntil(
+        caches.keys().then(cacheNames => {
+            return Promise.all(
+                cacheNames.map(cacheName => {
+                    if (cacheWhitelist.indexOf(cacheName) === -1) {
+                        return caches.delete(cacheName);
+                    }
+                })
+            );
         })
-      );
-    })
-  );
+    );
 });
