@@ -1,10 +1,7 @@
 const filesToCache = [
     "/",
-    "style/main.css",
-    "images/still_life_medium.jpg",
     "index.html",
-    "pages/offline.html",
-    "pages/404.html",
+    "index.js",
 ];
 
 const staticCacheName = "v1";
