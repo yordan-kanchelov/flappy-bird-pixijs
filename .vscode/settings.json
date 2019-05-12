@@ -7,6 +7,10 @@
         {
             "name": "feature/pixi-v5-migration",
             "base": "develop"
+        },
+        {
+            "name": "feature/pwa-update",
+            "base": "develop"
         }
     ]
 }
