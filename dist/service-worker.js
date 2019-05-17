@@ -4,7 +4,7 @@ const filesToCache = [
     "index.js",
 ];
 
-const staticCacheName = "v1.1";
+const staticCacheName = "v1.2";
 
 self.addEventListener("install", event => {
     console.log("Attempting to install service worker and cache static assets");
@@ -16,7 +16,6 @@ self.addEventListener("install", event => {
 });
 
 self.addEventListener("fetch", event => {
-    console.log("Fetch event for ", event.request.url);
     event.respondWith(
         caches
             .match(event.request)
