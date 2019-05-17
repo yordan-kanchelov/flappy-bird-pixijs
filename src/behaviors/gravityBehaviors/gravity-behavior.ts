@@ -6,7 +6,6 @@ import { World } from "../../models/world";
 
 export class GravityBehavior implements IGravityBehavior {
     public gameObject: IGameObject;
-    public gravityPower: number = 1;
     public gravityTicker: PIXI.Ticker;
 
     constructor(gameObject: IGameObject, velocityY = 0) {
@@ -20,7 +19,7 @@ export class GravityBehavior implements IGravityBehavior {
 
     public gravity(): void {
         if (this.velocityY < 10) {
-            this.velocityY += this.gravityPower;
+            this.velocityY += this.gameObject.gravityPower;
         }
 
         if (this.velocityY > 0 && World.isObjectOnGround(this.gameObject)) {
