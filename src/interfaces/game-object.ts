@@ -5,4 +5,5 @@ export interface IGameObject extends PIXI.Container {
     health: number;
     velocityX: number;
     velocityY: number;
+    gravityPower: number;
 }

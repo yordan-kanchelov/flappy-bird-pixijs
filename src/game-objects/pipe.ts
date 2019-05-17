@@ -3,6 +3,7 @@ import * as PIXI from "pixi.js";
 import { IGameObject } from "../interfaces/game-object";
 
 export class Pipe extends PIXI.Sprite implements IGameObject {
+    gravityPower: number;
     health: number;
     velocityX: number;
     velocityY: number;

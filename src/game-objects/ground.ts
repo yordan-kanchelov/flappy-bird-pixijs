@@ -5,6 +5,7 @@ export class Ground extends PIXI.Sprite implements IGameObject {
     health: number;
     velocityX: number;
     velocityY: number;
+    gravityPower: number;
 
     constructor() {
         super(PIXI.Texture.from("ground.png"));
