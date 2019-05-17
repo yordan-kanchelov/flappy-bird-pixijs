@@ -1,6 +1,6 @@
 {
-  "short_name": "EGT Quiz",
-  "name": "EGT Interactive quiz",
+  "short_name": "Flappy Bird",
+  "name": "Flappy Bird",
   "icons": [
     {
       "src": "favicon.ico",
@@ -19,7 +19,8 @@
     }
   ],
   "start_url": ".",
-  "display": "standalone",
+  "display": "fullscreen",
+  "orientation":  "portrait",
   "theme_color": "#000000",
   "background_color": "#ffffff"
 }

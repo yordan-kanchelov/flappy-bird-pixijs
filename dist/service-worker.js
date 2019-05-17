@@ -4,7 +4,7 @@ const filesToCache = [
     "index.js",
 ];
 
-const staticCacheName = "v1";
+const staticCacheName = "v1.1";
 
 self.addEventListener("install", event => {
     console.log("Attempting to install service worker and cache static assets");
