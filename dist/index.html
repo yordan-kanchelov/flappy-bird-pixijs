@@ -7,7 +7,7 @@
         <link rel="apple-touch-icon" href="/icons/icon-150.png" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="theme-color" content="#000000" />
-        
+
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="stylesheet" type="text/css" href="./game.css" />
         <title>flappy-bird</title>
@@ -18,6 +18,13 @@
         <div id="gameContainer"></div>
 
         <script>
+            // if (window.navigator && navigator.serviceWorker) {
+            //     navigator.serviceWorker.getRegistrations().then(function(registrations) {
+            //         for (let registration of registrations) {
+            //             registration.unregister();
+            //         }
+            //     });
+            // }
             if ("serviceWorker" in navigator) {
                 window.addEventListener("load", () => {
                     navigator.serviceWorker.register("./service-worker.js").then(
