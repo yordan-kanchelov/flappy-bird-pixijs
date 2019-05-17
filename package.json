@@ -15,7 +15,7 @@
     "author": "",
     "license": "ISC",
     "dependencies": {
-        "howler": "^2.0.15",
+        "howler": "^2.1.2",
         "is-ios": "^1.0.0",
         "pixi-console": "^3.0.1",
         "pixi-event-resolver": "^1.2.0",
