@@ -43,8 +43,6 @@ export class Main {
         const gameController = new GameController(gameModel, gameView);
 
         (window as any).flappyBird = { Main: this, GameController: gameController, GameView: gameView };
-
-        this.animate();
     }
 
     private createRenderer(): void {
@@ -74,16 +72,6 @@ export class Main {
             this.game.stage.scale.x = window.innerWidth / this.gameSettings.gameWidth;
             this.game.stage.scale.y = window.innerHeight / this.gameSettings.gameHeight;
         });
-
-        this.animate();
-    }
-
-    private animate(): void {
-        requestAnimationFrame(() => {
-            this.animate();
-        });
-
-        this.game.renderer.render(this.game.stage);
     }
 }
 
