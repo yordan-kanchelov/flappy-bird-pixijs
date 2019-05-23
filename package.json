@@ -20,7 +20,7 @@
         "pixi-console": "^3.0.1",
         "pixi-event-resolver": "^1.2.0",
         "pixi-fps": "^1.0.0",
-        "pixi.js": "^5.0.0",
+        "pixi.js": "^5.0.3",
         "screenfull": "^3.3.3"
     },
     "devDependencies": {
