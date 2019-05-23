@@ -19,7 +19,7 @@
         "is-ios": "^1.0.0",
         "pixi-console": "^3.0.1",
         "pixi-event-resolver": "^1.2.0",
-        "pixi-fps": "^1.0.0",
+        "pixi-fps": "^2.0.1",
         "pixi.js": "^5.0.3",
         "screenfull": "^4.2.0"
     },
