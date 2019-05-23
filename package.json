@@ -21,7 +21,7 @@
         "pixi-event-resolver": "^1.2.0",
         "pixi-fps": "^1.0.0",
         "pixi.js": "^5.0.3",
-        "screenfull": "^3.3.3"
+        "screenfull": "^4.2.0"
     },
     "devDependencies": {
         "@types/howler": "^2.0.5",
