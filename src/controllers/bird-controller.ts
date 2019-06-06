@@ -9,9 +9,12 @@ export class BirdController {
 
     constructor() {
         this._gameSettings = GameSettings.getInstance();
+
         this._bird = new Bird();
 
         World.addObjectToWorld(this.bird);
+
+        this.resetBird();
     }
 
     get bird(): Bird {
@@ -33,10 +36,8 @@ export class BirdController {
     public resetBird(): void {
         this.bird.x = this._gameSettings.birdStartingXPosition;
         this.bird.y = this._gameSettings.birdStartingYPosition;
-        this.bird.rotation = 0;
 
         this.bird.velocityY = this._gameSettings.birdStartingVelocity;
-
         this.birdHealth = 100;
 
         this.bird.startMovingWings();
