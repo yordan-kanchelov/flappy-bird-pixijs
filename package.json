@@ -18,23 +18,23 @@
         "howler": "^2.1.2",
         "is-ios": "^1.0.0",
         "pixi-console": "^3.0.1",
-        "pixi-event-resolver": "^1.2.0",
-        "pixi-fps": "^1.0.0",
-        "pixi.js": "^5.0.0",
-        "screenfull": "^3.3.3"
+        "pixi-event-resolver": "^1.3.0",
+        "pixi-fps": "^2.0.1",
+        "pixi.js": "^5.0.3",
+        "screenfull": "^4.2.0"
     },
     "devDependencies": {
         "@types/howler": "^2.0.5",
-        "@types/screenfull": "^3.3.2",
+        "@types/screenfull": "^4.1.0",
         "browserify": "^16.2.3",
         "cpy-cli": "^2.0.0",
-        "del-cli": "^1.1.0",
-        "husky": "^2.2.0",
+        "del-cli": "^2.0.0",
+        "husky": "^2.4.0",
         "live-server": "^1.2.1",
         "npm-run-all": "^4.1.3",
-        "prettier": "^1.17.0",
+        "prettier": "^1.17.1",
         "tsify": "^4.0.0",
-        "typescript": "^3.4.5",
+        "typescript": "^3.5.1",
         "uglify-es": "^3.3.9",
         "watchify": "^3.11.0"
     }
