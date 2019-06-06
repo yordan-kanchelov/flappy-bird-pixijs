@@ -1,21 +1,21 @@
 import { GameSettings } from "../models/game-settings";
-import { BirdView } from "../views/bird-view";
 import { Bird } from "../game-objects/bird";
 import { World } from "../models/world";
 
 export class BirdController {
-    private _view: BirdView;
     private _gameSettings: GameSettings;
 
-    constructor(view: BirdView) {
-        this._gameSettings = GameSettings.getInstance();
-        this._view = view;
+    private _bird: Bird;
 
-        World.addObjectToWorld(this._view.bird);
+    constructor() {
+        this._gameSettings = GameSettings.getInstance();
+        this._bird = new Bird();
+
+        World.addObjectToWorld(this.bird);
     }
 
     get bird(): Bird {
-        return this._view.bird;
+        return this._bird;
     }
 
     set birdHealth(value: number) {
@@ -39,7 +39,7 @@ export class BirdController {
 
         this.birdHealth = 100;
 
-        this._view.startMovingWings();
+        this.bird.startMovingWings();
     }
 
     private onBirdHit(): void {
@@ -47,6 +47,6 @@ export class BirdController {
             this.bird.velocityY = 0;
         }
 
-        this._view.stopMovingWings();
+        this.bird.stopMovingWings();
     }
 }

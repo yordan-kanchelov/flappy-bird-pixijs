@@ -5,7 +5,6 @@ import Utils from "../utils/utils";
 
 import { GameSettings } from "../models/game-settings";
 import { CollisionChecker } from "../utils/collision-checker";
-import { BirdView } from "../views/bird-view";
 import { ObstaclesView } from "../views/obstacles-view";
 import { GameView } from "../views/game-view";
 import { BirdController } from "./bird-controller";
@@ -20,9 +19,7 @@ export class GameController {
     private _obstaclesController: ObstaclesController;
     private _obstaclesView: ObstaclesView;
     private _birdController: BirdController;
-    private _birdView: BirdView;
 
-    private _gameSettings: GameSettings;
     private _gameScoreText: PIXI.Text;
     private _collisionCheckTicker: PIXI.Ticker;
 
@@ -35,8 +32,6 @@ export class GameController {
 
         this._view = view;
         this._model = model;
-        this._gameSettings = GameSettings.getInstance();
-
         this._scorePointSound = Utils.getHowlSound("sfx_point.wav");
         this._hitSound = Utils.getHowlSound("sfx_hit.wav");
 
@@ -53,11 +48,7 @@ export class GameController {
     }
 
     private initPlayerBird(): any {
-        this._birdView = new BirdView(
-            this._gameSettings.birdStartingXPosition,
-            this._gameSettings.birdStartingYPosition
-        );
-        this._birdController = new BirdController(this._birdView);
+        this._birdController = new BirdController();
     }
 
     private initObstacles(): any {
@@ -155,6 +146,7 @@ export class GameController {
         document.addEventListener("keydown", (e: KeyboardEvent) => {
             this.onKeyDown(e);
         });
+
         this._view.stage.addListener(
             PixiEventResolver.resolve("mousedown") as PIXI.interaction.InteractionEventTypes,
             () => this.mainAction()
