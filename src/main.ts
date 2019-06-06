@@ -72,6 +72,12 @@ export class Main {
             this.game.stage.scale.x = window.innerWidth / this.gameSettings.gameWidth;
             this.game.stage.scale.y = window.innerHeight / this.gameSettings.gameHeight;
         });
+
+        window.addEventListener("orientationchange", () => {
+            this.game.renderer.resize(window.innerWidth, window.innerHeight);
+            this.game.stage.scale.x = window.innerWidth / this.gameSettings.gameWidth;
+            this.game.stage.scale.y = window.innerHeight / this.gameSettings.gameHeight;
+        });
     }
 }
 
