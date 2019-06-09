@@ -36,6 +36,7 @@ export class BirdController {
     public resetBird(): void {
         this.bird.x = this._gameSettings.birdStartingXPosition;
         this.bird.y = this._gameSettings.birdStartingYPosition;
+        this.bird.rotation = 0;
 
         this.bird.velocityY = this._gameSettings.birdStartingVelocity;
         this.birdHealth = 100;
