@@ -1,15 +1,16 @@
-import Utils from "../../utils/utils";
-import { IFlyBehavior } from "../../interfaces/behaviors/fly-behavior";
-import { IGameObject } from "../../interfaces/game-object";
-export class BirdFlyFlappyBehavior implements IFlyBehavior {
+import Utils from "../../../utils/utils";
+import { FlyBehavior } from "../../abstract/behaviors/fly-behavior";
+import { GameObject } from "../../abstract/game-object";
+
+export class BirdFlyFlappyBehavior implements FlyBehavior {
     private static readonly FLY_VELOCITY_Y: number = 2.43;
 
-    public gameObject: IGameObject;
+    public gameObject: GameObject;
 
     private flySound: Howl;
     private whoopingFlySound: Howl;
 
-    constructor(gameObject: IGameObject) {
+    constructor(gameObject: GameObject) {
         this.gameObject = gameObject;
 
         this.flySound = Utils.getHowlSound("sfx_wing.wav");

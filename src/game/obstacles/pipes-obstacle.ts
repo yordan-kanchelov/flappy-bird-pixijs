@@ -1,6 +1,6 @@
 import { GameSettings } from "../models/game-settings";
 import { Pipe } from "./pipe";
-import { Ground } from "./ground";
+import { Ground } from "../ground/ground";
 
 export class PipeObstacle {
     private _upperPipe: Pipe;

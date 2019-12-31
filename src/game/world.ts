@@ -1,14 +1,14 @@
 import * as PIXI from "pixi.js";
 
-import { Ground } from "../game-objects/ground";
-import { IGameObject } from "../interfaces/game-object";
+import { Ground } from "./ground/ground";
+import { GameObject } from "./abstract/game-object";
 
 export class World {
     private static instance: World = new World();
 
     stage: PIXI.Container;
     ground: Ground;
-    gameObjects: IGameObject[];
+    gameObjects: GameObject[];
 
     private background: PIXI.Sprite;
 
@@ -35,7 +35,7 @@ export class World {
         }
     }
 
-    public static isObjectOnGround(gameObject: IGameObject) {
+    public static isObjectOnGround(gameObject: GameObject) {
         if (gameObject.y >= World.getInstance().ground.y) {
             return true;
         }
@@ -43,7 +43,7 @@ export class World {
         return false;
     }
 
-    public static addObjectToWorld(gameObject: IGameObject) {
+    public static addObjectToWorld(gameObject: GameObject) {
         this.WorldInstance.gameObjects.push(gameObject);
         this.WorldInstance.stage.addChild(gameObject);
     }

@@ -1,6 +1,6 @@
 import { GameSettings } from "../models/game-settings";
-import { Bird } from "../game-objects/bird";
-import { World } from "../models/world";
+import { Bird } from "./bird";
+import { World } from "../world";
 
 export class BirdController {
     private _gameSettings: GameSettings;

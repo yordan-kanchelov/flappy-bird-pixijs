@@ -3,14 +3,14 @@ import * as PIXI from "pixi.js";
 import PixiEventResolver from "pixi-event-resolver";
 import Utils from "../utils/utils";
 
-import { GameSettings } from "../models/game-settings";
+import { GameSettings } from "./models/game-settings";
 import { CollisionChecker } from "../utils/collision-checker";
-import { ObstaclesView } from "../views/obstacles-view";
-import { GameView } from "../views/game-view";
-import { BirdController } from "./bird-controller";
-import { ObstaclesController } from "./obstacles-controller";
-import { World } from "../models/world";
-import { GameModel } from "../models/game-model";
+import { ObstaclesView } from "./obstacles/obstacles-view";
+import { GameView } from "./game-view";
+import { BirdController } from "./bird/bird-controller";
+import { ObstaclesController } from "./obstacles/obstacles-controller";
+import { World } from "./world";
+import { GameModel } from "./game-model";
 
 export class GameController {
     private _view: GameView;

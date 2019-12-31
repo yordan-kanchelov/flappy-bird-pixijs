@@ -1,22 +1,17 @@
 import * as PIXI from "pixi.js";
 
-import { IGameObject } from "../interfaces/game-object";
-import { IGravityBehavior } from "../interfaces/behaviors/gravity-behavior";
-import { IFlyBehavior } from "../interfaces/behaviors/fly-behavior";
-import { IRotationBehavior } from "../interfaces/behaviors/rotation-behavior";
-import { BirdFlyFlappyBehavior } from "../behaviors/birdBehaviors/bird-fly-flappy-behavior";
-import { GravityBehavior } from "../behaviors/gravityBehaviors/gravity-behavior";
-import { BirdRotationBehavior } from "../behaviors/birdBehaviors/bird-rotation-behavior";
+import { GravityBehavior as IGravityBehavior } from "../abstract/behaviors/gravity-behavior";
+import { GravityBehavior } from "../commonBehaviors/gravityBehaviors/gravity-behavior";
 
-export class Bird extends PIXI.Sprite implements IGameObject {
-    gravityPower: number;
-    health: number;
-    velocityX: number;
-    velocityY: number;
+import { FlyBehavior } from "../abstract/behaviors/fly-behavior";
+import { BirdFlyFlappyBehavior } from "./behaviors/bird-fly-flappy-behavior";
+import { BirdRotationBehavior } from "./behaviors/bird-rotation-behavior";
+import { GameObject } from "../abstract/game-object";
 
+export class Bird extends GameObject {
     private _gravityBehavior: IGravityBehavior;
-    private _flyBehavior: IFlyBehavior;
-    private _rotationBehavior: IRotationBehavior;
+    private _flyBehavior: FlyBehavior;
+    private _rotationBehavior: BirdRotationBehavior;
 
     private _birdTextures: PIXI.Texture[];
     private _birdPhase: number;
@@ -51,10 +46,6 @@ export class Bird extends PIXI.Sprite implements IGameObject {
         this._rotationBehavior = new BirdRotationBehavior(this);
     }
 
-    get body(): PIXI.Sprite {
-        return this;
-    }
-
     fly() {
         this._flyBehavior.fly();
     }
@@ -80,7 +71,7 @@ export class Bird extends PIXI.Sprite implements IGameObject {
                 this._birdPhase = 0;
             }
 
-            this.body.texture = this._birdTextures[this._birdPhase];
+            this.texture = this._birdTextures[this._birdPhase];
             this._birdPhase += 1;
         }
     }

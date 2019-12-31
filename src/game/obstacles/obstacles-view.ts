@@ -1,7 +1,7 @@
 import * as PIXI from "pixi.js";
 
-import { Ground } from "../game-objects/ground";
-import { PipeObstacle } from "../game-objects/pipes-obstacle";
+import { Ground } from "../ground/ground";
+import { PipeObstacle } from "../obstacles/pipes-obstacle";
 import { GameSettings } from "../models/game-settings";
 
 export class ObstaclesView extends PIXI.utils.EventEmitter {
@@ -36,7 +36,7 @@ export class ObstaclesView extends PIXI.utils.EventEmitter {
     moveGround(moveStep: number) {
         this.groundObstacle.x += moveStep;
 
-        if (-this.groundObstacle.x === this.groundObstacle.body.texture.width - this._gameSettings.gameWidth) {
+        if (-this.groundObstacle.x === this.groundObstacle.texture.width - this._gameSettings.gameWidth) {
             this.groundObstacle.x = 0;
         }
     }

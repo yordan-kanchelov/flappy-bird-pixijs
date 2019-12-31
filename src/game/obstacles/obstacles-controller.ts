@@ -1,10 +1,10 @@
 import * as PIXI from "pixi.js";
 
-import { PipeObstacle } from "../game-objects/pipes-obstacle";
+import { PipeObstacle } from "./pipes-obstacle";
+import { ObstaclesView } from "./obstacles-view";
 import { GameSettings } from "../models/game-settings";
-import { ObstaclesView } from "../views/obstacles-view";
-import { Ground } from "../game-objects/ground";
-import { World } from "../models/world";
+import { Ground } from "../ground/ground";
+import { World } from "../world";
 
 export class ObstaclesController extends PIXI.utils.EventEmitter {
     public static readonly PIPE_PASSED = "pipePassed"; // move to notification class

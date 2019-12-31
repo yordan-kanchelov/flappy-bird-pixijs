@@ -1,16 +1,15 @@
 import * as PIXI from "pixi.js";
 
-import { IGameObject } from "../../interfaces/game-object";
-import { IGravityBehavior } from "../../interfaces/behaviors/gravity-behavior";
-import { World } from "../../models/world";
+import { World } from "../../world";
+import { GameObject } from "../../abstract/game-object";
 
-export class GravityBehavior implements IGravityBehavior {
-    public gameObject: IGameObject;
+export class GravityBehavior {
+    public gameObject: GameObject;
     public gravityTicker: PIXI.Ticker;
 
-    constructor(gameObject: IGameObject, velocityY = 0) {
+    constructor(gameObject: GameObject) {
         this.gameObject = gameObject;
-        this.velocityY = velocityY;
+        this.velocityY = 0;
 
         this.gravityTicker = new PIXI.Ticker();
         this.gravityTicker.add(this.gravity.bind(this));
@@ -26,7 +25,7 @@ export class GravityBehavior implements IGravityBehavior {
             return;
         }
 
-        this.gameObject.body.y += this.velocityY;
+        this.gameObject.y += this.velocityY;
     }
 
     public dispose(): void {

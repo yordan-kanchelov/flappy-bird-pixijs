@@ -1,10 +1,10 @@
 import * as PIXI from "pixi.js";
 import screenfull from "screenfull";
 // import { PixiConsole, PixiConsoleConfig } from "pixi-console";
-import { GameController } from "./controllers/game-controller";
-import { GameSettings } from "./models/game-settings";
-import { GameView } from "./views/game-view";
-import { GameModel } from "./models/game-model";
+import { GameController } from "./game/game-controller";
+import { GameSettings } from "./game/models/game-settings";
+import { GameView } from "./game/game-view";
+import { GameModel } from "./game/game-model";
 
 export class Main {
     private gameSettings: GameSettings = GameSettings.getInstance();

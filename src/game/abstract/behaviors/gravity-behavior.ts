@@ -1,9 +1,9 @@
 import * as PIXI from "pixi.js";
 
-import { IGameObject } from "../game-object";
+import { GameObject } from "../game-object";
 
-export interface IGravityBehavior {
-    gameObject: IGameObject;
+export interface GravityBehavior {
+    gameObject: GameObject;
     gravityTicker: PIXI.Ticker;
     gravity(): void;
     dispose(): void;

@@ -1,8 +1,8 @@
 import * as PIXI from "pixi.js";
 
-import { IGameObject } from "../interfaces/game-object";
+import { GameObject } from "../abstract/game-object";
 
-export class Pipe extends PIXI.Sprite implements IGameObject {
+export class Pipe extends PIXI.Sprite implements GameObject {
     gravityPower: number;
     health: number;
     velocityX: number;

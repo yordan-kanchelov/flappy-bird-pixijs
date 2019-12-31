@@ -1,5 +1,6 @@
-import { PipeObstacle } from "../game-objects/pipes-obstacle";
-import { Bird } from "../game-objects/bird";
+import { PipeObstacle } from "../game/obstacles/pipes-obstacle";
+
+import { Bird } from "../game/bird/bird";
 
 export class CollisionChecker {
     // TODO:
