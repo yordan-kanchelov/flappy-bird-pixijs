@@ -1,4 +1,4 @@
-import Utils from "../../../utils/utils";
+import getHowlSound from "../../../utils/getHowlerSound";
 import { FlyBehavior } from "../../abstract/behaviors/fly-behavior";
 import { GameObject } from "../../abstract/game-object";
 
@@ -13,8 +13,8 @@ export class BirdFlyFlappyBehavior implements FlyBehavior {
     constructor(gameObject: GameObject) {
         this.gameObject = gameObject;
 
-        this.flySound = Utils.getHowlSound("sfx_wing.wav");
-        this.whoopingFlySound = Utils.getHowlSound("sfx_swooshing.wav");
+        this.flySound = getHowlSound("sfx_wing.wav");
+        this.whoopingFlySound = getHowlSound("sfx_swooshing.wav");
     }
 
     public fly(): void {
