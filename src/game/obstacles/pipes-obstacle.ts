@@ -1,4 +1,4 @@
-import { GameSettings } from "../models/game-settings";
+import { GameSettings } from "../game-settings";
 import { Pipe } from "./pipe";
 import { Ground } from "../ground/ground";
 

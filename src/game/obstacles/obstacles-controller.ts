@@ -2,7 +2,7 @@ import * as PIXI from "pixi.js";
 
 import { PipeObstacle } from "./pipes-obstacle";
 import { ObstaclesView } from "./obstacles-view";
-import { GameSettings } from "../models/game-settings";
+import { GameSettings } from "../game-settings";
 import { Ground } from "../ground/ground";
 import { World } from "../world";
 

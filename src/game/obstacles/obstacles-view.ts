@@ -2,7 +2,7 @@ import * as PIXI from "pixi.js";
 
 import { Ground } from "../ground/ground";
 import { PipeObstacle } from "../obstacles/pipes-obstacle";
-import { GameSettings } from "../models/game-settings";
+import { GameSettings } from "../game-settings";
 
 export class ObstaclesView extends PIXI.utils.EventEmitter {
     public static readonly PIPE_PASSED = "pipePassed";

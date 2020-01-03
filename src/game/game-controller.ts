@@ -3,7 +3,7 @@ import * as PIXI from "pixi.js";
 import PixiEventResolver from "pixi-event-resolver";
 import getHowlerSound from "../utils/getHowlerSound";
 
-import { GameSettings } from "./models/game-settings";
+import { GameSettings } from "./game-settings";
 import { CollisionChecker } from "../utils/collision-checker";
 import { ObstaclesView } from "./obstacles/obstacles-view";
 import { GameView } from "./game-view";

@@ -1,4 +1,4 @@
-import { GameSettings } from "../models/game-settings";
+import { GameSettings } from "../game-settings";
 import { Bird } from "./bird";
 import { World } from "../world";
 
