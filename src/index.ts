@@ -1,6 +1,6 @@
 import * as PIXI from "pixi.js";
-import screenfull from "screenfull";
-// import { PixiConsole, PixiConsoleConfig } from "pixi-console";
+import * as screenfull from "screenfull";
+
 import { GameController } from "./game/game-controller";
 import { GameSettings } from "./game/game-settings";
 import { GameView } from "./game/game-view";
@@ -13,24 +13,13 @@ export class Main {
     constructor() {
         window.onload = () => {
             this.createRenderer();
-            // this.initConsole();
             this.startLoadingAssets();
         };
     }
 
-    // private initConsole() {
-    //     let consoleConfig = new PixiConsoleConfig();
-    //     consoleConfig.consoleWidth = this.gameSettings.gameWidth;
-    //     consoleConfig.consoleHeight = this.gameSettings.gameHeight;
-    //     consoleConfig.consoleAlpha = 0.5;
-    //     consoleConfig.fontSize = 10;
-
-    //     new PixiConsole(consoleConfig);
-    // }
-
     private startLoadingAssets(): void {
         const loader = PIXI.Loader.shared;
-        loader.add("gameSprite", "assets/spritesData.json");
+        loader.add("gameSprite", "./spritesData.json");
         loader.on("complete", () => {
             this.onAssetsLoaded();
         });
@@ -42,14 +31,14 @@ export class Main {
         const gameView = new GameView(this.game.stage);
         const gameController = new GameController(gameModel, gameView);
 
-        (window as any).flappyBird = { Main: this, GameController: gameController, GameView: gameView };
+        (window as any).flappyBird = { PIXI: PIXI, Main: this, GameController: gameController, GameView: gameView };
     }
 
     private createRenderer(): void {
         const gameContainer = document.getElementById("gameContainer");
 
         this.game = new PIXI.Application({
-            backgroundColor: 0xffff00,
+            backgroundColor: 0xff0000,
             height: window.innerHeight,
             width: window.innerWidth,
         });

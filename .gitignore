@@ -1,8 +1,3 @@
 node_modules
 dist/*
-!dist/index.html
-!dist/game.css
-!dist/manifest.json
-!dist/favicon.ico
-!dist/icons
-!dist/service-worker.js
+.cache

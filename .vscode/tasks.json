@@ -4,11 +4,11 @@
         {
             "label": "debug watcher",
             "type": "shell",
-            "command": "npm run watch",            
+            "command": "npm run dev",
             "group": {
                 "kind": "build",
                 "isDefault": true
             }
-        },
+        }
     ]
 }

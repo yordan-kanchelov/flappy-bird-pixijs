@@ -4,8 +4,8 @@ import { GameObject } from "../../abstract/game-object";
 import { World } from "../../world";
 
 export class BirdRotationBehavior {
-    public gameObject: GameObject;
-    public rotationTicker: PIXI.Ticker;
+    public gameObject: GameObject | null;
+    public rotationTicker: PIXI.Ticker | null;
 
     constructor(gameObject: GameObject) {
         this.gameObject = gameObject;

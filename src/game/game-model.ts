@@ -7,7 +7,8 @@ export class GameModel {
      *
      */
     constructor() {
-        this.initPropsWithDefaultValues();
+        this.gameOver = false;
+        this._gameScore = 0;
     }
 
     public get gameScore(): number {
@@ -23,10 +24,6 @@ export class GameModel {
     }
 
     resetModel() {
-        this.initPropsWithDefaultValues();
-    }
-
-    private initPropsWithDefaultValues(): any {
         this.gameOver = false;
         this._gameScore = 0;
     }

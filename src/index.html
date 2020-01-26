@@ -4,18 +4,19 @@
         <meta charset="UTF-8" />
 
         <link rel="manifest" href="manifest.json" />
-        <link rel="apple-touch-icon" href="/icons/icon-150.png" />
+        <link rel="apple-touch-icon" href="../static/icons/icon-150.png" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="theme-color" content="#000000" />
 
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="stylesheet" type="text/css" href="./game.css" />
         <title>flappy-bird</title>
-        <script src="index.js"></script>
     </head>
 
     <body>
         <div id="gameContainer"></div>
+
+        <script src="index.ts"></script>
 
         <script>
             // if (window.navigator && navigator.serviceWorker) {
@@ -25,18 +26,18 @@
             //         }
             //     });
             // }
-            if ("serviceWorker" in navigator) {
-                window.addEventListener("load", () => {
-                    navigator.serviceWorker.register("./service-worker.js").then(
-                        registration => {
-                            console.log(`ServiceWorker registration successful with scope: ${registration.scope}`);
-                        },
-                        error => {
-                            console.log(`ServiceWorker registration failed: ${error}`);
-                        }
-                    );
-                });
-            }
+            // if ("serviceWorker" in navigator) {
+            //     window.addEventListener("load", () => {
+            //         navigator.serviceWorker.register("./service-worker.js").then(
+            //             registration => {
+            //                 console.log(`ServiceWorker registration successful with scope: ${registration.scope}`);
+            //             },
+            //             error => {
+            //                 console.log(`ServiceWorker registration failed: ${error}`);
+            //             }
+            //         );
+            //     });
+            // }
         </script>
     </body>
 </html>
