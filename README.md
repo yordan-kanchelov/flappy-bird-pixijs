@@ -4,11 +4,11 @@
 
 ## [Live demo](https://flappy-bird-pixijs.netlify.com/)
 
-## To build the project
+## To build & run the project
 
 `npm install`
 
-`npm run watch`
+`npm run dev` or ctrl + shift + b ( if using vscode ) 
 
 ## TODO
 
