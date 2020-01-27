@@ -2,8 +2,8 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
-
-        <link rel="manifest" href="manifest.json" />
+        <link rel="icon" href="favicon.ico" sizes="16x16" />
+        <link rel="manifest" crossorigin="use-credentials" href="manifest.webmanifest" />
         <link rel="apple-touch-icon" href="../static/icons/icon-150.png" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="theme-color" content="#000000" />
@@ -26,18 +26,18 @@
             //         }
             //     });
             // }
-            // if ("serviceWorker" in navigator) {
-            //     window.addEventListener("load", () => {
-            //         navigator.serviceWorker.register("./service-worker.js").then(
-            //             registration => {
-            //                 console.log(`ServiceWorker registration successful with scope: ${registration.scope}`);
-            //             },
-            //             error => {
-            //                 console.log(`ServiceWorker registration failed: ${error}`);
-            //             }
-            //         );
-            //     });
-            // }
+            if ("serviceWorker" in navigator) {
+                window.addEventListener("load", () => {
+                    navigator.serviceWorker.register("./service-worker.js").then(
+                        registration => {
+                            console.log(`ServiceWorker registration successful with scope: ${registration.scope}`);
+                        },
+                        error => {
+                            console.log(`ServiceWorker registration failed: ${error}`);
+                        }
+                    );
+                });
+            }
         </script>
     </body>
 </html>
