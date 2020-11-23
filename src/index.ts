@@ -42,6 +42,7 @@ export class Main {
             height: window.innerHeight,
             width: window.innerWidth,
         });
+        this.game.ticker.maxFPS = 60;
 
         gameContainer.appendChild(this.game.view);
 
