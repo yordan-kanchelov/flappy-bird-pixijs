@@ -38,6 +38,6 @@
         "tsify": "^5.0.0",
         "typescript": "^3.7.4",
         "uglify-es": "^3.3.9",
-        "watchify": "^3.11.0"
+        "watchify": "^4.0.0"
     }
 }
